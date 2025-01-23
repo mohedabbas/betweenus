@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Core\Controller;
@@ -7,7 +8,6 @@ use Exception;
 
 class AuthController extends Controller
 {
-
 	public function register(): void
 	{
 		$form = new Form('/register');
@@ -15,18 +15,37 @@ class AuthController extends Controller
 			'required' => 'required',
 			'placeholder' => 'Enter your username',
 			'class' => 'form-control border border-dark mt-2'
-		])->addTextField('email', 'Email', '', [
-			'required' => 'required',
-			'placeholder' => 'Enter your email',
-			'class' => 'form-control border border-dark mt-2'
-		])->addPasswordField('password', 'Password', [
-			'required' => 'required',
-			'placeholder' => 'Enter your password',
-			'class' => 'form-control border border-dark mt-2'
-		])->addSubmitButton('Register', [
-			'class' => 'btn btn-dark mt-2',
-			'name' => 'submit'
-		]);
+		])->addRadioField(
+			'Test',
+			'Please select one option.',
+			[
+				'First Option' => '1',
+				'Second Option' => 'Two',
+				'Third Option' => 'Three'
+			],
+			[
+				'required' => 'required',
+				'class' => 'form-control border border-dark mt-2'
+			])
+			->addSelectField(
+				'country',
+				'Country',
+				[
+					'America' => 'USA',
+					'Canada' => 'Canada',
+					'UK' => 'UK',
+					'Australia' => 'Australia'
+				],
+				[
+					'required' => 'required',
+					'class' => 'form-control border border-dark mt-2'
+				]
+			)->addSubmitButton(
+				'Register',
+				[
+					'class' => 'btn btn-primary mt-2'
+				]
+			);
 
 		$data = [
 			'title' => 'Register User',
@@ -38,15 +57,15 @@ class AuthController extends Controller
 	/**
 	 * @throws Exception
 	 */
-	public function  store(): void
+	public function store(): void
 	{
 		$userModel = $this->loadModel('AuthModel');
 		$isSubmitted = isset($_POST['submit']) || Form::isSubmitted();
 		if ($isSubmitted) {
-			$data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+			// Filter input data
+			$data = filter_input_array(INPUT_POST, $_POST);
 			unset($data['submit']);
-			$userModel->createUser($data);
+//			$userModel->createUser($data);
 		}
 	}
-
 }

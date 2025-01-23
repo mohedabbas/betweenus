@@ -1,5 +1,6 @@
 <?php
 use App\Core\Router;
+
 //$databaseName = $_ENV["DATABASE_NAME"];
 //$databaseUser = $_ENV["DATABASE_USER"];
 //$databasePassword = $_ENV["DATABASE_PASSWORD"];
@@ -45,6 +46,4 @@ $router->post('/', ['HomeController', 'index']);
 
 $router->get('/register', ['AuthController', 'register']);
 $router->post('/register', ['AuthController', 'store']);
-
-
 $router->dispatch();

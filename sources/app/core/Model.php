@@ -4,7 +4,7 @@ namespace App\Core;
 
 class Model
 {
-	public static \PDO $pdo;
+	public \PDO $pdo;
 	private mixed $username;
 	private mixed $password;
 
@@ -20,19 +20,22 @@ class Model
 	 */
 	public function __construct($table)
 	{
+
 		$this->username = $_ENV['DATABASE_USER'];
 		$this->password = $_ENV['DATABASE_PASSWORD'];
 		$this->dbname = $_ENV['DATABASE_NAME'];
 		$this->table = $table;
 
 		try {
-			self::$pdo = new \PDO("mysql:host=mariadb;dbname=$this->dbname", $this->username, $this->password);
-			self::$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-			echo 'Connected to database';
+			$this->pdo = new \PDO("mysql:host=mariadb;dbname=$this->dbname", $this->username, $this->password);
+			$this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+			// Only if the model is called from the migration script via cli.
+			if (php_sapi_name() === 'cli') {
+				echo 'Connected to database. \\n';
+			}
 		} catch (\PDOException $e) {
 			die("Connection failed: " . $e->getMessage());
 		}
-
 	}
 
 	/**
@@ -40,7 +43,7 @@ class Model
 	 */
 	public function prepare($sql): bool|\PDOStatement
 	{
-		return self::$pdo->prepare($sql);
+		return $this->pdo->prepare($sql);
 	}
 
 
@@ -91,7 +94,7 @@ class Model
 		$sql = "INSERT INTO $this->table ($columns) VALUES ($placeholders)";
 		$statement = $this->prepare($sql);
 		$this->execute($statement, $data);
-		return self::$pdo->lastInsertId();
+		return $this->pdo->lastInsertId();
 	}
 
 	/**
@@ -154,6 +157,11 @@ class Model
 		return $this->fetchAll($statement);
 	}
 
+	public function __toString(): string
+	{
+		// TODO: Implement __toString() method.
+		return 'Model';
+	}
 
 
 }

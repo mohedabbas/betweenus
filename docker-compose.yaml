@@ -36,6 +36,8 @@ services:
     user: php
     volumes:
       - ./sources:$PHP_USER_HOME_DIRECTORY
+      - ./migrations:$PHP_USER_HOME_DIRECTORY/migrations
+#    command: ["/usr/local/bin/startup.sh"]
 
   mariadb:
     build:

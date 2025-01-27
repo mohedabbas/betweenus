@@ -11,9 +11,9 @@ RUN useradd --create-home --system --home-dir $PHP_USER_HOME_DIRECTORY --shell $
 
 RUN docker-php-ext-install pdo_mysql
 
-# Copy the startup script into the container
-COPY startup.sh /usr/local/bin/startup.sh
-RUN chmod +x /usr/local/bin/startup.sh
-
-# Execute the file containing the startup script that will start the migrations process.
-CMD ["startup.sh"]
+## Copy the startup script into the container
+#COPY startup.sh /usr/local/bin/startup.sh
+#RUN chmod +x /usr/local/bin/startup.sh
+#
+## Execute the file containing the startup script that will start the migrations process.
+#CMD ["startup.sh"]

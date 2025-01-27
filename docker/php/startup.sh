@@ -3,7 +3,7 @@ set -e
 
 echo ">>>> Waiting for MariaDB to be ready..."
 # Optional: wait for a few seconds or do a more sophisticated wait-for check
-sleep 5
+sleep 10
 
 echo ">>>> Running migrations..."
 php /home/php/migration_script.php up

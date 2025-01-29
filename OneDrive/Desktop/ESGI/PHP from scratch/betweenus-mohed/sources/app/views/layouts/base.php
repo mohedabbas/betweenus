@@ -1,23 +1,25 @@
-<?php
-$title = $title ?? 'Default Title'; // Set a default title if none is provided
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?= htmlspecialchars($title) ?></title>
-	<link rel="stylesheet" href="/assets/css/styles.css">
+    <meta charset="UTF-8">
+    <title><?= htmlspecialchars($title ?? 'BetweenUs') ?></title>
 </head>
 <body>
+<header>
+    <nav>
+        <a href="/">Accueil</a> |
+        <a href="/register">Inscription</a> |
+        <a href="/login">Connexion</a> |
+        <a href="/logout">Déconnexion</a>
+    </nav>
+</header>
 
-<?php require __DIR__ . '/header.php'; ?>
 <main>
-	<?= $content; // This will be where individual page content is injected ?>
+    <?= $content ?? '' ?>
 </main>
 
-<?php require __DIR__ . '/footer.php'; ?>
-<!--<script src="/assets/js/app.js"></script>-->
+<footer>
+    <p>Mon footer</p>
+</footer>
 </body>
 </html>

@@ -1,0 +1,13 @@
+# Ignore les fichiers système Windows
+*.log
+*.dat
+*.ini
+*.blf
+*.regtrans-ms
+NTUSER.*
+AppData/
+Downloads/
+Favorites/
+OneDrive*/
+.vscode/
+.ssh/

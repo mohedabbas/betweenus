@@ -25,6 +25,16 @@ class Form
         return $this;
     }
 
+    public function addHiddenField(string $name, string $value): static
+    {
+        $this->fields[] = [
+            'type'  => 'hidden',
+            'name'  => $name,
+            'value' => $value
+        ];
+        return $this;
+    }
+
     public function addPasswordField(string $name, string $label, array $attributes = []): static
     {
         $this->fields[] = [
@@ -65,7 +75,7 @@ class Form
     {
         $type = $field['type'];
         $html = '';
-
+    
         if ($type === 'text') {
             $html .= "<label>{$field['label']}</label>";
             $html .= "<input type='text' name='{$field['name']}' value='{$field['value']}'";
@@ -73,6 +83,7 @@ class Form
                 $html .= " $attr='$val'";
             }
             $html .= "><br>";
+    
         } elseif ($type === 'password') {
             $html .= "<label>{$field['label']}</label>";
             $html .= "<input type='password' name='{$field['name']}'";
@@ -80,6 +91,11 @@ class Form
                 $html .= " $attr='$val'";
             }
             $html .= "><br>";
+    
+        } elseif ($type === 'hidden') {
+            // Gérer le champ caché
+            $html .= "<input type='hidden' name='{$field['name']}' value='{$field['value']}'>";
+    
         } elseif ($type === 'submit') {
             $html .= "<button type='submit'";
             foreach ($field['attributes'] as $attr => $val) {
@@ -87,6 +103,8 @@ class Form
             }
             $html .= ">{$field['label']}</button><br>";
         }
+    
         return $html;
     }
+    
 }

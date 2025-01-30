@@ -14,6 +14,13 @@ require_once __DIR__ . '/../Libs/PHPMailer/src/Exception.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+/**
+ * AuthController gère :
+ * - Inscription + code 6 chiffres (verify)
+ * - Connexion (login)
+ * - Mot de passe oublié (forgot-password) => lien par email
+ * - Réinitialisation (reset-password) => nouveau mot de passe
+ */
 class AuthController extends Controller
 {
     /**
@@ -25,12 +32,14 @@ class AuthController extends Controller
         echo "<p><a href='/register'>Register</a> | <a href='/login'>Login</a> | <a href='/logout'>Logout</a></p>";
     }
 
+    // ----------------  INSCRIPTION + CODE 6 CHIFFRES ---------------- //
+
     /**
      * Formulaire d’inscription (GET "/register")
      */
     public function register(): void
     {
-        $form = new Form('/register'); // => POST
+        $form = new Form('/register'); // => method=POST
         $form->addTextField('first_name', 'Prénom', '', [
             'required' => 'required'
         ])
@@ -75,8 +84,8 @@ class AuthController extends Controller
             $postData['password'] = password_hash($postData['password'], PASSWORD_BCRYPT);
         }
 
-        // Générer un code aléatoire
-        $verificationCode = bin2hex(random_bytes(16));
+        // Générer un code à 6 chiffres
+        $verificationCode = strval(random_int(100000, 999999));
         $postData['verification_code'] = $verificationCode;
         $postData['is_verified']       = 0;
 
@@ -84,67 +93,62 @@ class AuthController extends Controller
         $authModel = $this->loadModel('AuthModel');
         $authModel->createUser($postData);
 
-        // Envoi du mail
+        // Envoyer mail de vérification (6 chiffres)
         $this->sendVerificationEmail($postData['email'], $verificationCode);
 
-        // Stocker un message + rediriger
-        $_SESSION['register_info'] = "Un e-mail de vérification vous a été envoyé.";
+        $_SESSION['register_info'] = "Un e-mail de vérification (6 chiffres) vous a été envoyé.";
         header('Location: /verify');
         exit;
     }
 
     /**
-     * Envoi d’un e-mail de vérification avec PHPMailer
+     * Envoi d’un e-mail de vérification (6 chiffres)
      */
     private function sendVerificationEmail(string $destMail, string $code): void
     {
         $mail = new PHPMailer(true);
 
         try {
-            // Désactive le debug direct
-            $mail->SMTPDebug  = 0;
+            $mail->SMTPDebug  = 0;   // Pas de logs à l’écran
             $mail->Debugoutput = 'html';
 
-            // Configuration SMTP
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com'; 
             $mail->SMTPAuth   = true;
-            // Mettez ici votre Gmail + mot de passe d’application (ou less secure apps)
+
+            // === RENSEIGNEZ VOS IDENTIFIANTS GMAIL OU APP PASSWORD ===
             $mail->Username   = 'projetphpscratch@gmail.com';
             $mail->Password   = 'cxvp lzrf icwq wiss';
+
             $mail->SMTPSecure = 'tls';
             $mail->Port       = 587;
 
-            // Expéditeur
-            $mail->setFrom('votrecompte@gmail.com', 'BetweenUs');
-
-            // Destinataire
+            // L'adresse "From" => pareil que l'adresse d'envoi
+            $mail->setFrom('projetphpscratch@gmail.com', 'BetweenUs');
             $mail->addAddress($destMail);
 
-            // Contenu
             $mail->isHTML(false);
             $mail->Subject = "Vérification de votre compte BetweenUs";
             $mail->Body    = "Bonjour,\n\n".
-                             "Voici votre code de vérification : $code\n\n".
+                             "Votre code de vérification (6 chiffres) : $code\n\n".
                              "Rendez-vous sur /verify pour valider.\n\n".
-                             "Cordialement,\nL’équipe BetweenUs";
+                             "Cordialement,\nBetweenUs";
 
             $mail->send();
-
         } catch (Exception $e) {
-            // En cas d’erreur
-            error_log("Erreur d’envoi du mail: " . $e->getMessage());
+            error_log("Erreur d’envoi du mail (verify code): " . $e->getMessage());
         }
     }
 
     /**
-     * Formulaire pour saisir le code de vérification (GET "/verify")
+     * Formulaire /verify (GET) pour saisir code 6 chiffres
      */
     public function verifyForm(): void
     {
         $form = new Form('/verify');
-        $form->addTextField('verification_code', 'Code reçu', '', [
-            'required' => 'required'
+        $form->addTextField('verification_code', 'Code reçu (6 chiffres)', '', [
+            'required'    => 'required',
+            'placeholder' => 'Ex: 123456'
         ])
         ->addSubmitButton('Valider', ['name' => 'submit']);
 
@@ -156,7 +160,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Traite la soumission du code (POST "/verify")
+     * POST /verify => vérifie le code
      */
     public function verifySubmit(): void
     {
@@ -168,6 +172,13 @@ class AuthController extends Controller
 
         $inputCode = filter_input(INPUT_POST, 'verification_code', FILTER_SANITIZE_STRING);
 
+        // Vérif: 6 chiffres
+        if (!ctype_digit($inputCode) || strlen($inputCode) !== 6) {
+            $_SESSION['verify_error'] = "Le code doit être composé de 6 chiffres.";
+            header('Location: /verify');
+            exit;
+        }
+
         $authModel = $this->loadModel('AuthModel');
         $user      = $authModel->findByVerificationCode($inputCode);
 
@@ -177,10 +188,174 @@ class AuthController extends Controller
             exit;
         }
 
-        // Vérification => is_verified=1
+        // Marquer is_verified=1
         $authModel->verifyUser($user->id);
 
         $_SESSION['verify_success'] = "Votre compte est validé ! Vous pouvez vous connecter.";
+        header('Location: /login');
+        exit;
+    }
+
+    // -------------------- MOT DE PASSE OUBLIÉ (avec lien) -------------------- //
+
+    /**
+     * Formulaire "Mot de passe oublié" (GET "/forgot-password")
+     */
+    public function forgotPasswordForm(): void
+    {
+        $form = new Form('/forgot-password');
+        $form->addTextField('email', 'Votre email', '', [
+            'required' => 'required',
+            'placeholder' => 'Entrez votre email'
+        ])
+        ->addSubmitButton('Envoyer', ['name' => 'submit']);
+
+        $data = [
+            'title' => 'Mot de passe oublié',
+            'form'  => $form
+        ];
+        $this->loadView('auth/forgot_password', $data);
+    }
+
+    /**
+     * Traitement "Mot de passe oublié" (POST "/forgot-password")
+     */
+    public function forgotPasswordSubmit(): void
+    {
+        $isSubmitted = isset($_POST['submit']) || Form::isSubmitted();
+        if (!$isSubmitted) {
+            header('Location: /forgot-password');
+            exit;
+        }
+
+        $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+        if (!$email) {
+            $_SESSION['forgot_error'] = "Veuillez saisir un email valide.";
+            header('Location: /forgot-password');
+            exit;
+        }
+
+        $authModel = $this->loadModel('AuthModel');
+        $user = $authModel->findUserByEmail($email);
+
+        if (!$user) {
+            // L’email n’existe pas
+            $_SESSION['forgot_error'] = "Cet email n’existe pas dans nos registres.";
+            header('Location: /forgot-password');
+            exit;
+        }
+
+        // Générer un reset_token
+        $resetToken = bin2hex(random_bytes(16));
+        $authModel->setResetToken($user->id, $resetToken);
+
+        // Envoyer un e-mail avec un lien
+        $this->sendResetEmail($email, $resetToken);
+
+        $_SESSION['forgot_info'] = "Un e-mail de réinitialisation a été envoyé à $email.";
+        header('Location: /forgot-password');
+        exit;
+    }
+
+    /**
+     * Envoi d’un mail de reset (lien)
+     */
+    private function sendResetEmail(string $destMail, string $token): void
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->SMTPDebug  = 0;
+            $mail->Debugoutput = 'html';
+
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com'; 
+            $mail->SMTPAuth   = true;
+
+            // Mettez vos identifiants Gmail ou App Password
+            $mail->Username   = 'projetphpscratch@gmail.com';
+            $mail->Password   = 'cxvp lzrf icwq wiss';
+
+            $mail->SMTPSecure = 'tls';
+            $mail->Port       = 587;
+
+            $mail->setFrom('projetphpscratch@gmail.com', 'BetweenUs');
+            $mail->addAddress($destMail);
+
+            $mail->isHTML(false);
+            $mail->Subject = "Réinitialisation de votre mot de passe BetweenUs";
+
+            // URL pour /reset-password?token=...
+            $resetUrl = "http://localhost:8000/reset-password?token=$token"; 
+
+            $mail->Body = "Bonjour,\n\n".
+                          "Pour réinitialiser votre mot de passe, cliquez sur le lien suivant :\n".
+                          "$resetUrl\n\n".
+                          "Si ce n’est pas vous, ignorez ce mail.\n\n".
+                          "Cordialement,\nBetweenUs";
+
+            $mail->send();
+        } catch (Exception $e) {
+            error_log("Erreur d’envoi de mail (reset): " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Formulaire "Nouveau mot de passe" (GET "/reset-password?token=xxx")
+     */
+    public function resetPasswordForm(): void
+    {
+        // Récup token en GET
+        $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);
+
+        // Créer le form
+        $form = new Form('/reset-password'); // => POST
+        $form->addPasswordField('new_password', 'Nouveau mot de passe', [
+            'required' => 'required'
+        ])
+        ->addHiddenField('token', $token) // Champ caché = token
+        ->addSubmitButton('Valider', ['name' => 'submit']);
+
+        $data = [
+            'title' => 'Réinitialisation',
+            'form'  => $form
+        ];
+        $this->loadView('auth/reset_password', $data);
+    }
+
+    /**
+     * Traitement du nouveau mot de passe (POST "/reset-password")
+     */
+    public function resetPasswordSubmit(): void
+    {
+        $isSubmitted = isset($_POST['submit']) || Form::isSubmitted();
+        if (!$isSubmitted) {
+            header('Location: /reset-password');
+            exit;
+        }
+
+        $newPass = filter_input(INPUT_POST, 'new_password', FILTER_SANITIZE_STRING);
+        $token   = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+
+        if (!$newPass || !$token) {
+            $_SESSION['reset_error'] = "Paramètres invalides.";
+            header('Location: /reset-password?token=' . urlencode($token));
+            exit;
+        }
+
+        $authModel = $this->loadModel('AuthModel');
+        $user = $authModel->findByResetToken($token);
+        if (!$user) {
+            $_SESSION['reset_error'] = "Token invalide ou expiré.";
+            header('Location: /reset-password');
+            exit;
+        }
+
+        // Mettre à jour le password
+        $hashed = password_hash($newPass, PASSWORD_BCRYPT);
+        $authModel->updatePasswordAndClearToken($user->id, $hashed);
+
+        $_SESSION['reset_success'] = "Mot de passe réinitialisé avec succès ! Connectez-vous.";
         header('Location: /login');
         exit;
     }
@@ -194,11 +369,11 @@ class AuthController extends Controller
     {
         $form = new Form('/login');
         $form->addTextField('identifier', 'Nom d’utilisateur / Email', '', [
-            'required' => 'required',
+            'required'    => 'required',
             'placeholder' => 'Entrez votre email ou username'
         ])
         ->addPasswordField('password', 'Mot de passe', [
-            'required' => 'required',
+            'required'    => 'required',
             'placeholder' => 'Entrez votre mot de passe'
         ])
         ->addSubmitButton('Connexion', ['name' => 'submit']);
@@ -210,9 +385,6 @@ class AuthController extends Controller
         $this->loadView('auth/login', $data);
     }
 
-    /**
-     * Traitement connexion (POST "/login")
-     */
     public function attemptLogin(): void
     {
         $isSubmitted = isset($_POST['submit']) || Form::isSubmitted();
@@ -221,7 +393,6 @@ class AuthController extends Controller
             exit;
         }
 
-        // Récupérer identifiants
         $identifier = filter_input(INPUT_POST, 'identifier', FILTER_SANITIZE_STRING);
         $password   = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
@@ -234,21 +405,19 @@ class AuthController extends Controller
             exit;
         }
 
-        // Vérifier le mot de passe haché
         if (!password_verify($password, $user->password)) {
             $_SESSION['login_error'] = "Mot de passe incorrect.";
             header('Location: /login');
             exit;
         }
 
-        // Vérifier si le compte est vérifié
         if (isset($user->is_verified) && !$user->is_verified) {
             $_SESSION['login_error'] = "Votre compte n’est pas encore validé.";
             header('Location: /login');
             exit;
         }
 
-        // OK => on stocke l’utilisateur en session
+        // OK => connecter
         $_SESSION['user'] = [
             'id'         => $user->id,
             'username'   => $user->username,
@@ -258,14 +427,10 @@ class AuthController extends Controller
             'role'       => $user->role ?? 'user'
         ];
 
-        // Rediriger vers page connectée
         header('Location: /connected');
         exit;
     }
 
-    /**
-     * Déconnexion (GET "/logout")
-     */
     public function logout(): void
     {
         session_unset();
@@ -274,9 +439,6 @@ class AuthController extends Controller
         exit;
     }
 
-    /**
-     * Page connectée (GET "/connected")
-     */
     public function connected(): void
     {
         if (!isset($_SESSION['user'])) {

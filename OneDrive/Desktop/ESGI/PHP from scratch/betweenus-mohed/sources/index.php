@@ -54,5 +54,11 @@ $router->get('/logout', ['AuthController', 'logout']);
 // Page connectée
 $router->get('/connected', ['AuthController', 'connected']);
 
+$router->get('/forgot-password',  ['AuthController', 'forgotPasswordForm']);
+$router->post('/forgot-password', ['AuthController', 'forgotPasswordSubmit']);
+$router->get('/reset-password',   ['AuthController', 'resetPasswordForm']);
+$router->post('/reset-password',  ['AuthController', 'resetPasswordSubmit']);
+
+
 // Dispatch
 $router->dispatch();

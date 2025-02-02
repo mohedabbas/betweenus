@@ -46,4 +46,6 @@ $router->post('/', ['HomeController', 'index']);
 
 $router->get('/register', ['AuthController', 'register']);
 $router->post('/register', ['AuthController', 'store']);
+
+$router->get('/designSystem', ['DesignSystemController', 'index']);
 $router->dispatch();

@@ -4,24 +4,29 @@
 .button {
     @include m.resetA;
     @include m.resetButton;
-    font-weight: 500;
+
     padding: f.rem(15) f.rem(25);
-    display: inline-block;
+    width: fit-content;
     background-color: var(--primary-color);
-    color: var(--black-color);
     border-radius: f.rem(27);
+
+    font-weight: 500;
+    color: var(--black-color);
+
+    display: flex;
+    align-items: center;
+    gap: f.rem(10);
+
     transition: background-color 0.3s;
 
     // Modifiers
-    &-cta {
+    &--cta {
         background-color: var(--primary-color);
     }
-    &-secondary {
+    &--secondary {
         background-color: var(--light-grey-color);
     }
-    &-icon {
-        display: flex;
-        align-items: center;
-        gap: f.rem(10);
+    &--icon {
+        padding: f.rem(15) f.rem(15);
     }
 }

@@ -1,0 +1,23 @@
+// Colors
+$colors: (
+	"grey": #959a9e,
+	"light-grey": #f2f2f2,
+
+	"black": #000000,
+	"white": #ffffff,
+	"orange": #ff9161,
+
+	"primary": #ff9161,
+	"text": #3f3f46,
+	"text-fade": #959a9e,
+	"background": #ffffff
+);
+
+// Breakpoints
+$breakpoints: (
+	"sm": 576px,
+	"md": 768px,
+	"lg": 992px,
+	"xl": 1200px,
+	"xxl": 1400px
+);

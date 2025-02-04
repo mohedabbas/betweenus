@@ -376,11 +376,12 @@ class AuthController extends Controller
             'required'    => 'required',
             'placeholder' => 'Entrez votre mot de passe'
         ])
-        ->addSubmitButton('Connexion', ['name' => 'submit']);
+        ->addSubmitButton('Connexion', ['name' => 'submit' , 'class' => 'buttton']);
 
         $data = [
             'title' => 'Connexion',
             'form'  => $form
+            
         ];
         $this->loadView('auth/login', $data);
     }

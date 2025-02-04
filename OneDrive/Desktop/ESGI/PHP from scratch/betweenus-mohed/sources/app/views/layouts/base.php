@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($title ?? 'BetweenUs') ?></title>
+     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 <header>

@@ -15,11 +15,13 @@ if (isset($_SESSION['login_error'])) {
 if (isset($form)) {
     echo $form->renderForm();
 }
+
+
 ?>
 
 <!-- Lien vers la page "Mot de passe oublié" -->
 <p>
-    <a href="/forgot-password">Mot de passe oublié ?</a>
+    <a   href="/forgot-password">Mot de passe oublié ?</a>
 </p>
 
 <?php

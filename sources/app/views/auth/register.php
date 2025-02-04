@@ -1,18 +1,17 @@
 <?php
 ob_start();
-$title = $title;
-$form = $data['form'];
+$title = $title ?? 'Register';
+
+if (isset($_SESSION['register_info'])) {
+    echo "<p style='color:green;'>" . $_SESSION['register_info'] . "</p>";
+    unset($_SESSION['register_info']);
+}
 ?>
-<main>
-	<div class="container">
-		<h1><?php echo $title; ?></h1>
-		<p>Welcome to the Register page.</p>
-		<div class="container">
-			<?php echo $form->renderForm(); ?>
-		</div>
-	</div>
-</main>
+<h1>Inscription</h1>
 
 <?php
+if (isset($form)) {
+    echo $form->renderForm();
+}
 $content = ob_get_clean();
 require __DIR__ . '/../layouts/base.php';

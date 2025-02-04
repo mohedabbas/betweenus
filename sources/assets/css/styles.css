@@ -28,22 +28,75 @@ body {
   cursor: pointer;
   font-weight: 500;
   padding: 0.9375rem 1.5625rem;
-  display: inline-block;
   background-color: var(--primary-color);
   color: var(--black-color);
   border-radius: 1.6875rem;
-  transition: background-color 0.3s;
-}
-.button-cta {
-  background-color: var(--primary-color);
-}
-.button-secondary {
-  background-color: var(--light-grey-color);
-}
-.button-icon {
   display: flex;
   align-items: center;
+  width: fit-content;
   gap: 0.625rem;
+  transition: background-color 0.3s;
+}
+.button--cta {
+  background-color: var(--primary-color);
+}
+.button--secondary {
+  background-color: var(--light-grey-color);
+}
+.button--icon {
+  padding: 0.9375rem 0.9375rem;
+}
+
+.photo-card {
+  position: relative;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  width: auto;
+  max-width: 19.375rem;
+}
+.photo-card img {
+  width: 100%;
+}
+.photo-card:hover::after,
+.photo-card:hover button {
+  opacity: 1;
+  transition: 300ms ease-out;
+}
+.photo-card button {
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  cursor: pointer;
+  width: 1.5rem;
+  height: 1.5rem;
+  opacity: 0;
+  position: absolute;
+  z-index: 2;
+  cursor: pointer;
+}
+.photo-card__delete {
+  background-image: url("../images/icons/cross.png");
+  right: 1.125rem;
+  top: 1.125rem;
+}
+.photo-card__zoom {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url("../images/icons/zoom.png");
+}
+.photo-card::after {
+  content: "";
+  opacity: 0;
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 /*# sourceMappingURL=styles.css.map */

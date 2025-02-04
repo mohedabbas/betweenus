@@ -45,7 +45,7 @@ $router->get('/', ['HomeController', 'index']);
 $router->post('/', ['HomeController', 'index']);
 
 // Page d'accueil d'exemple
-$router->get('/', ['AuthController', 'index']);
+//$router->get('/', ['AuthController', 'index']);
 
 // Inscription
 $router->get('/register', ['AuthController', 'register']);

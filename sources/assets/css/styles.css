@@ -26,14 +26,14 @@ body {
   font-size: inherit;
   padding: 0;
   cursor: pointer;
-  font-weight: 500;
   padding: 0.9375rem 1.5625rem;
+  width: fit-content;
   background-color: var(--primary-color);
-  color: var(--black-color);
   border-radius: 1.6875rem;
+  font-weight: 500;
+  color: var(--black-color);
   display: flex;
   align-items: center;
-  width: fit-content;
   gap: 0.625rem;
   transition: background-color 0.3s;
 }

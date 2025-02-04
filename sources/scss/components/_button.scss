@@ -4,15 +4,17 @@
 .button {
     @include m.resetA;
     @include m.resetButton;
-    font-weight: 500;
+
     padding: f.rem(15) f.rem(25);
+    width: fit-content;
     background-color: var(--primary-color);
-    color: var(--black-color);
     border-radius: f.rem(27);
+
+    font-weight: 500;
+    color: var(--black-color);
 
     display: flex;
     align-items: center;
-    width: fit-content;
     gap: f.rem(10);
 
     transition: background-color 0.3s;

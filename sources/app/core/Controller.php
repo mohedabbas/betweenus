@@ -1,22 +1,39 @@
 <?php
+
 namespace App\Core;
 
 use Exception;
 
+
 class Controller
 {
-    public function loadModel(string $model)
-    {
-        $class = "App\\Models\\$model";
-        if (!class_exists($class)) {
-            throw new Exception("Le modèle $class n’existe pas.");
-        }
-        return new $class();
-    }
+	/**
+	 * This method is used to load the model
+	 * @param string $model model Name.
+	 * @return mixed
+	 * @throws Exception
+	 */
+	public function loadModel(string $model): mixed
+	{
+		$modelPath = __DIR__ . "/../models/$model.php";
+		if (file_exists($modelPath)) {
+			require_once $modelPath;
+			$modelClass = "App\\Models\\$model";
+			return new $modelClass();
+		} else {
+			throw new Exception("Model file not found: $model");
+		}
+	}
 
-    public function loadView(string $view, array $data = []): void
-    {
-        extract($data);
-        require __DIR__ . "/../views/$view.php";
-    }
+	/**
+	 * This method is used to load the view
+	 * @param string $view
+	 * @param array $data
+	 */
+	public function loadView(string $view, array $data = []): void
+	{
+		extract($data);
+		require_once __DIR__ . "/../views/$view.php";
+	}
+
 }

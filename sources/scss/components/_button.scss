@@ -1,0 +1,32 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+.button {
+    @include m.resetA;
+    @include m.resetButton;
+
+    padding: f.rem(15) f.rem(25);
+    width: fit-content;
+    background-color: var(--primary-color);
+    border-radius: f.rem(27);
+
+    font-weight: 500;
+    color: var(--black-color);
+
+    display: flex;
+    align-items: center;
+    gap: f.rem(10);
+
+    transition: background-color 0.3s;
+
+    // Modifiers
+    &--cta {
+        background-color: var(--primary-color);
+    }
+    &--secondary {
+        background-color: var(--light-grey-color);
+    }
+    &--icon {
+        padding: f.rem(15) f.rem(15);
+    }
+}

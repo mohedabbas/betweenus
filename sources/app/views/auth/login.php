@@ -10,6 +10,10 @@ if (isset($_SESSION['login_error'])) {
 ?>
 <h1><?= htmlspecialchars($title) ?></h1>
 
+
+<html>
+    
+<div class="login-container login-card">
 <?php
 // Afficher le formulaire de connexion
 if (isset($form)) {
@@ -17,6 +21,8 @@ if (isset($form)) {
 }
 ?>
 
+</div>
+</html>
 <!-- Lien vers la page "Mot de passe oublié" -->
 <p>
     <a href="/forgot-password">Mot de passe oublié ?</a>

@@ -1,0 +1,134 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+$primary-color: #ff7f50;
+$text-color: #333;
+$background-color: #fff;
+$border-radius: 12px;
+$input-border-color: #e0e0e0;
+
+
+.button {
+    @include m.resetA;
+    @include m.resetButton;
+
+    padding: f.rem(15) f.rem(25);
+    width: fit-content;
+    background-color: var(--primary-color);
+    border-radius: f.rem(27);
+
+    font-weight: 500;
+    color: var(--black-color);
+
+    display: flex;
+    align-items: center;
+    gap: f.rem(10);
+
+    transition: background-color 0.3s;
+
+    // Modifiers
+    &--cta {
+        background-color: var(--primary-color);
+    }
+    &--secondary {
+        background-color: var(--light-grey-color);
+    }
+    &--icon {
+        padding: f.rem(15) f.rem(15);
+    }
+}
+
+
+ // -------------------------------------------------------
+
+ body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+    
+    .login-card {
+        background-color: $background-color;
+        padding: 40px;
+        border-radius: $border-radius;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        
+        h1 {
+            margin: 0 0 20px 0;
+            font-size: 32px;
+            font-weight: 600;
+            text-align: center;
+            color: $text-color;
+        }
+    }
+}
+
+.signup-text {
+    text-align: center;
+    margin-bottom: 30px;
+    color: $text-color;
+    
+    .signup-link {
+        color: $primary-color;
+        text-decoration: none;
+        font-weight: 500;
+        
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.login-form {
+    .form-group {
+        margin-bottom: 20px;
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: $text-color;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid $input-border-color;
+            border-radius: $border-radius;
+            font-size: 16px;
+            box-sizing: border-box;
+            
+            &:focus {
+                outline: none;
+                border-color: $primary-color;
+            }
+        }
+    }
+}
+
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: $border-radius;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+        background-color: darken($primary-color, 5%);
+    }
+}

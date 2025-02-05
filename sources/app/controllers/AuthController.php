@@ -376,7 +376,7 @@ class AuthController extends Controller
             'required'    => 'required',
             'placeholder' => 'Entrez votre mot de passe'
         ])
-        ->addSubmitButton('Connexion', ['name' => 'submit']);
+        ->addSubmitButton('Connexion', ['name' => 'submit','class' => 'login-button' ]);
 
         $data = [
             'title' => 'Connexion',

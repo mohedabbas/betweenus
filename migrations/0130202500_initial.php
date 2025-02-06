@@ -39,7 +39,7 @@ return new class extends Migration
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-CREATE TABLE groups (
+CREATE TABLE galleries (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
@@ -49,13 +49,13 @@ CREATE TABLE groups (
 );
 
 
-CREATE TABLE group_users (
+CREATE TABLE gallery_users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    group_id INT,
+    gallery_id INT,
     user_id INT,
     can_upload BOOLEAN DEFAULT 0,
     can_view BOOLEAN DEFAULT 1,
-    FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
+    FOREIGN KEY (gallery_id) REFERENCES galleries(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
@@ -63,13 +63,13 @@ CREATE TABLE group_users (
 CREATE TABLE photos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    group_id INT,
+    gallery_id INT,
     image_path VARCHAR(255) NOT NULL,
     caption TEXT,
     is_public BOOLEAN DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
+    FOREIGN KEY (gallery_id) REFERENCES galleries(id) ON DELETE CASCADE
 );
 		";
 

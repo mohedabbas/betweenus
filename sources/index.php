@@ -71,6 +71,13 @@ $router->get('/reset-password',   ['AuthController', 'resetPasswordForm']);
 $router->post('/reset-password',  ['AuthController', 'resetPasswordSubmit']);
 
 
+//Gallery routes
+$router->get('/gallery', ['GalleryController', 'index']);
+$router->get('/gallery/create', ['GalleryController', 'createGallery']);
+$router->post('/gallery/create', ['GalleryController', 'storeGallery']);
+
+
+
 // Dispatch
 $router->get('/designguide', ['DesignGuideController', 'index']);
 $router->dispatch();

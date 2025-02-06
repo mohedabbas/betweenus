@@ -13,8 +13,28 @@
 
 body {
   font-family: "Urbanist", serif;
+  font-weight: 400;
   color: var(--text-color);
   background-color: var(--background-color);
+}
+
+h1,
+h2 {
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 2.4375rem;
+}
+
+h2 {
+  font-size: 1.5625rem;
+}
+
+.container {
+  margin: auto;
+  max-width: 81.25rem;
+  padding: 0 1rem;
 }
 
 .button {
@@ -45,6 +65,9 @@ body {
 }
 .button--icon {
   padding: 0.9375rem 0.9375rem;
+}
+.button--square {
+  border-radius: 0.1875rem;
 }
 
 .photo-card {
@@ -97,6 +120,20 @@ body {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.8125rem;
+  font-size: 1.25rem;
+}
+.user-profile img {
+  width: 2.9375rem;
+  height: 2.9375rem;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 62.5rem;
 }
 
 /*# sourceMappingURL=styles.css.map */

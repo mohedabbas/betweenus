@@ -29,4 +29,7 @@
     &--icon {
         padding: f.rem(15) f.rem(15);
     }
+    &--square {
+        border-radius: f.rem(3);
+    }
 }

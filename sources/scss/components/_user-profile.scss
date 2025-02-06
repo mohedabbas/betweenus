@@ -1,0 +1,15 @@
+@use "../partials/functions" as f;
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: f.rem(13);
+    font-size: f.rem(20);
+    img {
+        width: f.rem(47);
+        height: f.rem(47);
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        border-radius: f.rem(1000);
+    }
+}

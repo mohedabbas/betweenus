@@ -1,9 +1,9 @@
 @use "../partials/functions" as f;
+@use "../partials/mixins" as m;
 
 .user-profile {
-    display: flex;
-    align-items: center;
-    gap: f.rem(13);
+    @include m.flexbox($align: center, $gap: f.rem(13));
+
     font-size: f.rem(20);
     img {
         width: f.rem(47);

@@ -26,6 +26,7 @@
             <button class="button button--icon"><img src="..\..\assets\images\icons\picture.png"></button>
             <a href="#" class="button button--cta">No icon</a>
             <a href="#" class="button button--square">.button--square</a>
+            <a href="#">Just a link</a>
         </div>
     </section>
     <section>
@@ -37,7 +38,7 @@
             <li>Add a button with <b>.photo-card__delete</b> class inside</li>
         </ul>
         <div class="photo-card">
-            <img src="../../assets/images/sample_picture.png" alt="picture">
+            <img src="../../assets/images/sample_picture.png" alt="trip picture">
             <button class="photo-card__zoom"></button>
             <button class="photo-card__delete"></button>
         </div>
@@ -45,8 +46,21 @@
     <section>
         <h2>.user-profile</h2>
         <div class="user-profile">
-            <img src="../../assets/images/sample_avatar.png" alt="">
+            <img src="../../assets/images/sample_avatar.png" alt="user profile picture">
             <p class="user-profile__name">John Doe</p>
         </div>
+    </section>
+    <section>
+        <h2> Header</h2>
+        <header>
+            <div class="brand">
+                <img src="../../assets/images/brand-logo.png" alt="brand logo">
+                <h1>BetweenUs</h1>
+            </div>
+            <div class="user-profile">
+                <img src="../../assets/images/sample_avatar.png" alt="user profile picture">
+                <p class="user-profile__name">John Doe</p>
+            </div>
+        </header>
     </section>
 </body>

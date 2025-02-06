@@ -24,6 +24,9 @@ h1 {
 h2 {
     font-size: f.rem(25);
 }
+a {
+    color: var(--primary-color);
+}
 
 .container {
     margin: auto;

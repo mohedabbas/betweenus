@@ -1,15 +1,14 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
-
-.brand {
-    @include m.flexbox($gap: f.rem(6), $align: center);
-
-    h1 {
+@layer component {
+    .brand {
+        @include m.flexbox($gap: f.rem(6), $align: center);
+        @include m.resetA;
         font-size: f.rem(24);
         font-weight: 500;
-    }
-    img {
-        width: f.rem(24);
-        height: f.rem(24);
+        img {
+            width: f.rem(24);
+            height: f.rem(24);
+        }
     }
 }

@@ -1,29 +1,31 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
 
-.button {
-    @include m.resetA;
-    @include m.resetButton;
-    @include m.flexbox($align: center, $gap: f.rem(10));
-    padding: f.rem(15) f.rem(25);
-    width: fit-content;
-    background-color: var(--primary-color);
-    border-radius: f.rem(27);
-    font-weight: 500;
-    color: var(--black-color);
-    transition: background-color 0.3s;
-
-    // Modifiers
-    &--cta {
+@layer component {
+    .button {
+        @include m.resetA;
+        @include m.resetButton;
+        @include m.flexbox($align: center, $gap: f.rem(10));
+        padding: f.rem(15) f.rem(25);
+        width: fit-content;
         background-color: var(--primary-color);
-    }
-    &--secondary {
-        background-color: var(--light-grey-color);
-    }
-    &--icon {
-        padding: f.rem(15) f.rem(15);
-    }
-    &--square {
-        border-radius: f.rem(3);
+        border-radius: f.rem(27);
+        font-weight: 500;
+        color: var(--black-color);
+        transition: background-color 0.3s;
+
+        // Modifiers
+        &--cta {
+            background-color: var(--primary-color);
+        }
+        &--secondary {
+            background-color: var(--light-grey-color);
+        }
+        &--icon {
+            padding: f.rem(15) f.rem(15);
+        }
+        &--square {
+            border-radius: f.rem(3);
+        }
     }
 }

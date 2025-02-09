@@ -1,17 +1,54 @@
 <?php
 ob_start();
+
+// Le titre est passé par le contrôleur, sinon on met une valeur par défaut
 $title = $title ?? 'Register';
 
-if (isset($_SESSION['register_info'])) {
-    echo "<p style='color:green;'>" . $_SESSION['register_info'] . "</p>";
-    unset($_SESSION['register_info']);
-}
+// Récupération des erreurs, le formulaire, etc. 
+// (ils sont passés par $data dans loadView)
+$errors = $errors ?? []; 
+$form   = $form ?? null;
 ?>
-<h1>Inscription</h1>
+
+<div class="login-container">
+    <div class="login-card form-group">
+        <!-- Titre de la page -->
+        <h1><?= htmlspecialchars($title) ?></h1>
+
+        <!-- Lien "déjà un compte ?" -->
+        <p class="signup-text">
+            Vous avez déjà un compte ?
+            <a href="/login">Se connecter</a>
+        </p>
+
+        <!-- Message de succès (inscription) -->
+        <?php if (isset($_SESSION['register_info'])): ?>
+            <div class="success-message">
+                <?= htmlspecialchars($_SESSION['register_info']) ?>
+            </div>
+            <?php unset($_SESSION['register_info']); ?>
+        <?php endif; ?>
+
+        <!-- Affichage GLOBAL des erreurs s’il y en a -->
+        <?php if (!empty($errors)): ?>
+            <div class="error-container">
+                <?php foreach ($errors as $field => $message): ?>
+                    <p class="error-message"><?= htmlspecialchars($message) ?></p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Rendu du formulaire -->
+        <?php
+        if ($form) {
+            // Si votre classe Form gère déjà la valeur par défaut pour chaque champ,
+            // elle affichera automatiquement ce qui a été injecté dans le contrôleur.
+            echo $form->renderForm();
+        }
+        ?>
+    </div>
+</div>
 
 <?php
-if (isset($form)) {
-    echo $form->renderForm();
-}
 $content = ob_get_clean();
 require __DIR__ . '/../layouts/base.php';

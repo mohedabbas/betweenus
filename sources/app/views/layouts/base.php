@@ -14,14 +14,13 @@ $title = $title ?? 'Default Title'; // Set a default title if none is provided
     <link rel="stylesheet" href="/assets/css/temporary.css">
 </head>
 <body>
-
+<<<<<<< HEAD
 <?php require __DIR__ . '/header.php'; ?>
 <main>
     <?php FlashMessage::display(); ?>
 	<?= $content; // This will be where individual page content is injected ?>
 </main>
-
+=======
 <?php require __DIR__ . '/footer.php'; ?>
-<!--<script src="/assets/js/app.js"></script>-->
 </body>
 </html>

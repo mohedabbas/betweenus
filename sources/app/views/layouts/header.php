@@ -6,7 +6,7 @@ $userImg = $user['image_path'] ?? '/uploads/profiles/default.jpg';
 ?>
 
 
-<header>
+<header class="container">
     <a href="/" class="brand">
         <img src="../../../assets/images/brand-logo.png" alt="">
         BetweenUs

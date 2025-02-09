@@ -1,8 +1,14 @@
 @use "fonts" as fonts;
 @use "variables" as v;
 @use "functions" as f;
+@use "mixins" as m;
 
 @layer base {
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
     :root {
         @each $name, $color in v.$colors {
             --#{$name}-color: #{$color};
@@ -33,5 +39,16 @@
         margin: auto;
         max-width: f.rem(1300);
         padding: 0 f.rem(16);
+    }
+    .hero-section {
+        @include m.flexbox($align: center, $direction: column, $gap: f.rem(24));
+        h1 {
+            margin: 0;
+            text-align: center;
+            font-size: f.rem(76);
+        }
+        p {
+            font-size: f.rem(16);
+        }
     }
 }

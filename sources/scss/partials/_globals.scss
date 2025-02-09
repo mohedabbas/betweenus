@@ -1,5 +1,6 @@
 @use "fonts" as fonts;
 @use "variables" as v;
+@use "functions" as f;
 
 :root {
     @each $name, $color in v.$colors {
@@ -9,6 +10,26 @@
 
 body {
     font-family: fonts.$font1;
+    font-weight: 400;
     color: var(--text-color);
     background-color: var(--background-color);
+}
+h1,
+h2 {
+    font-weight: 400;
+}
+h1 {
+    font-size: f.rem(39);
+}
+h2 {
+    font-size: f.rem(25);
+}
+a {
+    color: var(--primary-color);
+}
+
+.container {
+    margin: auto;
+    max-width: f.rem(1300);
+    padding: 0 f.rem(16);
 }

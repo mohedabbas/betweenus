@@ -113,7 +113,7 @@ class AuthController extends Controller
             $mail->Debugoutput = 'html';
 
             $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com'; 
+            $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
 
             // === RENSEIGNEZ VOS IDENTIFIANTS GMAIL OU APP PASSWORD ===
@@ -269,7 +269,7 @@ class AuthController extends Controller
             $mail->Debugoutput = 'html';
 
             $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com'; 
+            $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
 
             // Mettez vos identifiants Gmail ou App Password
@@ -286,7 +286,7 @@ class AuthController extends Controller
             $mail->Subject = "Réinitialisation de votre mot de passe BetweenUs";
 
             // URL pour /reset-password?token=...
-            $resetUrl = "http://localhost:8000/reset-password?token=$token"; 
+            $resetUrl = "http://localhost:8000/reset-password?token=$token";
 
             $mail->Body = "Bonjour,\n\n".
                           "Pour réinitialiser votre mot de passe, cliquez sur le lien suivant :\n".
@@ -417,6 +417,7 @@ class AuthController extends Controller
             exit;
         }
 
+
         // OK => connecter
         $_SESSION['user'] = [
             'id'         => $user->id,
@@ -427,7 +428,7 @@ class AuthController extends Controller
             'role'       => $user->role ?? 'user'
         ];
 
-        header('Location: /connected');
+        header('Location: /gallery');
         exit;
     }
 

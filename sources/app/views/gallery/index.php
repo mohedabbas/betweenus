@@ -2,8 +2,13 @@
 ob_start();
 ?>
 
-
 <style>
+    .gallery__title__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     .thumbnail__container {
         margin: 10px;
         border: 2px solid lightgray;
@@ -13,6 +18,7 @@ ob_start();
         align-items: flex-start;
         border-radius: 10%;
         padding: 0.75rem;
+        flex-wrap: wrap;
     }
 
     .img__thumbnail {
@@ -27,41 +33,42 @@ ob_start();
         justify-content: flex-start;
         align-items: center;
     }
+
+    .gallery {
+        margin: 10px;
+        text-align: center;
+        text-decoration: none;
+        color: black;
+    }
 </style>
 
-
-
 <main>
-    <h1><?php echo $title ?></h1>
+
+    <div class="gallery__page__header">
+        <div class="gallery__title__header">
+            <h1 class="left"><?php echo $title; ?></h1>
+            <a href="/gallery/create" class="button button-cta">Create Gallery</a>
+        </div>
+    </div>
     <div class="gallery__container">
         <?php
         foreach ($galleries as $gallery) {
             $galleryPhotos = json_decode($gallery->galleryPhotos);
             ?>
-            <div class="gallery">
+            <a href="/gallery/<?php echo $gallery->gallery_id; ?>" class="gallery">
                 <div class="thumbnail__container">
                     <?php foreach ($galleryPhotos as $photo) { ?>
-                        <img src="/uploads/default/<?php echo $photo->image_path; ?>" alt="<?php echo $photo->caption; ?>"
+                        <img src="<?php echo $photo->image_path; ?>" alt="<?php echo $photo->caption; ?>"
                             title="<?php echo $photo->caption; ?>" class="img__thumbnail">
                     <?php } ?>
                 </div>
                 <h3><?php echo $gallery->gallery_name; ?></h3>
-            </div>
+            </a>
 
         <?php } ?>
     </div>
     </div>
-
-
-
-
-
-
 </main>
-
-
-
 <?php
-
 $content = ob_get_clean();
 require __DIR__ . "/../layouts/base.php";

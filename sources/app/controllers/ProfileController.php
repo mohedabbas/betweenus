@@ -14,8 +14,7 @@ class ProfileController extends Controller
 	{
 		$loadModel = $this->loadModel('AuthModel');
 
-		$user = $loadModel->getUserByEmail('mohed332@gmail.com');
-
+		$user = $loadModel->findUserByUsernameOrEmail('mohed332@betweenus.com');
 		$data = [
 			'title' => 'Profile Page',
 			'user' => $user

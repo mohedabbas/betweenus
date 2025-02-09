@@ -8,6 +8,7 @@
             <?php else: ?>
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
+                <li><a href="/gallery">Gallery</a></li>
             <?php endif; ?>
         </ul>
     </nav>

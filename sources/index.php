@@ -1,6 +1,6 @@
 <?php
 use App\Core\Router;
-
+session_start();
 //$databaseName = $_ENV["DATABASE_NAME"];
 //$databaseUser = $_ENV["DATABASE_USER"];
 //$databasePassword = $_ENV["DATABASE_PASSWORD"];
@@ -75,9 +75,22 @@ $router->post('/reset-password',  ['AuthController', 'resetPasswordSubmit']);
 $router->get('/gallery', ['GalleryController', 'index']);
 $router->get('/gallery/create', ['GalleryController', 'createGallery']);
 $router->post('/gallery/create', ['GalleryController', 'storeGallery']);
+$router->get('/gallery/{id}', ['GalleryController', 'showGallery']);
+$router->get('/gallery/upload/{id}', ['GalleryController', 'uploadPhotoForm']);
+$router->post('/gallery/upload/{id}', ['GalleryController', 'storePhoto']);
+
+// Delete photo
+$router->get('/gallery/delete/{id}', ['GalleryController', 'deletePhoto']);
 
 
+
+// Temporary code for testing
+$router->get('/profile', ['ProfileController', 'index']);
 
 // Dispatch
 $router->get('/designguide', ['DesignGuideController', 'index']);
+
+
+
+
 $router->dispatch();

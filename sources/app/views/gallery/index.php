@@ -28,12 +28,6 @@ ob_start();
         border-radius: 10%;
     }
 
-    .gallery__container {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }
-
     .gallery {
         margin: 10px;
         text-align: center;

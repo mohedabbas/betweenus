@@ -470,6 +470,4 @@ class Form
 		}
 		return $this->errors;
 	}
-
-
 }

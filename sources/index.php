@@ -84,6 +84,10 @@ $router->get('/gallery/delete/{id}', ['GalleryController', 'deletePhoto']);
 
 
 
+// Gallery user routes
+$router->get('/gallery/addusers/{id}', ['GalleryUserController', 'addUsersInGalleryForm']);
+$router->post('/gallery/addusers/{id}', ['GalleryUserController', 'getUsersToAddInGallery']);
+
 // Temporary code for testing
 $router->get('/profile', ['ProfileController', 'index']);
 

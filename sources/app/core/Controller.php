@@ -36,4 +36,14 @@ class Controller
 		require_once __DIR__ . "/../views/$view.php";
 	}
 
+    /**
+     * This method is used to redirect to a specific path
+     * @param string $path
+     */
+    public function redirect(string $path): void
+    {
+        header("Location: $path");
+        exit;
+    }
+
 }

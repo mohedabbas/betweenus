@@ -32,7 +32,6 @@ class GalleryModel extends Model
             'user_id' => $userid
         ];
 
-
         $this->execute($statement, $params);
         return $this->fetchAll($statement);
 
@@ -150,20 +149,6 @@ class GalleryModel extends Model
         return $galleryId;
     }
 
-
-    public function getGalleryUsers(int $galleryId)
-    {
-        $sql = " SELECT *
-        FROM gallery_users gu
-                LEFT JOIN users u ON u.id = gu.user_id
-                WHERE gallery_id = :gallery_id
-        ";
-        $statement = $this->prepare($sql);
-        $this->execute($statement, ['gallery_id' => $galleryId]);
-        return $this->fetchAll($statement);
-    }
-
-
     public function deleteGalleryPhoto(int $photoId, int $userId)
     {
         $sql = "DELETE FROM photos WHERE id = :photo_id AND user_id = :user_id";
@@ -191,7 +176,6 @@ class GalleryModel extends Model
 
     public function createPhoto(array $data): int
     {
-
         $sql = "INSERT INTO photos (gallery_id, user_id, image_path, caption, is_public) VALUES (:gallery_id, :user_id, :image_path, :caption, :is_public)";
         $statement = $this->prepare($sql);
         $params = [
@@ -203,6 +187,37 @@ class GalleryModel extends Model
         ];
         $this->execute($statement, $data);
         return $this->pdo->lastInsertId();
+    }
+
+
+
+    public function getGalleryUsers(int $galleryId)
+    {
+        $sql = " SELECT *
+        FROM gallery_users gu
+                LEFT JOIN users u ON u.id = gu.user_id
+                WHERE gallery_id = :gallery_id
+        ";
+        $statement = $this->prepare($sql);
+        $this->execute($statement, ['gallery_id' => $galleryId]);
+        return $this->fetchAll($statement);
+    }
+
+
+    public function getUsersNotInGallery(int $galleryId)
+    {
+        $sql = "SELECT u.id, u.first_name,u.last_name, u.profile_image FROM users u WHERE id NOT IN (SELECT user_id FROM gallery_users WHERE gallery_id = :gallery_id)";
+        $statement = $this->prepare($sql);
+        $this->execute($statement, ['gallery_id' => $galleryId]);
+        return $this->fetchAll($statement);
+    }
+
+    public function getConnectedUserRole(int $userId, int $galleryId)
+    {
+        $sql = "SELECT * FROM gallery_users WHERE user_id = :user_id AND gallery_id = :gallery_id";
+        $statement = $this->prepare($sql);
+        $this->execute($statement, ['user_id' => $userId, 'gallery_id' => $galleryId]);
+        return $this->fetch($statement);
     }
 
 }

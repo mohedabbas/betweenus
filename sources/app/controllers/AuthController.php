@@ -417,7 +417,6 @@ class AuthController extends Controller
             exit;
         }
 
-
         // OK => connecter
         $_SESSION['user'] = [
             'id'         => $user->id,

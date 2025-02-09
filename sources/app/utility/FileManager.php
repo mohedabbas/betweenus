@@ -65,8 +65,6 @@ class FileManager
     }
 
 
-
-
     public static function generateUniqueFilename($extension)
     {
         return date('YmdHis') . '_' . bin2hex(random_bytes(8)) . '.' . $extension;

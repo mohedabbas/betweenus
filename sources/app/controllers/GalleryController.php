@@ -3,24 +3,21 @@
 namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\Form;
+use App\Middlewares\AuthMiddleware;
 use App\Utility\FileManager;
-
-
+use App\Utility\FlashMessage;
 
 
 class GalleryController extends Controller
 {
-
     /**
      * Display a listing of the gallery to show on the dashboard with all the galleries of which user is a part.
      * @return void
      */
     public function index(): void
     {
-        $user = $_SESSION['user'] ?? null;
-        if (!$user or empty($user)) {
-            header('Location: /login');
-        }
+        AuthMiddleware::requireLogin();
+        $user = AuthMiddleware::getSessionUser();
         $galleryModel = $this->loadModel('GalleryModel');
         $galleries = $galleryModel->getUserGalleriesAndContent($user['id']);
 
@@ -38,6 +35,9 @@ class GalleryController extends Controller
 
     public function createGallery(): void
     {
+
+        AuthMiddleware::requireLogin();
+
         $galleryForm = new Form('/gallery/create', 'POST');
         $galleryForm->addTextField(
             'name',
@@ -48,7 +48,13 @@ class GalleryController extends Controller
                 'placeholder' => 'Gallery Name',
                 'class' => 'form-control'
             ]
-        )->addSubmitButton('Create Gallery', ['class' => 'btn btn-primary']);
+        )->addHiddenField(
+                'csrf_token',
+                AuthMiddleware::generateCsrfToken()
+            )->addSubmitButton(
+                'Create Gallery',
+                ['class' => 'btn btn-primary']
+            );
 
 
         $data = [
@@ -65,13 +71,20 @@ class GalleryController extends Controller
      */
     public function storeGallery(): void
     {
-
-        $galleryModel = $this->loadModel('GalleryModel');
+        AuthMiddleware::requireLogin();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             // redirect to the create gallery page
-            header('Location: /gallery/create');
+            $this->redirect('/gallery/create');
         }
+
+
+        if (!AuthMiddleware::verifyCsrfToken($_POST['csrf_token'])) {
+            // redirect to the create gallery page
+            $this->redirect('/gallery/create');
+        }
+
+        $galleryModel = $this->loadModel('GalleryModel');
 
         // Sanitize the POST data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -79,15 +92,13 @@ class GalleryController extends Controller
         $user = $_SESSION['user'];
 
         try {
-            $galleryModel->createGallery([
+            $galleryId = $galleryModel->createGallery([
                 'name' => $_POST['name'],
                 'created_by' => $user['id']
             ]);
-            // redirect to the gallery page
-            header('Location: /gallery');
+            $this->redirect('/gallery/' . $galleryId);
         } catch (\Exception $e) {
-            // redirect to the create gallery page
-            header('Location: /gallery/create');
+            $this->redirect('/gallery/create');
         }
 
     }
@@ -99,14 +110,14 @@ class GalleryController extends Controller
      */
     public function showGallery(int $id): void
     {
-        $galleryModel = $this->loadModel('GalleryModel');
+        AuthMiddleware::requireLogin();
+        $user = AuthMiddleware::getSessionUser();
 
-        $user = $_SESSION['user'];
+        $galleryModel = $this->loadModel('GalleryModel');
         $gallery = $galleryModel->getGallery($id, $user['id']);
 
         if (!$gallery || empty($gallery) || !$user) {
-            // redirect to the gallery page
-            header('Location: /gallery');
+            $this->redirect('/gallery');
         }
 
         // Get the gallery photos
@@ -124,22 +135,12 @@ class GalleryController extends Controller
     }
 
     /**
-     * Get the users of a gallery
-     * @param int $galleryId
-     * @return mixed
-     */
-    private function getGalleryUsers(int $galleryId): mixed
-    {
-        $galleryModel = $this->loadModel('GalleryModel');
-        return $galleryModel->getGalleryUsers($galleryId);
-    }
-
-    /**
      * Show the form for uploading a new photo.
      * @return void
      */
     public function uploadPhotoForm(int $id): void
     {
+        AuthMiddleware::requireLogin();
         $formAction = "/gallery/upload/{$id}";
         $photoForm = new Form($formAction, 'POST', 'multipart/form-data');
         $photoForm->addFileField(
@@ -149,7 +150,11 @@ class GalleryController extends Controller
                 'required' => true,
                 'class' => 'button button-cta'
             ]
-        )->addSubmitButton('Upload Photo', ['class' => 'btn btn-primary']);
+        )->addHiddenField(
+                'csrf_token',
+                AuthMiddleware::generateCsrfToken()
+            )
+            ->addSubmitButton('Upload Photo', ['class' => 'btn btn-primary']);
 
         $data = [
             'title' => 'Upload Photo',
@@ -166,15 +171,17 @@ class GalleryController extends Controller
      */
     public function storePhoto($id): void
     {
-        if (!$_SERVER['REQUEST_METHOD'] !== 'POST') {
-            // redirect to the upload photo page
-            header('Location: /gallery/upload');
+        AuthMiddleware::requireLogin();
+
+        // if (!$_SERVER['REQUEST_METHOD'] !== 'POST') {
+        //     $this->redirect('/gallery/upload/' . $id);
+        // }
+
+        if (!AuthMiddleware::verifyCsrfToken($_POST['csrf_token'])) {
+            $this->redirect('/gallery/upload/' . $id);
         }
-        // Check if the user is logged in
-        if (!isset($_SESSION['user'])) {
-            header('Location: /login');
-        }
-        $user = $_SESSION['user'];
+
+        $user = AuthMiddleware::getSessionUser();
         $galleryId = $id;
         $galleryModel = $this->loadModel('GalleryModel');
         $photo = $_FILES['photo'];
@@ -189,7 +196,7 @@ class GalleryController extends Controller
         ];
 
         $galleryModel->createPhoto($data);
-        header("Location: /gallery/" . $galleryId);
+        $this->redirect('/gallery/' . $galleryId);
     }
 
     /**
@@ -199,6 +206,7 @@ class GalleryController extends Controller
      */
     public function deletePhoto(int $photoId): void
     {
+        AuthMiddleware::requireLogin();
         $galleryModel = $this->loadModel('GalleryModel');
         $user = $_SESSION['user'];
         $photo = $galleryModel->getPhoto($photoId, $user['id']);
@@ -206,7 +214,18 @@ class GalleryController extends Controller
         $galleryModel->deleteGalleryPhoto($photoId, $user['id']);
         FileManager::deleteGalleryPhoto($photo->image_path);
 
-        header('Location: /gallery');
+        $this->redirect('/gallery/' . $photo->gallery_id);
     }
 
+    /**
+     * Get the users of a gallery
+     * @param int $galleryId
+     * @return mixed
+     */
+    private function getGalleryUsers(int $galleryId): mixed
+    {
+        AuthMiddleware::requireLogin();
+        $galleryModel = $this->loadModel('GalleryModel');
+        return $galleryModel->getGalleryUsers($galleryId);
+    }
 }

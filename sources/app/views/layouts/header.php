@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 use App\Middlewares\AuthMiddleware;
 $user = AuthMiddleware::getSessionUser();
@@ -5,10 +6,17 @@ $username = htmlspecialchars($user['username'] ?? 'Guest');
 $userImg = $user['image_path'] ?? '/uploads/profiles/default.jpg';
 ?>
 
+=======
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+>>>>>>> 73e2919 (mise à jour 10.02.2025)
 
 <header>
-    <nav>
-        <ul>
+    <nav class="navbar">
+        <ul class="navbar-links" >
             <li><a href="/">Home</a></li>
             <?php if (isset($_SESSION['user'])): ?>
                 <li><a href="/gallery">Gallery</a></li>
@@ -21,3 +29,5 @@ $userImg = $user['image_path'] ?? '/uploads/profiles/default.jpg';
         </ul>
     </nav>
 </header>
+
+<link rel="stylesheet" href="/assets/css/styles.css">

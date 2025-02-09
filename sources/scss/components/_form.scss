@@ -3,10 +3,13 @@ $background-color: #ffffff;
 $text-color: #333333;
 $placeholder-color: #999999;
 $border-color: #e0e0e0;
+$border-radius : #000000;
+
+@use '../partials/functions' as f;
 
 // Mixins
 @mixin card-shadow {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px f.rem(10) rgba(0, 0, 0, 0.08);
   }
   
   @mixin input-reset {
@@ -14,9 +17,9 @@ $border-color: #e0e0e0;
     outline: none;
     background: none;
     width: 100%;
-    padding: 15px;
-    border-radius: 12px;
-    font-size: 16px;
+    padding: f.rem(15) ;
+    border-radius: f.rem(12);
+    font-size: f.rem(16);
     transition: border-color 0.3s ease;
   
     &:focus {
@@ -31,32 +34,45 @@ $border-color: #e0e0e0;
     align-items: center;
     justify-content: center;
     background-color: #f5f5f5;
-    padding: 20px;
+    padding: f.rem(20);
   }
   
+
+
+
   // Login Card
   .login-card {
     background-color: $background-color;
     border: solid #FF9161;
-    border-radius: 24px;
-    padding: 40px;
+    border-radius: f.rem(24);
+    padding: f.rem(40);
     width: 100%;
-    max-width: 400px;
+    max-width: f.rem(400);
     @include card-shadow;
   
     h1 {
-      font-size: 32px;
+      font-size: f.rem(32);
       font-weight: 600;
       color: $text-color;
       text-align: center;
-      margin-bottom: 12px;
+      margin-bottom: f.rem(12);
     }
+
+   button{
+    width: 100%;
+    padding: f.rem(14);
+    display: block;
+    border-radius: f.rem(14);
+    transition: background-color 0.3s ease;
+  
+
+   }
   
     .signup-text {
       text-align: center;
       color: $text-color;
-      margin-bottom: 32px;
-      font-size: 15px;
+      margin-bottom: f.rem(32);
+      font-size: f.rem(15);
   
       a {
         color: $primary-color;
@@ -72,14 +88,14 @@ $border-color: #e0e0e0;
   
   // Form Elements
   .form-group {
-    margin-bottom: 20px;
+    margin-bottom: f.rem(20);
   
     label {
       display: block;
-      font-size: 15px;
+      font-size: f.rem(15);
       font-weight: 500;
       color: $text-color;
-      margin-bottom: 8px;
+      margin-bottom: f.rem(8);
     }
   
     input {
@@ -96,25 +112,28 @@ $border-color: #e0e0e0;
     background-color: #fff2f0;
     border: 1px solid #ffccc7;
     color: #ff4d4f;
-    padding: 12px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    font-size: 14px;
+    padding: f.rem(12);
+    border-radius: f.rem(12);
+    margin-bottom: f.rem(20);
+    font-size: f.rem(14);
     text-align: center;
   }
   
   // Forgot Password
   .forgot-password-text {
     text-align: center;
-    margin-top: 20px;
+    margin-top: f.rem(20);
   
     a {
       color: $text-color;
       text-decoration: none;
-      font-size: 14px;
+      font-size: f.rem(14);
   
       &:hover {
         color: $primary-color;
       }
     }
   }
+
+
+

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 use App\Middlewares\AuthMiddleware;
 $user = AuthMiddleware::getSessionUser();
@@ -6,13 +5,13 @@ $username = htmlspecialchars($user['username'] ?? 'Guest');
 $userImg = $user['image_path'] ?? '/uploads/profiles/default.jpg';
 ?>
 
-=======
+
 
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
->>>>>>> 73e2919 (mise à jour 10.02.2025)
+
 
 <header>
     <nav class="navbar">

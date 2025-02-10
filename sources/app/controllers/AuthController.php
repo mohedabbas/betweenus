@@ -448,10 +448,7 @@ class AuthController extends Controller
             'placeholder' => 'Enter your password',
             'class'       => 'form-group'
         ])
-        ->addSubmitButton('Login', [
-            'name'  => 'submit',
-            'class' => 'button'
-        ]);
+        ->addSubmitButton('Connexion', ['name' => 'submit','class' => 'login-button' ]);
 
         $data = [
             'title' => 'Login',

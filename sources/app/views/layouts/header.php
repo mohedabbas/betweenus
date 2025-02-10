@@ -1,3 +1,4 @@
+
 <?php
 use App\Middlewares\AuthMiddleware;
 $user = AuthMiddleware::getSessionUser();
@@ -6,27 +7,18 @@ $userImg = $user['image_path'] ?? '/uploads/profiles/default.jpg';
 ?>
 
 
+<header class="container">
+    <a href="/" class="brand">
+        <img src="../../../assets/images/brand-logo.png" alt="">
+        BetweenUs
+    </a>
 
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/assets/css/styles.css">
-</head>
-
-
-<header>
-    <nav class="navbar">
-        <ul class="navbar-links" >
-            <li><a href="/">Home</a></li>
-            <?php if (isset($_SESSION['user'])): ?>
-                <li><a href="/gallery">Gallery</a></li>
-                <li><a href="/logout">Logout</a></li>
-                <li><img src="<?= $userImg ?>" class="user__thumbnail"/> <?php echo $username ?></li>
-            <?php else: ?>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
-            <?php endif; ?>
-        </ul>
-    </nav>
+    <?php if (isset($_SESSION['user'])): ?>
+        <div class="user-profile">
+            <img src="<?= $userImg ?>" class="user__thumbnail" />
+            <p>
+                <?php echo $username ?>
+            </p>
+        </div>
+    <?php endif; ?>
 </header>
-
-<link rel="stylesheet" href="/assets/css/styles.css">

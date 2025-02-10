@@ -9,7 +9,7 @@ $userImg = $user['image_path'] ?? '/uploads/profiles/default.jpg';
     <!-- Logo/Brand section -->
     <a href="/" class="brand">
         <img src="../../../assets/images/brand-logo.png" alt="BetweenUs Logo">
-        <span>BetweenUss</span>
+        <span>BetweenUs</span>
     </a>
 
     <!-- Navigation buttons - only visible when NOT logged in -->

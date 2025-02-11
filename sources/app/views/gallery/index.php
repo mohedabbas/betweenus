@@ -1,62 +1,36 @@
 <?php
 ob_start();
 ?>
-
 <style>
     .gallery__title__header {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-
-    .thumbnail__container {
-        margin: 10px;
-        border: 2px solid lightgray;
-        width: 310px;
-        height: 310px;
-        display: flex;
-        align-items: flex-start;
-        border-radius: 10%;
-        padding: 0.75rem;
-        flex-wrap: wrap;
-    }
-
-    .img__thumbnail {
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 10%;
-    }
-
-    .gallery {
-        margin: 10px;
-        text-align: center;
-        text-decoration: none;
-        color: black;
-    }
 </style>
-
 <main>
 
     <div class="gallery__page__header">
         <div class="gallery__title__header">
             <h1 class="left"><?php echo $title; ?></h1>
-            <a href="/gallery/create" class="button button-cta">Create Gallery</a>
+            <a href="/gallery/create" class="button button-cta">New Gallery
+                <img src="../../../assets/images/icons/plus.png" alt="">
+            </a>
         </div>
     </div>
-    <div class="gallery__container">
+    <div class="grid">
         <?php
         foreach ($galleries as $gallery) {
             $galleryPhotos = json_decode($gallery->galleryPhotos);
             ?>
             <a href="/gallery/<?php echo $gallery->gallery_id; ?>" class="gallery">
-                <div class="thumbnail__container">
+                <div class="gallery__thumbnail__container">
                     <?php foreach ($galleryPhotos as $photo) { ?>
                         <img src="<?php echo $photo->image_path; ?>" alt="<?php echo $photo->caption; ?>"
-                            title="<?php echo $photo->caption; ?>" class="img__thumbnail">
+                            title="<?php echo $photo->caption; ?>">
                     <?php } ?>
                 </div>
-                <h3><?php echo $gallery->gallery_name; ?></h3>
+                <h3 class="gallery__name"><?php echo $gallery->gallery_name; ?></h3>
             </a>
 
         <?php } ?>

@@ -101,4 +101,16 @@
             </div>
         </div>
     </section>
+    <section>
+        <h2>.gallery</h2>
+        <a href="#" class="gallery">
+            <div class="gallery__thumbnail__container">
+                <img src="../../assets/images/sample_picture.png" alt="">
+                <img src="../../assets/images/sample_picture_2.png" alt="">
+                <img src="../../assets/images/sample_picture.png" alt="">
+                <img src="../../assets/images/sample_picture_2.png" alt="">
+            </div>
+            <h3 class="gallery__name">Gallery name</h3>
+        </a>
+    </section>
 </body>

@@ -13,11 +13,9 @@ $userImg = $user['image_path'] ?? '/uploads/profiles/default.jpg';
     </a>
 
     <?php if (isset($_SESSION['user'])): ?>
-        <div class="user-profile">
+        <a href="/profile" class="user-profile">
             <img src="<?= $userImg ?>" class="user__thumbnail" />
-            <p>
-                <?php echo $username ?>
-            </p>
-        </div>
+            <?php echo $username ?>
+        </a>
     <?php endif; ?>
 </header>

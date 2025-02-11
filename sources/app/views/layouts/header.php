@@ -12,16 +12,10 @@ $userImg = $user['image_path'] ?? '/uploads/profiles/default.jpg';
         <span>BetweenUs</span>
     </a>
 
-    <header class="container">
-        <a href="/" class="brand">
-            <img src="../../../assets/images/brand-logo.png" alt="">
-            BetweenUs
+    <?php if (isset($_SESSION['user'])): ?>
+        <a href="/profile" class="user-profile">
+            <img src="<?= $userImg ?>" class="user__thumbnail" />
+            <?php echo $username ?>
         </a>
-
-        <?php if (isset($_SESSION['user'])): ?>
-            <a href="/profile" class="user-profile">
-                <img src="<?= $userImg ?>" class="user__thumbnail" />
-                <?php echo $username ?>
-            </a>
-        <?php endif; ?>
-    </header>
+    <?php endif; ?>
+</header>

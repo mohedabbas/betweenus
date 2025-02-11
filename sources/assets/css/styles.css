@@ -194,6 +194,7 @@
   }
   .grid [class^=col-] {
     grid-column: 1/-1;
+    border: 1px solid red;
   }
   .grid .col-1 {
     grid-column: span 1;

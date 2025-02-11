@@ -68,4 +68,37 @@
             </a>
         </header>
     </section>
+    <section>
+        <h2>.grid</h2>
+        <div class="grid">
+            <div class="col-1 col-md-2 col-lg-1">
+                <div class="photo-card">
+                    <img src="../../assets/images/sample_picture.png" alt="trip picture">
+                    <button class="photo-card__zoom"></button>
+                    <a href="#" class="photo-card__delete"></a>
+                </div>
+            </div>
+            <div class="col-1 col-md-2 col-lg-1">
+                <div class="photo-card">
+                    <img src="../../assets/images/sample_picture_2.png" alt="trip picture">
+                    <button class="photo-card__zoom"></button>
+                    <a href="#" class="photo-card__delete"></a>
+                </div>
+            </div>
+            <div class="col-1 col-md-2 col-lg-1">
+                <div class="photo-card">
+                    <img src="../../assets/images/sample_picture.png" alt="trip picture">
+                    <button class="photo-card__zoom"></button>
+                    <a href="#" class="photo-card__delete"></a>
+                </div>
+            </div>
+            <div class="col-1 col-md-2 col-lg-1">
+                <div class="photo-card">
+                    <img src="../../assets/images/sample_picture_2.png" alt="trip picture">
+                    <button class="photo-card__zoom"></button>
+                    <a href="#" class="photo-card__delete"></a>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>

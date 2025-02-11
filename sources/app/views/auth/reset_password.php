@@ -1,21 +1,37 @@
 <?php
 ob_start();
 $title = $title ?? 'Réinitialisation';
-
-if (isset($_SESSION['reset_error'])) {
-    echo "<p style='color:red;'>" . $_SESSION['reset_error'] . "</p>";
-    unset($_SESSION['reset_error']);
-}
-if (isset($_SESSION['reset_success'])) {
-    echo "<p style='color:green;'>" . $_SESSION['reset_success'] . "</p>";
-    unset($_SESSION['reset_success']);
-}
 ?>
-<h1>Réinitialiser le mot de passe</h1>
+
+<div class="login-container">
+    <div class="login-card form-group">
+        <!-- En-tête de page -->
+        <h1><?= htmlspecialchars($title) ?></h1>
+
+        <!-- Afficher les messages d'erreur et de réussite dans des blocs de style -->
+        <?php if (isset($_SESSION['reset_error'])): ?>
+            <div class="error-message">
+                <?= htmlspecialchars($_SESSION['reset_error']) ?>
+            </div>
+            <?php unset($_SESSION['reset_error']); ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['reset_success'])): ?>
+            <div class="success-message">
+                <?= htmlspecialchars($_SESSION['reset_success']) ?>
+            </div>
+            <?php unset($_SESSION['reset_success']); ?>
+        <?php endif; ?>
+
+        <!-- Rendre le formulaire de réinitialisation (en supposant que $form est un objet avec la méthode renderForm() -->
+        <?php
+        if (isset($form)) {
+            echo $form->renderForm();
+        }
+        ?>
+    </div>
+</div>
 
 <?php
-if (isset($form)) {
-    echo $form->renderForm();
-}
 $content = ob_get_clean();
 require __DIR__ . '/../layouts/base.php';

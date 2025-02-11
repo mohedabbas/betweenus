@@ -1,0 +1,67 @@
+
+$primary-color: #ff7f50; // Coral color for the button and links
+$background-color: #ffffff;
+$text-color: #333333;
+$placeholder-color: #999999;
+$border-color: #e0e0e0;
+$border-radius : #000000;
+
+@use '../partials/functions' as f;
+
+.btn {
+  padding: f.rem(14);
+  border-radius: f.rem(14);
+  font-size: f.rem(16);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  
+  &-primary {
+    background-color: $primary-color;
+    color: $background-color;
+    
+    &:hover {
+      background-color: darken($primary-color, 10%);
+      transform: translateY(-2px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &-danger {
+    background-color: #ff4d4f;
+    color: $background-color;
+    
+    &:hover {
+      background-color: darken(#ff4d4f, 10%);
+      transform: translateY(-2px);
+
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// Navigation Buttons Specific Styles
+.nav-buttons {
+  display: flex;
+  gap: f.rem(16);
+  
+  .btn {
+    min-width: f.rem(100);
+    
+    // Pour les petits écrans
+    @media (max-width: 768px) {
+      min-width: f.rem(80);
+      padding: f.rem(10);
+      font-size: f.rem(14);
+    }
+  }
+}

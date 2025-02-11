@@ -39,28 +39,44 @@ class AuthController extends Controller
      */
     public function register(): void
     {
+        // Récupérer les erreurs & anciennes données (stockées en session par store())
+        $errors = $_SESSION['register_errors'] ?? [];
+        $old    = $_SESSION['old_data'] ?? [];
+
+        // Nettoyer la session pour éviter que ces données ne persistent
+        unset($_SESSION['register_errors'], $_SESSION['old_data']);
+
+        // Construction du formulaire
         $form = new Form('/register'); // => method=POST
-        $form->addTextField('first_name', 'Prénom', '', [
-            'required' => 'required'
+        $form->addTextField('first_name', 'Prénom', $old['first_name'] ?? '', [
+            'required' => 'required',
+            'class'    => 'form-group'
         ])
-        ->addTextField('last_name', 'Nom', '', [
-            'required' => 'required'
+        ->addTextField('last_name', 'Nom', $old['last_name'] ?? '', [
+            'required' => 'required',
+            'class'    => 'form-group'
         ])
-        ->addTextField('username', 'Nom d’utilisateur', '', [
-            'required' => 'required'
+        ->addTextField('username', 'Nom d’utilisateur', $old['username'] ?? '', [
+            'required' => 'required',
+            'class'    => 'form-group'
         ])
-        ->addTextField('email', 'Email', '', [
-            'required' => 'required'
+        ->addTextField('email', 'Email', $old['email'] ?? '', [
+            'required' => 'required',
+            'class'    => 'form-group'
         ])
         ->addPasswordField('password', 'Mot de passe', [
-            'required' => 'required'
+            'required' => 'required',
+            'class'    => 'form-group'
         ])
-        ->addSubmitButton('Register', ['name' => 'submit']);
+        ->addSubmitButton('Register', ['name' => 'submit', 'class' => 'button']);
 
         $data = [
-            'title' => 'Register',
-            'form'  => $form
+            'title'  => 'Register',
+            'form'   => $form,
+            'errors' => $errors,
+            'old'    => $old
         ];
+
         $this->loadView('auth/register', $data);
     }
 
@@ -69,22 +85,72 @@ class AuthController extends Controller
      */
     public function store(): void
     {
+        // Vérifier la soumission du formulaire
         $isSubmitted = isset($_POST['submit']) || Form::isSubmitted();
         if (!$isSubmitted) {
             header('Location: /register');
             exit;
         }
 
-        // Récupérer les champs
-        $postData = filter_input_array(INPUT_POST, $_POST);
-        unset($postData['submit']);
+        // Tableau pour stocker les erreurs de validation
+        $errors = [];
 
-        // Hacher le mot de passe
-        if (isset($postData['password'])) {
-            $postData['password'] = password_hash($postData['password'], PASSWORD_BCRYPT);
+        // Récupération sécurisée des champs
+        $firstName = trim($_POST['first_name'] ?? '');
+        $lastName  = trim($_POST['last_name'] ?? '');
+        $username  = trim($_POST['username'] ?? '');
+        $email     = trim($_POST['email'] ?? '');
+        $password  = trim($_POST['password'] ?? '');
+
+        // --- VALIDATIONS SIMPLES ---
+
+        // Prénom
+        if (empty($firstName)) {
+            $errors['first_name'] = "Le prénom est obligatoire.";
+        }
+        // Nom
+        if (empty($lastName)) {
+            $errors['last_name'] = "Le nom est obligatoire.";
+        }
+        // Nom d’utilisateur
+        if (empty($username)) {
+            $errors['username'] = "Le nom d’utilisateur est obligatoire.";
+        }
+        // Email
+        if (empty($email)) {
+            $errors['email'] = "L'email est obligatoire.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = "Le format de l'email est invalide.";
         }
 
-        // Générer un code à 6 chiffres
+        // --- VALIDATION DU MOT DE PASSE : 12+ caractères, majuscules, minuscules, chiffres, spéciaux ---
+        $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}$/';
+        if (!preg_match($pattern, $password)) {
+            $errors['password'] = "Le mot de passe doit contenir au moins 12 caractères, 
+                                   dont 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spécial.";
+        }
+
+        // Si des erreurs existent, on les stocke dans la session + on stocke les anciennes valeurs
+        if (!empty($errors)) {
+            $_SESSION['register_errors'] = $errors;
+            $_SESSION['old_data']        = $_POST;
+            header('Location: /register');
+            exit;
+        }
+
+        // === AUCUNE ERREUR => On peut créer l’utilisateur ===
+
+        // On crée un tableau $postData pour correspondre aux colonnes
+        $postData = [
+            'first_name' => $firstName,
+            'last_name'  => $lastName,
+            'username'   => $username,
+            'email'      => $email,
+            // Hachage du mot de passe
+            'password'   => password_hash($password, PASSWORD_BCRYPT),
+        ];
+
+        // Générer un code à 6 chiffres pour la vérification
         $verificationCode = strval(random_int(100000, 999999));
         $postData['verification_code'] = $verificationCode;
         $postData['is_verified']       = 0;
@@ -93,9 +159,10 @@ class AuthController extends Controller
         $authModel = $this->loadModel('AuthModel');
         $authModel->createUser($postData);
 
-        // Envoyer mail de vérification (6 chiffres)
+        // Envoyer un mail de vérification
         $this->sendVerificationEmail($postData['email'], $verificationCode);
 
+        // Message de confirmation + redirection
         $_SESSION['register_info'] = "Un e-mail de vérification (6 chiffres) vous a été envoyé.";
         header('Location: /verify');
         exit;
@@ -148,9 +215,10 @@ class AuthController extends Controller
         $form = new Form('/verify');
         $form->addTextField('verification_code', 'Code reçu (6 chiffres)', '', [
             'required'    => 'required',
-            'placeholder' => 'Ex: 123456'
+            'placeholder' => 'Ex: 123456',
+            'class'       => 'form-group'
         ])
-        ->addSubmitButton('Valider', ['name' => 'submit']);
+        ->addSubmitButton('Valider', ['name' => 'submit','class' => 'button ']);
 
         $data = [
             'title' => 'Vérification',
@@ -205,10 +273,11 @@ class AuthController extends Controller
     {
         $form = new Form('/forgot-password');
         $form->addTextField('email', 'Votre email', '', [
-            'required' => 'required',
-            'placeholder' => 'Entrez votre email'
+            'required'    => 'required',
+            'placeholder' => 'Entrez votre email',
+            'class'       => 'form-group'
         ])
-        ->addSubmitButton('Envoyer', ['name' => 'submit']);
+        ->addSubmitButton('Envoyer', ['name' => 'submit', 'class' => 'button']);
 
         $data = [
             'title' => 'Mot de passe oublié',
@@ -239,7 +308,6 @@ class AuthController extends Controller
         $user = $authModel->findUserByEmail($email);
 
         if (!$user) {
-            // L’email n’existe pas
             $_SESSION['forgot_error'] = "Cet email n’existe pas dans nos registres.";
             header('Location: /forgot-password');
             exit;
@@ -308,13 +376,13 @@ class AuthController extends Controller
         // Récup token en GET
         $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);
 
-        // Créer le form
         $form = new Form('/reset-password'); // => POST
         $form->addPasswordField('new_password', 'Nouveau mot de passe', [
-            'required' => 'required'
+            'required' => 'required',
+            'class'    => 'form-group '
         ])
         ->addHiddenField('token', $token) // Champ caché = token
-        ->addSubmitButton('Valider', ['name' => 'submit']);
+        ->addSubmitButton('Valider', ['name' => 'submit','class' => 'button ']);
 
         $data = [
             'title' => 'Réinitialisation',
@@ -367,24 +435,32 @@ class AuthController extends Controller
      */
     public function login(): void
     {
-        $form = new Form('/login');
-        $form->addTextField('identifier', 'Nom d’utilisateur / Email', '', [
+        $form = new Form('/login', 'POST');
+
+        $form->addTextField('identifier', 'Email', '', [
             'required'    => 'required',
-            'placeholder' => 'Entrez votre email ou username'
+            'placeholder' => 'Enter your email',
+            'type'        => 'email',
+            'class'       => 'form-group'
         ])
-        ->addPasswordField('password', 'Mot de passe', [
+        ->addPasswordField('password', 'Password', [
             'required'    => 'required',
-            'placeholder' => 'Entrez votre mot de passe'
+            'placeholder' => 'Enter your password',
+            'class'       => 'form-group'
         ])
-        ->addSubmitButton('Connexion', ['name' => 'submit']);
+        ->addSubmitButton('Connexion', ['name' => 'submit','class' => 'login-button' ]);
 
         $data = [
-            'title' => 'Connexion',
+            'title' => 'Login',
             'form'  => $form
         ];
+
         $this->loadView('auth/login', $data);
     }
 
+    /**
+     * Traitement du login (POST "/login")
+     */
     public function attemptLogin(): void
     {
         $isSubmitted = isset($_POST['submit']) || Form::isSubmitted();

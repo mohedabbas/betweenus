@@ -4,7 +4,7 @@
 .gallery {
     @include m.resetA;
     @include m.flexbox($direction: column, $align: center, $gap: f.rem(17));
-    width: fit-content;
+    width: auto;
 
     &__name {
         margin: 0;
@@ -14,17 +14,18 @@
 
     &__thumbnail__container {
         box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.15);
-        margin: f.rem(10);
-        width: f.rem(310);
-        height: f.rem(310);
+        width: 100%;
+
+        aspect-ratio: 1/1;
         border-radius: f.rem(10);
         padding: f.rem(10);
 
         @include m.flexbox($align: flex-start, $wrap: wrap, $gap: f.rem(10));
 
         img {
-            width: f.rem(150);
-            height: f.rem(150);
+            width: calc(50% - f.rem(5));
+            height: calc(50% - f.rem(5));
+            aspect-ratio: 1/1;
             object-fit: cover;
             border-radius: f.rem(10);
         }

@@ -4,9 +4,9 @@ $title = $title;
 ?>
 <main>
 	<section class="container hero-section">
-		<h1>All your memories, <br>One place</h1>
-		<p>Collect and share trip photos with your friends -- effortlessly</p>
-		<a class="button" href="/login">Start uploading</a>
+		<h1>Tous vos souvenirs, <br> un seul endroit <br></h1>
+		<p>Partagez facilement vos photos de voyage entre amis.</p>
+		<a class="button" href="/login">Partagez des photos</a>
 	</section>
 </main>
 

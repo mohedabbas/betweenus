@@ -22,7 +22,7 @@ class GalleryController extends Controller
         $galleries = $galleryModel->getUserGalleriesAndContent($user['id']);
 
         $data = [
-            'title' => 'My Galleries',
+            'title' => 'Mes Galleries',
             'galleries' => $galleries
         ];
         $this->loadView('gallery/index', $data);
@@ -58,7 +58,7 @@ class GalleryController extends Controller
 
 
         $data = [
-            'title' => 'Create Gallery',
+            'title' => 'Créer une Galerie',
             'form' => $galleryForm
         ];
 
@@ -157,7 +157,7 @@ class GalleryController extends Controller
             ->addSubmitButton('Upload Photo', ['class' => 'btn btn-primary']);
 
         $data = [
-            'title' => 'Upload Photo',
+            'title' => 'Importer une photo',
             'form' => $photoForm
         ];
         // return $photoForm;

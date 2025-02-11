@@ -5,20 +5,20 @@
 @layer components {
 	.grid {
 		display: grid;
-		gap: 1rem;
 		grid-template-columns: repeat(4, 1fr); // 4 colonnes ayant la même largeur
+		gap: f.rem(20);
 
 		// @media screen and (min-width: map.get(v.$breakpoints, "lg")) {
 		// 	background-color: var(--blue);
 		// }
 
-		@media screen and (min-width: f.screen("lg")) {
-			background-color: var(--blue);
-		}
+		// @media screen and (min-width: f.screen("lg")) {
+		// 	background-color: var(--blue);
+		// }
 
 		[class^="col-"] {
 			grid-column: 1 / -1;
-			border: 1px solid red;
+			// border: 1px solid red;
 		}
 		@for $i from 1 through 4 {
 			.col-#{$i} {

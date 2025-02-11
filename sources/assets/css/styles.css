@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 @layer base {
-  * {
-    margin: 0;
-    padding: 0;
-  }
   :root {
     --grey-color: #959a9e;
     --light-grey-color: #f2f2f2;
@@ -54,7 +50,8 @@
     font-size: 1rem;
   }
 }
-@layer component {
+@layer base, components, utilities;
+@layer components {
   .button {
     color: inherit;
     text-decoration: none;
@@ -88,7 +85,7 @@
     border-radius: 0.1875rem;
   }
 }
-@layer component {
+@layer components {
   .photo-card {
     position: relative;
     border-radius: 1.25rem;
@@ -100,11 +97,12 @@
     width: 100%;
   }
   .photo-card:hover::after,
-  .photo-card:hover button {
+  .photo-card:hover button,
+  .photo-card:hover a {
     opacity: 1;
     transition: 300ms ease-out;
   }
-  .photo-card button {
+  .photo-card__delete, .photo-card__zoom {
     background-color: transparent;
     border: none;
     font-family: inherit;
@@ -141,8 +139,10 @@
     background-color: rgba(0, 0, 0, 0.6);
   }
 }
-@layer component {
+@layer components {
   .user-profile {
+    color: inherit;
+    text-decoration: none;
     display: flex;
     align-items: center;
     gap: 0.8125rem;
@@ -156,7 +156,7 @@
     border-radius: 62.5rem;
   }
 }
-@layer component {
+@layer components {
   header {
     display: flex;
     justify-content: space-between;
@@ -166,7 +166,7 @@
     width: auto;
   }
 }
-@layer component {
+@layer components {
   .brand {
     display: flex;
     align-items: center;
@@ -179,6 +179,103 @@
   .brand img {
     width: 1.5rem;
     height: 1.5rem;
+  }
+}
+@layer components {
+  .grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media screen and (min-width: 992px) {
+    .grid {
+      background-color: var(--blue);
+    }
+  }
+  .grid [class^=col-] {
+    grid-column: 1/-1;
+  }
+  .grid .col-1 {
+    grid-column: span 1;
+  }
+  .grid .col-2 {
+    grid-column: span 2;
+  }
+  .grid .col-3 {
+    grid-column: span 3;
+  }
+  .grid .col-4 {
+    grid-column: span 4;
+  }
+  @media screen and (min-width: 576px) {
+    .grid .col-sm-1 {
+      grid-column: span 1;
+    }
+    .grid .col-sm-2 {
+      grid-column: span 2;
+    }
+    .grid .col-sm-3 {
+      grid-column: span 3;
+    }
+    .grid .col-sm-4 {
+      grid-column: span 4;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .grid .col-md-1 {
+      grid-column: span 1;
+    }
+    .grid .col-md-2 {
+      grid-column: span 2;
+    }
+    .grid .col-md-3 {
+      grid-column: span 3;
+    }
+    .grid .col-md-4 {
+      grid-column: span 4;
+    }
+  }
+  @media screen and (min-width: 992px) {
+    .grid .col-lg-1 {
+      grid-column: span 1;
+    }
+    .grid .col-lg-2 {
+      grid-column: span 2;
+    }
+    .grid .col-lg-3 {
+      grid-column: span 3;
+    }
+    .grid .col-lg-4 {
+      grid-column: span 4;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .grid .col-xl-1 {
+      grid-column: span 1;
+    }
+    .grid .col-xl-2 {
+      grid-column: span 2;
+    }
+    .grid .col-xl-3 {
+      grid-column: span 3;
+    }
+    .grid .col-xl-4 {
+      grid-column: span 4;
+    }
+  }
+  @media screen and (min-width: 1400px) {
+    .grid .col-xxl-1 {
+      grid-column: span 1;
+    }
+    .grid .col-xxl-2 {
+      grid-column: span 2;
+    }
+    .grid .col-xxl-3 {
+      grid-column: span 3;
+    }
+    .grid .col-xxl-4 {
+      grid-column: span 4;
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
 
-@layer component {
+@layer components {
     header {
         @include m.flexbox($justify: space-between, $align: center);
         margin-top: f.rem(45);

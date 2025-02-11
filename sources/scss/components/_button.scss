@@ -1,7 +1,7 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
 
-@layer component {
+@layer components {
     .button {
         @include m.resetA;
         @include m.resetButton;

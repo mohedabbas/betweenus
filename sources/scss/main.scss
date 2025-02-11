@@ -1,5 +1,6 @@
 // Partials //
 @use "partials/globals";
+@use "partials/layers";
 
 // Components;
 @use "components/button";
@@ -7,3 +8,4 @@
 @use "components/user-profile";
 @use "components/header";
 @use "components/brand";
+@use "components/grid";

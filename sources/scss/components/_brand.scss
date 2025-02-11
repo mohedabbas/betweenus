@@ -1,8 +1,9 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
-@layer component {
+@layer components {
     .brand {
         @include m.flexbox($gap: f.rem(6), $align: center);
+
         @include m.resetA;
         font-size: f.rem(24);
         font-weight: 500;

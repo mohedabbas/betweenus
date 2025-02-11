@@ -1,7 +1,7 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
 
-@layer component {
+@layer components {
     .photo-card {
         position: relative;
         border-radius: f.rem(20);
@@ -14,13 +14,15 @@
         }
         &:hover {
             &::after,
-            button {
+            button,
+            a {
                 opacity: 1;
                 transition: 300ms ease-out;
             }
         }
 
-        button {
+        &__delete,
+        &__zoom {
             @include m.resetButton;
             width: f.rem(24);
             height: f.rem(24);

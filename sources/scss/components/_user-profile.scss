@@ -1,7 +1,8 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
-@layer component {
+@layer components {
     .user-profile {
+        @include m.resetA;
         @include m.flexbox($align: center, $gap: f.rem(13));
 
         font-size: f.rem(20);

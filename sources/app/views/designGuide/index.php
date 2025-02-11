@@ -40,7 +40,7 @@
         <div class="photo-card">
             <img src="../../assets/images/sample_picture.png" alt="trip picture">
             <button class="photo-card__zoom"></button>
-            <button class="photo-card__delete"></button>
+            <a href="#" class="photo-card__delete"></a>
         </div>
     </section>
     <section>
@@ -52,15 +52,20 @@
     </section>
     <section>
         <h2> Header</h2>
+        <ul>
+            <li>Just create a header component</li>
+            <li>For the brand logo : create a link with class .brand</li>
+            <li>For the Profile : create a link with class .user-profile</li>
+        </ul>
         <header>
-            <div class="brand">
+            <a href="/" class="brand">
                 <img src="../../assets/images/brand-logo.png" alt="brand logo">
-                <h1>BetweenUs</h1>
-            </div>
-            <div class="user-profile">
+                BetweenUs
+            </a>
+            <a href="#" class="user-profile">
                 <img src="../../assets/images/sample_avatar.png" alt="user profile picture">
-                <p class="user-profile__name">John Doe</p>
-            </div>
+                John Doe
+            </a>
         </header>
     </section>
 </body>

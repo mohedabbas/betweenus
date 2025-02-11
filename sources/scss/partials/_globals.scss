@@ -4,11 +4,6 @@
 @use "mixins" as m;
 
 @layer base {
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
     :root {
         @each $name, $color in v.$colors {
             --#{$name}-color: #{$color};

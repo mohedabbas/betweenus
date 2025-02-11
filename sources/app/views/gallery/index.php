@@ -9,7 +9,6 @@ ob_start();
     }
 </style>
 <main>
-
     <div class="gallery__page__header">
         <div class="gallery__title__header">
             <h1 class="left"><?php echo $title; ?></h1>

@@ -58,6 +58,14 @@ class AuthModel extends Model
         return $this->fetch($stmt);
     }
 
+    public function findUserById(int $id)
+    {
+        $sql = "SELECT * FROM {$this->table} WHERE id = :id LIMIT 1";
+        $stmt = $this->prepare($sql);
+        $this->execute($stmt, ['id' => $id]);
+        return $this->fetch($stmt);
+    }
+
     public function setResetToken(int $userId, string $token): void
     {
         $sql = "UPDATE {$this->table}

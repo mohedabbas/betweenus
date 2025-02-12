@@ -6,10 +6,11 @@ use App\Core\Controller;
 use App\Core\Form;
 use App\Middlewares\AuthMiddleware;
 use App\Utility\FlashMessage;
+use App\Utility\Mailer;
 
-
-class GalleryUserController extends Controller{
-    public function addUsersInGalleryForm(int $galleryId): void
+class GalleryUserController extends Controller
+{
+    public function addUsersInGallery(int $galleryId): void
     {
         AuthMiddleware::requireLogin();
 
@@ -26,59 +27,80 @@ class GalleryUserController extends Controller{
                     'class' => 'form-control'
                 ]
             )
-            ->addHiddenField
-            (
+            ->addHiddenField(
                 'csrf_token',
                 AuthMiddleware::generateCsrfToken()
             )->addSubmitButton(
                 'Search User',
-                ['class' => 'button button-cta']
+                [
+                    'class' => 'button button-cta',
+                    'name' => 'search_user'
+                ]
             );
+
+        $users = $this->getUsersToAddInGallery($galleryId);
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search_user'])) {
+            $email = $_POST['email'];
+
+
+
+            $authModel = $this->loadModel('AuthModel');
+
+            $getUser = $authModel->findUserByUsernameOrEmail($email);
+
+            if (!$getUser) {
+                FlashMessage::add('No user found with the given mail', 'error');
+                $this->redirect("/gallery/addusers/$galleryId");
+            }
+            unset($users);
+            $users[] = $getUser;
+        }
+
         $data = [
             'title' => 'Add Users',
             'form' => $addUsersForm,
-            'galleryId' => $galleryId
+            'galleryId' => $galleryId,
+            'users'  => $users
         ];
         $this->loadView('gallery/addUsers', $data);
     }
 
-
-    public function addUsersInGallery(int $galleryId): void
+    public function getUsersToAddInGallery(int $galleryId): array
     {
         AuthMiddleware::requireLogin();
 
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect('/gallery/addusers/' . $galleryId);
-        }
-
-        if (!AuthMiddleware::verifyCsrfToken($_POST['csrf_token'])) {
-            $this->redirect('/gallery/addusers/' . $galleryId);
-        }
-
-        $galleryModel = $this->loadModel('GalleryModel');
         $authModel = $this->loadModel('AuthModel');
+        $galleryModel = $this->loadModel('GalleryModel');
         $user = AuthMiddleware::getSessionUser();
-
         $roles = $this->getConnectedUserRole($user['id'], $galleryId);
 
-
-        if (!$roles || $roles->can_upload !== '1') {
+        if (!$roles || $roles->is_owner !== '1') {
             $this->redirect('/gallery/' . $galleryId);
         }
 
-        $email = $_POST['email'];
-        $user = $authModel->findUserByUsernameOrEmail($email);
+        $users = $galleryModel->getUsersNotInGallery($galleryId);
 
-        if (!$user) {
-            FlashMessage::add('User not found', 'error');
-            $this->redirect("/gallery/addusers/{$galleryId}");
+        return $users;
+    }
+
+    public function addUserAndSendMail($userid)
+    {
+        $galleryId = $_GET['galleryid'];
+        $galleryModel = $this->loadModel('GalleryModel');
+        $lastID = $galleryModel->addUsersinGalleryById($userid, $galleryId);
+
+
+        if ($lastID) {    // If the user is added successfully
+            $mailer = new Mailer();
+            $user = $this->loadModel('AuthModel')->findUserById($userid);
+            $mailer->sendMail($user->email, 'Invitation to join gallery', 'You have been invited to join a gallery. Please login to your account to accept the invitation.');
+            FlashMessage::add('User added successfully', 'success');
+            $this->redirect("/gallery/addusers/$galleryId");
+        } else {
+            FlashMessage::add('Error adding user', 'error');
+            $this->redirect("/gallery/addusers/$galleryId");
         }
-
-        var_dump(
-            $user
-        );
-        // $galleryModel->addUserToGallery($galleryId, $user->id);
-        // $this->redirect('/gallery/' . $galleryId);
     }
 
     private function getConnectedUserRole(int $userId, int $galleryId): mixed
@@ -86,31 +108,5 @@ class GalleryUserController extends Controller{
         $galleryModel = $this->loadModel('GalleryModel');
         $role = $galleryModel->getConnectedUserRole($userId, $galleryId);
         return $role;
-    }
-
-
-    public function getUsersToAddInGallery(int $galleryId): void
-    {
-        AuthMiddleware::requireLogin();
-
-        $authModel = $this->loadModel('AuthModel');
-        $galleryModel = $this->loadModel('GalleryModel');
-        $user = AuthMiddleware::getSessionUser();
-
-        $roles = $this->getConnectedUserRole($user['id'], $galleryId);
-
-        if (!$roles || $roles->can_upload !== '1') {
-            $this->redirect('/gallery/' . $galleryId);
-        }
-
-        $users = $galleryModel->getUsersNotInGallery($galleryId);
-        $data = [
-            'title' => 'Add Users',
-            'users' => $users,
-            'galleryId' => $galleryId
-        ];
-
-        var_dump($users);
-        // $this->loadView('gallery/addUsers', $data);
     }
 }

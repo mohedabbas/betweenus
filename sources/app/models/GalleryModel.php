@@ -206,7 +206,7 @@ class GalleryModel extends Model
 
     public function getUsersNotInGallery(int $galleryId)
     {
-        $sql = "SELECT u.id, u.first_name,u.last_name, u.profile_image FROM users u WHERE id NOT IN (SELECT user_id FROM gallery_users WHERE gallery_id = :gallery_id)";
+        $sql = "SELECT u.id, u.first_name,u.last_name, u.profile_image FROM users u WHERE id NOT IN (SELECT user_id FROM gallery_users WHERE gallery_id = :gallery_id) ORDER BY u.created_at ASC LIMIT 5";
         $statement = $this->prepare($sql);
         $this->execute($statement, ['gallery_id' => $galleryId]);
         return $this->fetchAll($statement);
@@ -220,4 +220,13 @@ class GalleryModel extends Model
         return $this->fetch($statement);
     }
 
+
+    public function addUsersinGalleryById(int $userId, $galleryId){
+        $sql = "
+            INSERT INTO gallery_users (gallery_id, user_id, can_upload, can_view, is_owner) VALUES (:gallery_id, :user_id, 1, 1, 0)
+        ";
+        $statement = $this->prepare($sql);
+        $this->execute($statement, ['gallery_id' => $galleryId, 'user_id' => $userId]);
+        return $this->pdo->lastInsertId();
+    }
 }

@@ -26,7 +26,7 @@ $photoCount = count($galleryPhotos);
     </div>
 
     
-    <?php if ($photoCount == 0 || ($photoCount == 1 && empty($galleryPhotos[0]->id)) ) { ?>
+    <?php if ($photoCount == 0) { ?>
         <div class="gallery__empty">
             <p>There are no photos in this gallery yet.</p>
         </div>

@@ -10,6 +10,11 @@ use App\Utility\Mailer;
 
 class GalleryUserController extends Controller
 {
+
+    /**
+     * Show the form to add users in gallery and the users that can be added
+     * @param int $galleryId
+     */
     public function addUsersInGallery(int $galleryId): void
     {
         AuthMiddleware::requireLogin();
@@ -58,36 +63,21 @@ class GalleryUserController extends Controller
             'title' => 'Add Users',
             'form' => $addUsersForm,
             'galleryId' => $galleryId,
-            'users'  => $users
+            'users' => $users
         ];
         $this->loadView('gallery/addUsers', $data);
     }
 
-    public function getUsersToAddInGallery(int $galleryId): array
-    {
-        AuthMiddleware::requireLogin();
 
-        $authModel = $this->loadModel('AuthModel');
-        $galleryModel = $this->loadModel('GalleryModel');
-        $user = AuthMiddleware::getSessionUser();
-        $roles = $this->getConnectedUserRole($user['id'], $galleryId);
-
-        if (!$roles || $roles->is_owner !== '1') {
-            FlashMessage::add('Dont have necessary permissions.','error');
-            $this->redirect('/gallery/' . $galleryId);
-        }
-
-        $users = $galleryModel->getUsersNotInGallery($galleryId);
-
-        return $users;
-    }
-
+    /**
+     * Add a user in the gallery and send an email to the user
+     * @param int $userid
+     */
     public function addUserAndSendMail($userid)
     {
         $galleryId = $_GET['galleryid'];
         $galleryModel = $this->loadModel('GalleryModel');
         $lastID = $galleryModel->addUsersinGalleryById($userid, $galleryId);
-
 
         if ($lastID) {    // If the user is added successfully
             $mailer = new Mailer();
@@ -101,6 +91,33 @@ class GalleryUserController extends Controller
         }
     }
 
+    /**
+     * Add a user in the gallery and send an email to the user
+     * @param int $userid
+     */
+    private function getUsersToAddInGallery(int $galleryId): array
+    {
+        AuthMiddleware::requireLogin();
+
+        $galleryModel = $this->loadModel('GalleryModel');
+        $user = AuthMiddleware::getSessionUser();
+        $roles = $this->getConnectedUserRole($user['id'], $galleryId);
+
+        if (!$roles || $roles->is_owner !== '1') {
+            FlashMessage::add('Dont have necessary permissions.', 'error');
+            $this->redirect('/gallery/' . $galleryId);
+        }
+
+        $users = $galleryModel->getUsersNotInGallery($galleryId);
+
+        return $users;
+    }
+
+    /**
+     * Get the connected user role by the user id and the gallery id to check if it can add new users
+     * @param int $userId
+     * @param int $galleryId
+     */
     private function getConnectedUserRole(int $userId, int $galleryId): mixed
     {
         $galleryModel = $this->loadModel('GalleryModel');

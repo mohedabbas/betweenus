@@ -19,17 +19,19 @@ ob_start();
             </div>
         </div>
         <div class="grid">
-            <?php
-            foreach ($galleries as $gallery) {
+            <?php foreach ($galleries as $gallery) {
                 $galleryPhotos = json_decode($gallery->galleryPhotos);
                 ?>
                 <div class="col-4 col-md-2 col-lg-1">
                     <a href="/gallery/<?php echo $gallery->gallery_id; ?>" class="gallery">
                         <div class="gallery__thumbnail__container">
-                            <?php foreach ($galleryPhotos as $photo) { ?>
+                        <?php if ((count($galleryPhotos) == 0 || (count($galleryPhotos) == 1 && empty($galleryPhotos[0]->id)))) {
+                                $galleryPhotos = [];
+                                echo '<p>Aucune photo</p>';
+                                } else { foreach ($galleryPhotos as $photo) { ?>
                                 <img src="<?php echo $photo->image_path; ?>" alt="<?php echo $photo->caption; ?>"
                                     title="<?php echo $photo->caption; ?>">
-                            <?php } ?>
+                            <?php }} ?>
                         </div>
                         <h3 class="gallery__name"><?php echo $gallery->gallery_name; ?></h3>
                     </a>

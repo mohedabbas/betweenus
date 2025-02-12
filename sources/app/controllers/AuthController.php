@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Core\Form;
+use App\Middlewares\AuthMiddleware;
 use App\Models\AuthModel;
 
 // Inclusion manuelle de PHPMailer
@@ -435,6 +436,10 @@ class AuthController extends Controller
      */
     public function login(): void
     {
+        if (AuthMiddleware::isLoggedIn()) {
+            $this->redirect('/gallery');
+        }
+        
         $form = new Form('/login', 'POST');
 
         $form->addTextField('identifier', 'Email', '', [

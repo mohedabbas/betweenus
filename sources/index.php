@@ -96,6 +96,4 @@ $router->get('/profile', ['ProfileController', 'index']);
 $router->get('/designguide', ['DesignGuideController', 'index']);
 
 
-
-
 $router->dispatch();

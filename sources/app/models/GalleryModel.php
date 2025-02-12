@@ -21,6 +21,7 @@ class GalleryModel extends Model
      * Get all the galleries of a user with the user id
      * @param int $userid
      * @return array
+     * @deprecated message="This method is deprecated, use getUserGalleriesAndContent instead"
      */
 
     public function getGalleries(int $userid)
@@ -39,7 +40,7 @@ class GalleryModel extends Model
 
 
     /**
-     * Get a gallery by the id and the user id
+     * Get a gallery by the id and the user id and its photos
      * @param int $id
      * @param int $userid
      * @return array
@@ -147,7 +148,15 @@ class GalleryModel extends Model
         return $galleryId;
     }
 
-    public function deleteGalleryPhoto(int $photoId, int $userId)
+
+    /**
+     * Delete a gallery by the id and the user id
+     * @param int $id
+     * @param int $userid
+     * @return bool|int
+     */
+
+    public function deleteGalleryPhoto(int $photoId, int $userId): bool|int
     {
         $sql = "DELETE FROM photos WHERE id = :photo_id AND user_id = :user_id";
         $statement = $this->prepare($sql);
@@ -161,7 +170,12 @@ class GalleryModel extends Model
     }
 
 
-    public function getPhoto(int $photoId, int $userId)
+    /**
+     * Get a photo by the photo id.
+     * @param int $photoId
+     * @return mixed
+     */
+    public function getPhoto(int $photoId): mixed
     {
         $sql = "SELECT * FROM photos WHERE id = :photo_id";
         $statement = $this->prepare($sql);
@@ -172,7 +186,11 @@ class GalleryModel extends Model
         return $this->fetch($statement);
     }
 
-
+    /**
+     * Add a photo info in the database with the gallery id, user id, image path, caption and is public.
+     * @param array $data
+     * @return bool|string
+     */
     public function createPhoto(array $data): int
     {
         $sql = "INSERT INTO photos (gallery_id, user_id, image_path, caption, is_public) VALUES (:gallery_id, :user_id, :image_path, :caption, :is_public)";
@@ -189,7 +207,10 @@ class GalleryModel extends Model
     }
 
 
-
+    /**
+     * Get the gallery users by the gallery id
+     * @param int $galleryId
+     */
     public function getGalleryUsers(int $galleryId)
     {
         $sql = " SELECT *
@@ -202,7 +223,10 @@ class GalleryModel extends Model
         return $this->fetchAll($statement);
     }
 
-
+    /**
+     * Get the users not in the gallery by the gallery id
+     * @param int $galleryId
+     */
     public function getUsersNotInGallery(int $galleryId)
     {
         $sql = "SELECT u.id, u.first_name,u.last_name, u.profile_image FROM users u WHERE id NOT IN (SELECT user_id FROM gallery_users WHERE gallery_id = :gallery_id) ORDER BY u.created_at ASC LIMIT 5";
@@ -211,6 +235,11 @@ class GalleryModel extends Model
         return $this->fetchAll($statement);
     }
 
+    /**
+     * Get the connected user role by the user id and the gallery id
+     * @param int $userId
+     * @param int $galleryId
+     */
     public function getConnectedUserRole(int $userId, int $galleryId)
     {
         $sql = "SELECT * FROM gallery_users WHERE user_id = :user_id AND gallery_id = :gallery_id";
@@ -219,8 +248,13 @@ class GalleryModel extends Model
         return $this->fetch($statement);
     }
 
-
-    public function addUsersinGalleryById(int $userId, $galleryId){
+    /**
+     * Add a user in the gallery by the user id and the gallery id
+     * @param int $userId
+     * @param mixed $galleryId
+     * @return bool|string
+     */
+    public function addUsersinGalleryById(int $userId, $galleryId):bool|string{
         $sql = "
             INSERT INTO gallery_users (gallery_id, user_id, can_upload, can_view, is_owner) VALUES (:gallery_id, :user_id, 1, 1, 0)
         ";
@@ -228,4 +262,5 @@ class GalleryModel extends Model
         $this->execute($statement, ['gallery_id' => $galleryId, 'user_id' => $userId]);
         return $this->pdo->lastInsertId();
     }
+    
 }

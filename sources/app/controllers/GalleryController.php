@@ -123,6 +123,10 @@ class GalleryController extends Controller
         // Get the gallery photos
         $galleryPhotos = json_decode($gallery->galleryPhotos);
 
+        if ((count($galleryPhotos) == 0 || (count($galleryPhotos) == 1 && empty($galleryPhotos[0]->id)) )) {
+            $galleryPhotos = [];
+        }
+
         // Get the gallery users
         $galleryUsers = $this->getGalleryUsers($id);
         $data = [

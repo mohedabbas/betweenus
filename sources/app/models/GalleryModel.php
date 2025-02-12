@@ -121,8 +121,6 @@ class GalleryModel extends Model
         return $this->fetchAll($statement);
     }
 
-
-
     /**
      * Create a new gallery and insert it into the database with the user id.
      * @param array $data
@@ -158,16 +156,17 @@ class GalleryModel extends Model
             'user_id' => $userId
         ];
         $this->execute($statement, $params);
+        // Check if the photo was deleted
+        return $statement->rowCount() > 0;
     }
 
 
     public function getPhoto(int $photoId, int $userId)
     {
-        $sql = "SELECT * FROM photos WHERE id = :photo_id AND user_id = :user_id";
+        $sql = "SELECT * FROM photos WHERE id = :photo_id";
         $statement = $this->prepare($sql);
         $params = [
-            'photo_id' => $photoId,
-            'user_id' => $userId
+            'photo_id' => $photoId
         ];
         $this->execute($statement, $params);
         return $this->fetch($statement);

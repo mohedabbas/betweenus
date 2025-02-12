@@ -1,5 +1,7 @@
 <?php
 ob_start();
+
+$photoCount = count($galleryPhotos);
 // <?php echo __DIR__."/uploads/profiles/default.jpg";
 ?>
 <main>
@@ -22,6 +24,14 @@ ob_start();
             <a href="/gallery/addusers/<?php echo $galleryId; ?>" class="button button-cta">Add users+</a>
         </div>
     </div>
+
+    
+    <?php if ($photoCount == 0 || ($photoCount == 1 && empty($galleryPhotos[0]->id)) ) { ?>
+        <div class="gallery__empty">
+            <p>There are no photos in this gallery yet.</p>
+        </div>
+    <?php } ?>
+
     <div class="gallery__container">
         <?php foreach ($galleryPhotos as $photo) { ?>
             <div class="photo-card">

@@ -211,9 +211,20 @@ class GalleryController extends Controller
         $user = $_SESSION['user'];
         $photo = $galleryModel->getPhoto($photoId, $user['id']);
 
-        $galleryModel->deleteGalleryPhoto($photoId, $user['id']);
-        FileManager::deleteGalleryPhoto($photo->image_path);
+        if (!$photo) {
+            FlashMessage::add('Photo not found.', 'error');
+            $this->redirect('/gallery');
+        }
 
+        
+        $isPhotoDeleted = $galleryModel->deleteGalleryPhoto($photoId, $user['id']);
+        if (!$isPhotoDeleted) {
+            FlashMessage::add('Failed to delete photo.', 'error');
+            $this->redirect('/gallery/' . $photo->gallery_id);
+        }
+
+        FileManager::deleteGalleryPhoto($photo->image_path);
+        FlashMessage::add('Photo deleted successfully.', 'success');
         $this->redirect('/gallery/' . $photo->gallery_id);
     }
 

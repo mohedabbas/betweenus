@@ -42,9 +42,6 @@ class GalleryUserController extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search_user'])) {
             $email = $_POST['email'];
-
-
-
             $authModel = $this->loadModel('AuthModel');
 
             $getUser = $authModel->findUserByUsernameOrEmail($email);
@@ -76,6 +73,7 @@ class GalleryUserController extends Controller
         $roles = $this->getConnectedUserRole($user['id'], $galleryId);
 
         if (!$roles || $roles->is_owner !== '1') {
+            FlashMessage::add('Dont have necessary permissions.','error');
             $this->redirect('/gallery/' . $galleryId);
         }
 

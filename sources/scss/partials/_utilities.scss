@@ -1,0 +1,24 @@
+// margin, padding, border-radius
+// .m-1, .m-2..., .m-6
+@use "variables" as v;
+@use "functions" as f;
+
+@layer utilities {
+    $increment: f.rem(10);
+    $directions: (
+        t: top,
+        b: bottom,
+        l: left,
+        r: right
+    );
+    @for $i from 0 through 4 {
+        .m-#{$i} {
+            margin: $i * $increment;
+        }
+        @each $name, $value in $directions {
+            .m#{$name}-#{$i} {
+                margin-#{$value}: $i * $increment;
+            }
+        }
+    }
+}

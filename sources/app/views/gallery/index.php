@@ -10,28 +10,30 @@ ob_start();
 </style>
 <main>
     <div class="container">
-        <div class="gallery__page__header">
-            <div class="gallery__title__header">
-                <h1 class="left"><?php echo $title; ?></h1>
-                <a href="/gallery/create" class="button button-cta">Nouvelle Gallerie
-                    <img src="../../../assets/images/icons/plus.png" alt="">
-                </a>
-            </div>
+
+        <div class="flex flex--justify-between flex--wrap mb-3">
+            <h1 class="m-0"><?php echo $title; ?></h1>
+            <a href="/gallery/create" class="button button-cta">
+                <img src="../../../assets/images/icons/plus.png" alt="plus icon"> Nouvelle Gallerie
+            </a>
         </div>
+
         <div class="grid">
             <?php foreach ($galleries as $gallery) {
                 $galleryPhotos = json_decode($gallery->galleryPhotos);
                 ?>
-                <div class="col-4 col-md-2 col-lg-1">
+                <div class="col-12 col-sm-6 col-md-3">
                     <a href="/gallery/<?php echo $gallery->gallery_id; ?>" class="gallery">
                         <div class="gallery__thumbnail__container">
-                        <?php if ((count($galleryPhotos) == 0 || (count($galleryPhotos) == 1 && empty($galleryPhotos[0]->id)))) {
+                            <?php if ((count($galleryPhotos) == 0 || (count($galleryPhotos) == 1 && empty($galleryPhotos[0]->id)))) {
                                 $galleryPhotos = [];
-                                echo '<p>Aucune photo</p>';
-                                } else { foreach ($galleryPhotos as $photo) { ?>
-                                <img src="<?php echo $photo->image_path; ?>" alt="<?php echo $photo->caption; ?>"
-                                    title="<?php echo $photo->caption; ?>">
-                            <?php }} ?>
+                                echo '<p class="m-auto">Aucune photo</p>';
+                            } else {
+                                foreach ($galleryPhotos as $photo) { ?>
+                                    <img src="<?php echo $photo->image_path; ?>" alt="<?php echo $photo->caption; ?>"
+                                        title="<?php echo $photo->caption; ?>">
+                                <?php }
+                            } ?>
                         </div>
                         <h3 class="gallery__name"><?php echo $gallery->gallery_name; ?></h3>
                     </a>

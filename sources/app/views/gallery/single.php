@@ -5,13 +5,17 @@ $photoCount = count($galleryPhotos);
 // <?php echo __DIR__."/uploads/profiles/default.jpg";
 ?>
 <main>
-    <div class="gallery__title__header">
-        <h1 class="left">
-            <a href="/gallery"><-</a>
-            <?php echo $title; ?>
-        </h1>
-        <div class="right">
-            <div class="gallery__users">
+    <div class="flex flex--justify-between flex--wrap">
+        <div class="flex flex--gap-2 flex--wrap">
+            <a href="/gallery" class="button button--icon button--secondary">
+                <img src="../../../assets/images/icons/arrow-left.png" alt="arrow-left">
+            </a>
+            <h1 class="m-0">
+                <?php echo $title; ?>
+            </h1>
+        </div>
+        <div class="flex flex--gap-2 flex--wrap">
+            <div class="gallery__users flex flex--align-center">
                 <?php foreach ($galleryUsers as $user) { ?>
                     <img src="
                 <?php echo '/uploads/profiles/default.jpg'; ?>
@@ -20,15 +24,20 @@ $photoCount = count($galleryPhotos);
 
                 <?php } ?>
             </div>
-            <a href="/gallery/upload/<?php echo $galleryId; ?>" class="button button-cta">Upload Photos</a>
-            <a href="/gallery/addusers/<?php echo $galleryId; ?>" class="button button-cta">Add users+</a>
+            <div class="flex flex--gap-2">
+                <a href="/gallery/upload/<?php echo $galleryId; ?>" class="button button-cta">
+                    <img src="../../../assets/images/icons/picture.png" alt="picture icon">Ajouter des photos</a>
+                <a href="/gallery/addusers/<?php echo $galleryId; ?>" class="button button--secondary ">
+                    <img src="../../../assets/images/icons/arrow-curved.png" alt="picture icon">
+                    Inviter</a>
+            </div>
         </div>
     </div>
 
-    
+
     <?php if ($photoCount == 0) { ?>
         <div class="gallery__empty">
-            <p>There are no photos in this gallery yet.</p>
+            <p>Il n'y a pas de photo dans cette gallerie pour l'instant</p>
         </div>
     <?php } ?>
 

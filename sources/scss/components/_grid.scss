@@ -5,7 +5,7 @@
 @layer components {
 	.grid {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr); // 4 colonnes ayant la même largeur
+		grid-template-columns: repeat(12, 1fr); // 12 colonnes ayant la même largeur
 		gap: f.rem(20);
 
 		// @media screen and (min-width: map.get(v.$breakpoints, "lg")) {
@@ -18,16 +18,16 @@
 
 		[class^="col-"] {
 			grid-column: 1 / -1;
-			// border: 1px solid red;
+			//border: 1px solid red;
 		}
-		@for $i from 1 through 4 {
+		@for $i from 1 through 12 {
 			.col-#{$i} {
 				grid-column: span #{$i};
 			}
 		}
 		@each $name, $value in v.$breakpoints {
 			@media screen and (min-width: #{$value}) {
-				@for $i from 1 through 4 {
+				@for $i from 1 through 12 {
 					.col-#{$name}-#{$i} {
 						grid-column: span #{$i};
 					}

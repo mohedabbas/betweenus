@@ -7,14 +7,15 @@
   :root {
     --grey-color: #959a9e;
     --light-grey-color: #f2f2f2;
-    --black-color: #000000;
-    --white-color: #ffffff;
-    --orange-color: #ff9161;
-    --primary-color: #ff9161;
     --text-color: #3f3f46;
     --text-fade-color: #959a9e;
     --background-color: #ffffff;
+    --primary-color: #ff9161;
     --primary-hover-color: #faa17a;
+    --success-text-color: rgb(92, 198, 92);
+    --success-background-color: rgb(214, 255, 214);
+    --danger-text-color: rgb(191, 70, 70);
+    --danger-background-color: rgb(255, 222, 222);
   }
   body {
     font-family: "Urbanist", serif;
@@ -825,6 +826,25 @@
     border: 0.125rem solid lightgray;
     position: relative;
     margin-left: -1.5625rem;
+  }
+}
+@layer components {
+  .alert {
+    padding: 0.9375rem;
+    margin: 0.625rem 0;
+    border-radius: 0.625rem;
+  }
+  .alert--error {
+    color: var(--danger-text-color);
+    background-color: var(--danger-background-color);
+  }
+  .alert--success {
+    color: var(--sucess-text-color);
+    background-color: var(--success-background-color);
+  }
+  .alert--info {
+    color: #0c5460;
+    background-color: #d1ecf1;
   }
 }
 

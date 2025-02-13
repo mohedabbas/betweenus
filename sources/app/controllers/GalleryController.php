@@ -114,6 +114,7 @@ class GalleryController extends Controller
         $user = AuthMiddleware::getSessionUser();
 
         $galleryModel = $this->loadModel('GalleryModel');
+
         $gallery = $galleryModel->getGallery($id, $user['id']);
 
         if (!$gallery || empty($gallery) || !$user) {

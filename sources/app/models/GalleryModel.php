@@ -140,7 +140,7 @@ class GalleryModel extends Model
 
         $galleryId = $this->pdo->lastInsertId();
 
-        $sql = "INSERT INTO gallery_users (gallery_id, user_id, can_upload, can_view) VALUES (:gallery_id, :user_id, 1, 1)";
+        $sql = "INSERT INTO gallery_users (gallery_id, user_id, can_upload, can_view, is_owner) VALUES (:gallery_id, :user_id, 1, 1, 1)";
         $statement = $this->prepare($sql);
         $this->execute($statement, [
             'gallery_id' => $galleryId,

@@ -1,7 +1,10 @@
-@use "fonts" as fonts;
 @use "variables" as v;
 @use "functions" as f;
 @use "mixins" as m;
+
+// Only font
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
+$main-font: "Urbanist", serif;
 
 @layer base {
     * {
@@ -9,15 +12,12 @@
     }
     :root {
         @each $name, $color in v.$colors {
-            // @if ($name == "primary") {
-            //     --#{$name}-hover: #{color.scale($color, $space: hsl)};
-            // }
             --#{$name}-color: #{$color};
         }
     }
 
     body {
-        font-family: fonts.$font1;
+        font-family: $main-font;
         font-weight: 400;
         color: var(--text-color);
         background-color: var(--background-color);
@@ -48,9 +48,6 @@
             margin: 0;
             text-align: center;
             font-size: f.rem(76);
-        }
-        p {
-            font-size: f.rem(16);
         }
     }
 }

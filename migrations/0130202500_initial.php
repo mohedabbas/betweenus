@@ -55,6 +55,7 @@ CREATE TABLE gallery_users (
     user_id INT,
     can_upload BOOLEAN DEFAULT 0,
     can_view BOOLEAN DEFAULT 1,
+    is_owner BOOLEAN DEFAULT 0,
     FOREIGN KEY (gallery_id) REFERENCES galleries(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

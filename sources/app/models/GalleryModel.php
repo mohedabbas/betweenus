@@ -45,35 +45,37 @@ class GalleryModel extends Model
      * @param int $userid
      * @return array
      */
-    public function getGallery(int $id, int $userid)
+    public function getGallery(int $galleryid, int $userid)
     {
-        $sql = "
-        SELECT
+        $sql = 'SELECT
             g.id AS gallery_id,
             g.name AS gallery_name,
             g.created_by,
             g.created_at AS gallery_created_at,
             JSON_ARRAYAGG(
                 JSON_OBJECT(
-                    'id', p.id,
-                    'user_id', p.user_id,
-                    'image_path', p.image_path,
-                    'caption', p.caption,
-                    'is_public', p.is_public,
-                    'created_at', p.created_at
+                    "id", p.id,
+                    "user_id", p.user_id,
+                    "image_path", p.image_path,
+                    "caption", p.caption,
+                    "is_public", p.is_public,
+                    "created_at", p.created_at
                 )
             ) AS galleryPhotos
-        FROM galleries g
-        JOIN gallery_users gu ON gu.gallery_id = :id
-        LEFT JOIN photos p ON p.gallery_id = :id
-        WHERE gu.user_id = :user_id
-        GROUP BY g.id, g.name, g.created_by, g.created_at
-        ORDER BY g.created_at DESC;
-        ";
+            FROM galleries g
+            JOIN gallery_users gu ON gu.gallery_id = g.id
+            LEFT JOIN photos p ON p.gallery_id = g.id
+            WHERE g.id = :id AND gu.user_id = :user_id
+            GROUP BY g.id, g.name, g.created_by, g.created_at
+            ORDER BY g.created_at DESC;
+            
+            ';
+
+
         $statement = $this->prepare($sql);
 
         $params = [
-            'id' => $id,
+            'id' => $galleryid,
             'user_id' => $userid
         ];
         $this->execute($statement, $params);

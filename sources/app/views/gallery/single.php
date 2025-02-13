@@ -5,7 +5,7 @@ $photoCount = count($galleryPhotos);
 // <?php echo __DIR__."/uploads/profiles/default.jpg";
 ?>
 <main>
-    <div class="flex flex--justify-between flex--wrap">
+    <div class="flex flex--justify-between flex--wrap mb-3">
         <div class="flex flex--gap-2 flex--wrap">
             <a href="/gallery" class="button button--icon button--secondary">
                 <img src="../../../assets/images/icons/arrow-left.png" alt="arrow-left">
@@ -15,13 +15,12 @@ $photoCount = count($galleryPhotos);
             </h1>
         </div>
         <div class="flex flex--gap-2 flex--wrap">
-            <div class="gallery__users flex flex--align-center">
+            <div class="flex flex--align-center">
                 <?php foreach ($galleryUsers as $user) { ?>
                     <img src="
                 <?php echo '/uploads/profiles/default.jpg'; ?>
                     " alt="<?php echo $user->username; ?>" title="<?php echo $user->username; ?>"
-                        class="user__thumbnail">
-
+                        class="user_thumbnail">
                 <?php } ?>
             </div>
             <div class="flex flex--gap-2">

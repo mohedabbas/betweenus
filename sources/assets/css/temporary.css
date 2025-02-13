@@ -41,15 +41,6 @@
     align-items: center;
 }
 
-.user__thumbnail {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid lightgray;
-    position: relative;
-    margin-left: -1.75rem;
-}
 
 .right {
     display: flex;

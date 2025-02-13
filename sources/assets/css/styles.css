@@ -662,5 +662,16 @@
     flex-wrap: wrap;
   }
 }
+@layer components {
+  .user_thumbnail {
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 0.125rem solid lightgray;
+    position: relative;
+    margin-left: -1.5625rem;
+  }
+}
 
 /*# sourceMappingURL=styles.css.map */

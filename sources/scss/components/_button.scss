@@ -31,5 +31,11 @@
         &--square {
             border-radius: f.rem(3);
         }
+        &--no-background {
+            background-color: transparent;
+            &:hover {
+                background-color: var(--light-grey-color);
+            }
+        }
     }
 }

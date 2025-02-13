@@ -4,6 +4,9 @@
 @use "mixins" as m;
 
 @layer base {
+    * {
+        box-sizing: border-box;
+    }
     :root {
         @each $name, $color in v.$colors {
             // @if ($name == "primary") {

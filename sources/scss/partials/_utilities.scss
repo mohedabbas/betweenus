@@ -13,6 +13,9 @@
         .m-#{$i} {
             margin: $i * $increment;
         }
+        .m-auto {
+            margin: auto;
+        }
         @each $name, $value in $directions {
             .m#{$name}-#{$i} {
                 margin-#{$value}: $i * $increment;

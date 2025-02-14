@@ -24,7 +24,7 @@ class FlashMessage
 
         if (!empty($_SESSION['flash_messages'])) {
             foreach ($_SESSION['flash_messages'] as $message) {
-                echo '<div class="alert alert--' . $message['type'] . '">'
+                echo '<div class="container alert alert--' . $message['type'] . '">'
                     . htmlspecialchars($message['message'])
                     . '</div>';
             }

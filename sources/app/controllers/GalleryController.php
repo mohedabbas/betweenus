@@ -73,16 +73,16 @@ class GalleryController extends Controller
     {
         AuthMiddleware::requireLogin();
 
-        // if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        //     // redirect to the create gallery page
-        //     $this->redirect('/gallery/create');
-        // }
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            // redirect to the create gallery page
+            $this->redirect('/gallery/create');
+        }
 
 
-        // if (!AuthMiddleware::verifyCsrfToken($_POST['csrf_token'])) {
-        //     // redirect to the create gallery page
-        //     $this->redirect('/gallery/create');
-        // }
+        if (!AuthMiddleware::verifyCsrfToken($_POST['csrf_token'])) {
+            // redirect to the create gallery page
+            $this->redirect('/gallery/create');
+        }
 
         $galleryModel = $this->loadModel('GalleryModel');
 
@@ -231,6 +231,37 @@ class GalleryController extends Controller
         FileManager::deleteGalleryPhoto($photo->image_path);
         FlashMessage::add('Photo deleted successfully.', 'success');
         $this->redirect('/gallery/' . $photo->gallery_id);
+    }
+
+
+    /**
+     * Empty the specified gallery.
+     * @param int $galleryId
+     * @return void
+     */
+
+    public function emptyGallery(int $galleryId): void
+    {
+        $galleryModel = $this->loadModel('GalleryModel');
+        $userId = AuthMiddleware::getSessionUser()['id'];
+        
+        $isOwner = $galleryModel->checkOwner($userId);
+
+        if (!$isOwner) {
+            FlashMessage::add('Vous n\'avez pas l\'autorisation pour vider le gallerie.', 'error');
+            $this->redirect('/gallery/' . $galleryId);
+        }
+
+        $isEmptied = $galleryModel->emptyGallery($galleryId, $userId);
+
+        if (!$isEmptied) {
+            FlashMessage::add('Failed to empty gallery.', 'error');
+            $this->redirect('/gallery/' . $galleryId);
+        }
+
+        FileManager::emptyGalleryPhotos($galleryId);
+        FlashMessage::add('Gallery has been emptied', 'success');
+        $this->redirect('/gallery/' . $galleryId);
     }
 
     /**

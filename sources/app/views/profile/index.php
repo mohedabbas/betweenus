@@ -3,10 +3,6 @@
 $title = $data['title'];
 ob_start();
 
-var_dump(__DIR__);
-
-var_dump(''.$user->profile_image);
-
 $profile = $user->profile_image;
 
 ?>

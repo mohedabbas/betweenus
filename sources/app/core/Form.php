@@ -18,12 +18,14 @@ class Form
 
     private string $enctype;
 
+	private string $class;
+
 	/**
 	 * Form constructor.
 	 * @param string $action
 	 * @param string $method
 	 */
-	public function __construct(string $action, string $method = 'POST', $enctype = '')
+	public function __construct(string $action, string $method = 'POST', $enctype = '', $class = '')
 	{
 		// Start the session if it's not already started
 		if (session_status() == PHP_SESSION_NONE) {
@@ -32,6 +34,7 @@ class Form
 		$this->action = $action;
 		$this->method = $method;
         $this->enctype = $enctype;
+		$this->class = $class;
 	}
 
 	/**
@@ -417,7 +420,8 @@ class Form
 	 */
 	public function renderForm(): string
 	{
-		$form = "<form action='{$this->action}' method='{$this->method}' enctype='{$this->enctype}'>";
+
+		$form = "<form action='{$this->action}' method='{$this->method}' enctype='{$this->enctype}' class='$this->class'>";
 		foreach ($this->fields as $field) {
 			$form .= $this->renderFields($field);
 		}

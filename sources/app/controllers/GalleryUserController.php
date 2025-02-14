@@ -22,52 +22,65 @@ class GalleryUserController extends Controller
         $formAction = "/gallery/addusers/{$galleryId}";
         $addUsersForm = new Form($formAction, 'POST');
         $addUsersForm
-            ->addTextField(
-                'email',
-                'Email',
-                '',
-                [
-                    'required' => true,
-                    'placeholder' => 'Email',
-                    'class' => 'form-control'
-                ]
-            )
-            ->addHiddenField(
-                'csrf_token',
-                AuthMiddleware::generateCsrfToken()
-            )->addSubmitButton(
-                'Search User',
-                [
-                    'class' => 'button button-cta',
-                    'name' => 'search_user'
-                ]
-            );
+            ->addTextField('email', 'Email', '', [
+                'required' => true,
+                'placeholder' => 'Email',
+                'class' => 'form-group'
+            ])
+            ->addHiddenField('csrf_token', $_SESSION['csrf_token'])
+            ->addSubmitButton('Search User', [
+                'class' => 'button button-cta',
+                'name' => 'search_user'
+            ]);
 
-        $users = $this->getUsersToAddInGallery($galleryId);
+        // Fetch existing users in the gallery
+        $users = $this->getMembersInGallery($galleryId);
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search_user'])) {
-            $email = $_POST['email'];
-            $authModel = $this->loadModel('AuthModel');
-
-            $getUser = $authModel->findUserByUsernameOrEmail($email);
-
-            if (!$getUser) {
-                FlashMessage::add('No user found with the given mail', 'error');
+        // Remove the current logged-in user from the list
+        $currentUserId = AuthMiddleware::getSessionUser()['id'];
+        $users = array_filter($users, fn($user) => $user->id !== $currentUserId);
+        $galleryModel = $this->loadModel('GalleryModel');
+        // Handle POST request
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search_user'])) {
+            // Validate CSRF token
+            if (!AuthMiddleware::verifyCsrfToken($_POST['csrf_token'])) {
+                FlashMessage::add('Invalid CSRF token', 'error');
                 $this->redirect("/gallery/addusers/$galleryId");
             }
-            unset($users);
-            $users[] = $getUser;
+
+            // Validate email input
+            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                FlashMessage::add('Invalid email format', 'error');
+                $this->redirect("/gallery/addusers/$galleryId");
+            }
+
+            // Check if the user exists in the database and is not part of the gallery.
+            $getUser = $galleryModel->getUsersNotInGallery($galleryId, $email);
+
+            if (!$getUser || empty($getUser)) {
+                FlashMessage::add('Aucun utilisateur trouvé avec cet e-mail ou l’utilisateur est déjà ajouté', 'error');
+                $this->redirect("/gallery/addusers/$galleryId");
+            }
+
+            FlashMessage::add('Utilisateur Trouver', 'success');
+
+            // Add new user to the list
+            $getUser->is_newUser = true;
+
+            // Add the new user to the beginning of the array to display it first.
+            array_unshift($users, $getUser);
         }
 
+        // Render the view with data
         $data = [
-            'title' => 'Add Users',
+            'title' => 'Ajouter les utilisateurs à la galerie',
             'form' => $addUsersForm,
             'galleryId' => $galleryId,
             'users' => $users
         ];
         $this->loadView('gallery/addUsers', $data);
     }
-
 
     /**
      * Add a user in the gallery and send an email to the user
@@ -91,9 +104,32 @@ class GalleryUserController extends Controller
         }
     }
 
+
+    /**
+     * Remove a user from the gallery
+     * @param int $userid
+     */
+    public function removeUserFromGallery($userid)
+    {
+        $galleryId = $_GET['galleryid'];
+        $galleryModel = $this->loadModel('GalleryModel');
+        $lastID = $galleryModel->removeUserFromGalleryById($userid, $galleryId);
+        if ($lastID) {
+            // If the user is added successfully
+            FlashMessage::add('User removed successfully', 'success');
+            $this->redirect("/gallery/addusers/$galleryId");
+        } else {
+            FlashMessage::add('Error removing user', 'error');
+            $this->redirect("/gallery/addusers/$galleryId");
+        }
+    }
+
+
+
     /**
      * Add a user in the gallery and send an email to the user
      * @param int $userid
+     * @deprecated This method is deprecated. Use addUserAndSendMail instead.
      */
     private function getUsersToAddInGallery(int $galleryId): array
     {
@@ -114,6 +150,28 @@ class GalleryUserController extends Controller
     }
 
     /**
+     * Get the members in the gallery to display in the view
+     * @param int $galleryId
+     */
+    public function getMembersInGallery(int $galleryId): array
+    {
+        AuthMiddleware::requireLogin();
+
+        $galleryModel = $this->loadModel('GalleryModel');
+        $user = AuthMiddleware::getSessionUser();
+        $roles = $this->getConnectedUserRole($user['id'], $galleryId);
+
+        if (!$roles || $roles->is_owner !== '1') {
+            FlashMessage::add('Dont have necessary permissions.', 'error');
+            $this->redirect('/gallery/' . $galleryId);
+        }
+
+        $users = $galleryModel->getGalleryUsers($galleryId);
+
+        return $users;
+    }
+
+    /**
      * Get the connected user role by the user id and the gallery id to check if it can add new users
      * @param int $userId
      * @param int $galleryId
@@ -124,4 +182,6 @@ class GalleryUserController extends Controller
         $role = $galleryModel->getConnectedUserRole($userId, $galleryId);
         return $role;
     }
+
+
 }

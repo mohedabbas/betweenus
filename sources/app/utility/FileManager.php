@@ -65,6 +65,21 @@ class FileManager
     }
 
 
+    public static function emptyGalleryPhotos($galleryId) {
+        $targetDir = __DIR__ . self::$baseUploadPath . '/gallery_photos/' . $galleryId;
+        if (is_dir($targetDir)) {
+            $files = glob($targetDir . '/*'); // Get all file names
+            foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file); // Delete file
+            }
+            }
+            return rmdir($targetDir); // Remove the directory itself
+        }
+        return false;
+    }
+
+
     public static function generateUniqueFilename($extension)
     {
         return date('YmdHis') . '_' . bin2hex(random_bytes(8)) . '.' . $extension;

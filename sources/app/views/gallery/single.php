@@ -4,7 +4,7 @@ ob_start();
 $photoCount = count($galleryPhotos);
 // <?php echo __DIR__."/uploads/profiles/default.jpg";
 ?>
-<main>
+<main class="container">
     <!-- Gallery header -->
     <div class="flex flex--justify-between flex--wrap flex--gap-2 mb-3">
         <div class="flex flex--gap-2 flex--wrap">
@@ -29,7 +29,12 @@ $photoCount = count($galleryPhotos);
                     <img src="../../../assets/images/icons/picture.png" alt="picture icon">Ajouter</a>
                 <a href="/gallery/addusers/<?php echo $galleryId; ?>" class="button button--secondary ">
                     <img src="../../../assets/images/icons/arrow-curved.png" alt="picture icon">
-                    Inviter</a>
+                    Inviter
+                </a>
+                <a href="/gallery/empty/<?php echo $galleryId; ?>" class="button button--secondary">
+                    <img src="../../../assets/images/icons/delete.svg" alt="picture icon"
+                        style="width: 100%; height: 20px; object-fit: contain;">
+                </a>
             </div>
         </div>
     </div>

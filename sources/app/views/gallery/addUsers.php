@@ -1,25 +1,94 @@
 <?php
 ob_start();
+$countUser = count($users);
 ?>
 
-<main>
-    <h1><?php echo $title; ?></h1>
+<style>
+    #users-lists-to-add {
+        margin-top: 2rem;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    article {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ccc;
+        justify-content: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+
+        img {
+            width: 2.5rem;
+            height: 2.5rem;
+            object-fit: cover;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        a {
+            margin-left: auto;
+
+            img {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+    }
+
+    h3 {
+        margin: 0;
+    }
+
+    h3 small {
+        font-size: 0.8rem;
+        color: var(--text-fade-color);
+    }
+</style>
+
+<main class="container">
+    <div class="flex flex--gap-2 flex--wrap">
+        <a href="/gallery/<?php echo htmlspecialchars($galleryId); ?>"
+            class="button button--icon button--no-background">
+            <img src="/assets/images/icons/arrow-left.png" alt="Back">
+        </a>
+        <h1 class="m-0"><?php echo htmlspecialchars($title); ?></h1>
+    </div>
+
     <?php echo $form->renderForm(); ?>
 
-    <div id="users-lists-to-add">
-        <h2>User to add</h2>
-        <ul>
-            <?php foreach ($users as $user) { ?>
-                <li>
-                    <article style="display: flex; align-items: center;">
-                        <img src="/uploads/profiles/default.jpg" alt="John Doe" class="user__thumbnail">
-                        <h3><?php echo $user->first_name . " " . $user->last_name ?></h3>
-                        <a href="/gallery/send_invite/<?php echo $user->id?>?galleryid=<?php echo $galleryId?>" class="button button-cta">+</a>
-                    </article>
-                </li>
-            <?php } ?>
-        </ul>
-    </div>
+    <?php if ($countUser > 0) { ?>
+        <div id="users-lists-to-add" class="container">
+            <h1 class="m-0">Les Membres</h1>
+            <ul>
+                <?php foreach ($users as $user) {
+                    $isNewUser = isset($user->is_newUser) && $user->is_newUser;
+                    $fullName = htmlspecialchars($user->first_name ?? '') . ' ' . htmlspecialchars($user->last_name ?? '');
+                    ?>
+                    <li>
+                        <article>
+                            <img src="/uploads/profiles/default.jpg" alt="<?php echo $fullName; ?>">
+                            <h3>
+                                <?php echo $fullName; ?>
+                                <br>
+                                <small class="small-text"><?php echo htmlspecialchars($user->email); ?></small>
+                            </h3>
+
+                            <a href="/gallery/<?php echo $isNewUser ? 'send_invite' : 'removeuser'; ?>/<?php echo htmlspecialchars($user->id); ?>?galleryid=<?php echo htmlspecialchars($galleryId); ?>"
+                                class="button button--cta">
+                                <img src="/assets/images/icons/<?php echo $isNewUser ? 'add-user.svg' : 'remove-user-2.svg'; ?>"
+                                    alt="<?php echo $isNewUser ? 'Invite user' : 'Remove user'; ?>" />
+                                <?php echo $isNewUser ? 'Invite' : ''; ?>
+                            </a>
+                        </article>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+    <?php } ?>
 </main>
 
 <?php

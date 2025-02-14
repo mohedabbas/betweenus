@@ -52,8 +52,7 @@ class Model
 	 */
 	public function execute($statement, $params = [])
 	{
-		$statement->execute($params);
-		return $statement;
+		return $statement->execute($params);
 	}
 
 	/**

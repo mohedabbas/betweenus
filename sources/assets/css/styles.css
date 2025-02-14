@@ -160,7 +160,6 @@
     align-items: center;
     gap: 0.625rem;
     padding: 0.9375rem 1.5625rem;
-    width: fit-content;
     background-color: var(--primary-color);
     border-radius: 1.6875rem;
     font-weight: 500;
@@ -253,7 +252,7 @@
 
 .login-card {
   background-color: #ffffff;
-  border: solid #FF9161;
+  border: solid #ff9161;
   border-radius: 1.5rem;
   padding: 2.5rem;
   width: 100%;
@@ -291,6 +290,7 @@
 
 .form-group {
   margin-bottom: 1.25rem;
+  max-width: 25rem;
 }
 .form-group label {
   display: block;
@@ -314,6 +314,12 @@
 }
 .form-group input::placeholder {
   color: #999999;
+}
+.form-group button[type=submit] {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .error-message {

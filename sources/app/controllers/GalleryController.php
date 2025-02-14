@@ -45,15 +45,15 @@ class GalleryController extends Controller
             $data['name'] ?? '',
             [
                 'required' => true,
-                'placeholder' => 'Gallery Name',
-                'class' => 'form-control'
+                'placeholder' => 'Nom de la Galerie',
+                'class' => 'mb-2'
             ]
         )->addHiddenField(
                 'csrf_token',
                 AuthMiddleware::generateCsrfToken()
             )->addSubmitButton(
-                'Create Gallery',
-                ['class' => 'btn btn-primary']
+                'Créer',
+                ['class' => 'button m-auto']
             );
 
 
@@ -124,7 +124,7 @@ class GalleryController extends Controller
         // Get the gallery photos
         $galleryPhotos = json_decode($gallery->galleryPhotos);
 
-        if ((count($galleryPhotos) == 0 || (count($galleryPhotos) == 1 && empty($galleryPhotos[0]->id)) )) {
+        if ((count($galleryPhotos) == 0 || (count($galleryPhotos) == 1 && empty($galleryPhotos[0]->id)))) {
             $galleryPhotos = [];
         }
 
@@ -221,7 +221,7 @@ class GalleryController extends Controller
             $this->redirect('/gallery');
         }
 
-        
+
         $isPhotoDeleted = $galleryModel->deleteGalleryPhoto($photoId, $user['id']);
         if (!$isPhotoDeleted) {
             FlashMessage::add('Failed to delete photo.', 'error');

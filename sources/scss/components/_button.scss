@@ -7,7 +7,6 @@
         @include m.resetButton;
         @include m.flexbox($align: center, $gap: f.rem(10));
         padding: f.rem(15) f.rem(25);
-        width: fit-content;
         background-color: var(--primary-color);
         border-radius: f.rem(27);
         font-weight: 500;

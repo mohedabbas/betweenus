@@ -83,6 +83,7 @@ $router->get('/gallery/delete/{id}', ['GalleryController', 'deletePhoto']);
 
 // Empty gallery 
 $router->get('/gallery/empty/{galleryId}', ['GalleryController','emptyGallery']);
+$router->get('/gallery/deletegallery/{galleryId}', ['GalleryController','deleteGallery']);
 
 
 

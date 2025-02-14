@@ -244,7 +244,7 @@ class GalleryController extends Controller
     {
         $galleryModel = $this->loadModel('GalleryModel');
         $userId = AuthMiddleware::getSessionUser()['id'];
-        
+
         $isOwner = $galleryModel->checkOwner($userId);
 
         if (!$isOwner) {
@@ -263,6 +263,35 @@ class GalleryController extends Controller
         FlashMessage::add('Gallery has been emptied', 'success');
         $this->redirect('/gallery/' . $galleryId);
     }
+
+    /**
+     * Delete the specified gallery.
+     * @param int $galleryId
+     * @return void
+     */
+
+    public function deleteGallery(int $galleryId): void
+    {
+        $galleryModel = $this->loadModel('GalleryModel');
+        $userId = AuthMiddleware::getSessionUser()['id'];
+        $isOwner = $galleryModel->checkOwner($userId);
+        if (!$isOwner) {
+            FlashMessage::add('Vous n\'avez pas de permission de effectuer l\'action.', 'error');
+            $this->redirect('/gallery/' . $galleryId);
+        }
+
+        $isDeleted = $galleryModel->deleteGalleryById($galleryId);
+        if (!$isDeleted) {
+            FlashMessage::add('Failed to delete gallery.', 'error');
+            $this->redirect('/gallery/' . $galleryId);
+        }
+
+        FileManager::emptyGalleryPhotos($galleryId);
+        FlashMessage::add('La galerie est bien supprimer', 'success');
+        $this->redirect('/gallery');
+    }
+
+
 
     /**
      * Get the users of a gallery

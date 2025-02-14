@@ -315,8 +315,11 @@ class GalleryModel extends Model
     // {
     //     $sql = 'DELETE FROM galleries WHERE id = :gallery_id';
     //     $statement = $this->prepare($sql);
-    //     return $this->execute($statement, [':gallery_id'=> $galleryId]);
+    //     $result = $this->execute($statement, [':gallery_id'=> $galleryId]);
+    //     return $result->rowCount() > 0;
     // }
+
+
 
 
     // public function deleteUsersinGalleryById(int $galleryId) {
@@ -324,6 +327,16 @@ class GalleryModel extends Model
     //     $statement = $this->prepare($sql);
     //     return $this->execute($statement, [':gallery_id'=> $galleryId]);
     // }
+
+
+
+    public function deleteGalleryById(int $galleryId): bool
+    {
+        $sql = 'DELETE FROM galleries WHERE id = :gallery_id';
+        $statement = $this->prepare($sql);
+        $this->execute($statement, [':gallery_id' => $galleryId]);
+        return $statement->rowCount() > 0;
+    }
 
 
 

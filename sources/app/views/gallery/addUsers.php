@@ -49,7 +49,7 @@ $countUser = count($users);
     }
 </style>
 
-<main class="container">
+<main>
     <div class="flex flex--gap-2 flex--wrap">
         <a href="/gallery/<?php echo htmlspecialchars($galleryId); ?>"
             class="button button--icon button--no-background">

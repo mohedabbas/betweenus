@@ -73,16 +73,16 @@ class GalleryController extends Controller
     {
         AuthMiddleware::requireLogin();
 
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            // redirect to the create gallery page
-            $this->redirect('/gallery/create');
-        }
+        // if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        //     // redirect to the create gallery page
+        //     $this->redirect('/gallery/create');
+        // }
 
 
-        if (!AuthMiddleware::verifyCsrfToken($_POST['csrf_token'])) {
-            // redirect to the create gallery page
-            $this->redirect('/gallery/create');
-        }
+        // if (!AuthMiddleware::verifyCsrfToken($_POST['csrf_token'])) {
+        //     // redirect to the create gallery page
+        //     $this->redirect('/gallery/create');
+        // }
 
         $galleryModel = $this->loadModel('GalleryModel');
 

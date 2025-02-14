@@ -14,6 +14,10 @@
         color: var(--black-color);
         transition: background-color 0.3s;
 
+        &:hover {
+            background-color: var(--primary-hover-color);
+        }
+
         // Modifiers
         &--cta {
             background-color: var(--primary-color);
@@ -26,6 +30,12 @@
         }
         &--square {
             border-radius: f.rem(3);
+        }
+        &--no-background {
+            background-color: transparent;
+            &:hover {
+                background-color: var(--light-grey-color);
+            }
         }
     }
 }

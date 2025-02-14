@@ -1,0 +1,66 @@
+@use '../partials/functions' as f;
+
+/* Conteneur principal du footer */
+.footer {
+  background-color: var(--background-color);
+  border-top: 1px solid var(--border-color);
+  padding: f.rem(48) 0 f.rem(24);
+  margin-top: f.rem(300);
+}
+
+/* Grille principale du contenu (2 colonnes) */
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: f.rem(32);
+  /* Marge inférieure retirée pour coller au bas du footer */
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+/* Styles des sections du footer */
+.footer-section h3 {
+  color: var(--text-color);
+  font-size: f.rem(18);
+  margin-bottom: f.rem(16);
+}
+
+.footer-section p,
+.footer-section a {
+  color: var(--text-color-light);
+  font-size: f.rem(14);
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul a:hover {
+  color: var(--primary-color);
+}
+
+/* Section du bas du footer */
+.footer-bottom {
+  /* Marge supérieure retirée pour éviter l'espace avec .footer-content */
+  padding-top: f.rem(24);
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.footer-bottom p {
+  color: var(--text-color-light);
+  font-size: f.rem(14);
+  margin: 0;
+}

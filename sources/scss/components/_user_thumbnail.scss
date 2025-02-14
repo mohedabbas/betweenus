@@ -1,0 +1,13 @@
+@use "../partials/functions" as f;
+
+@layer components {
+    .user_thumbnail {
+        width: f.rem(40);
+        height: f.rem(40);
+        object-fit: cover;
+        border-radius: 50%;
+        border: f.rem(2) solid lightgray;
+        position: relative;
+        margin-left: f.rem(-25);
+    }
+}

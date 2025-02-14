@@ -1,0 +1,27 @@
+@use "../partials/variables" as v;
+@use "../partials/functions" as f;
+
+@layer components {
+    .flex {
+        display: flex;
+
+        @for $i from 1 through 4 {
+            &--gap-#{$i} {
+                gap: f.rem(10) * $i;
+            }
+        }
+
+        &--align-center {
+            align-items: center;
+        }
+        &--justify-between {
+            justify-content: space-between;
+        }
+        &--justify-end {
+            justify-content: flex-end;
+        }
+        &--wrap {
+            flex-wrap: wrap;
+        }
+    }
+}

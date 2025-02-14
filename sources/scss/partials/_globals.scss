@@ -4,8 +4,14 @@
 @use "mixins" as m;
 
 @layer base {
+    * {
+        box-sizing: border-box;
+    }
     :root {
         @each $name, $color in v.$colors {
+            // @if ($name == "primary") {
+            //     --#{$name}-hover: #{color.scale($color, $space: hsl)};
+            // }
             --#{$name}-color: #{$color};
         }
     }
@@ -35,6 +41,7 @@
         max-width: f.rem(1300);
         padding: 0 f.rem(16);
     }
+
     .hero-section {
         @include m.flexbox($align: center, $direction: column, $gap: f.rem(24));
         h1 {

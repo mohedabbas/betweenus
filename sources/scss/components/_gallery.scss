@@ -5,9 +5,11 @@
     @include m.resetA;
     @include m.flexbox($direction: column, $align: center, $gap: f.rem(17));
     width: auto;
+    transition: 0.3s ease-in-out;
 
     &__name {
         margin: 0;
+        text-align: center;
         font-size: f.rem(25);
         font-weight: 500;
     }
@@ -29,5 +31,9 @@
             object-fit: cover;
             border-radius: f.rem(10);
         }
+    }
+
+    &:hover {
+        transform: scale(105%);
     }
 }

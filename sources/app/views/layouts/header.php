@@ -13,9 +13,14 @@ $userImg = $user['image_path'] ?? '/uploads/profiles/default.jpg';
     </a>
 
     <?php if (isset($_SESSION['user'])): ?>
-        <a href="/logout" class="user-profile">
-            <img src="<?= $userImg ?>" class="user__thumbnail" />
-            <?php echo $username ?>
-        </a>
+        <div class="user-menu">
+            <div class="user-profile">
+                <img src="<?= $userImg ?>" class="user__thumbnail" />
+                <span><?php echo $username ?></span>
+            </div>
+            <div class="user-dropdown">
+                <a href="/logout" class="dropdown-item">Déconnexion</a>
+            </div>
+        </div>
     <?php endif; ?>
 </header>

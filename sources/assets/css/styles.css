@@ -246,13 +246,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5;
   padding: 1.25rem;
 }
 
 .login-card {
-  background-color: #ffffff;
-  border: solid #ff9161;
   border-radius: 1.5rem;
   padding: 2.5rem;
   width: 100%;
@@ -289,18 +286,15 @@
 }
 
 .form-group {
-  margin-bottom: 1.25rem;
   max-width: 25rem;
 }
 .form-group label {
   display: block;
-  font-size: 0.9375rem;
   font-weight: 500;
-  color: #333333;
   margin-bottom: 0.5rem;
 }
 .form-group input {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--grey-color);
   outline: none;
   background: none;
   width: 100%;
@@ -308,18 +302,20 @@
   border-radius: 0.75rem;
   font-size: 1rem;
   transition: border-color 0.3s ease;
+  margin-bottom: 1.875rem;
 }
 .form-group input:focus {
-  border-color: #ff7f50;
+  border-color: var(--grey-color);
 }
 .form-group input::placeholder {
-  color: #999999;
+  color: var(--grey-color);
 }
 .form-group button[type=submit] {
   width: 100%;
   text-align: center;
   display: flex;
   justify-content: center;
+  border-radius: 0.875rem;
 }
 
 .error-message {

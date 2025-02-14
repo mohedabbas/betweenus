@@ -498,6 +498,10 @@ class AuthController extends Controller
             exit;
         }
 
+        // CSRF Token generation for the session
+        $token = AuthMiddleware::generateCsrfToken();
+        $_SESSION['csrf_token'] = $token;
+
         // OK => connecter
         $_SESSION['user'] = [
             'id'         => $user->id,

@@ -11,7 +11,6 @@ session_start();
 //
 //$result = $query->fetch();
 //
-//var_dump($result);
 
 // Register the autoloader
 spl_autoload_register(function ($class) {
@@ -82,12 +81,18 @@ $router->post('/gallery/upload/{id}', ['GalleryController', 'storePhoto']);
 // Delete photo
 $router->get('/gallery/delete/{id}', ['GalleryController', 'deletePhoto']);
 
+// Empty gallery 
+$router->get('/gallery/empty/{galleryId}', ['GalleryController','emptyGallery']);
+
 
 
 // Gallery user routes
 $router->get('/gallery/addusers/{id}', ['GalleryUserController', 'addUsersInGallery']);
 $router->post('/gallery/addusers/{id}', ['GalleryUserController', 'addUsersInGallery']);
 $router->get('/gallery/send_invite/{userid}', ['GalleryUserController', 'addUserAndSendMail']);
+
+// Remove user from gallery
+$router->get('/gallery/removeuser/{userid}', ['GalleryUserController', 'removeUserFromGallery']);
 
 // Temporary code for testing
 $router->get('/profile', ['ProfileController', 'index']);

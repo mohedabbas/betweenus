@@ -226,17 +226,21 @@ class GalleryModel extends Model
     }
 
     /**
-     * Get the users not in the gallery by the gallery id
+     * Get the user by email/username not in the gallery by the gallery id and user id
      * @param int $galleryId
      */
-    public function getUsersNotInGallery(int $galleryId)
+    public function getUsersNotInGallery(int $galleryId, string $email)
     {
-        $sql = "SELECT u.id, u.first_name,u.last_name, u.profile_image FROM users u WHERE id NOT IN (SELECT user_id FROM gallery_users WHERE gallery_id = :gallery_id) ORDER BY u.created_at ASC LIMIT 5";
+        $sql = "SELECT * FROM users u WHERE (email = :email OR username = :email) AND u.id NOT IN (SELECT user_id FROM gallery_users WHERE gallery_id = :gallery_id)";
         $statement = $this->prepare($sql);
-        $this->execute($statement, ['gallery_id' => $galleryId]);
-        return $this->fetchAll($statement);
-    }
+        $params = [
+            "gallery_id" => $galleryId,
+            "email" => $email
+        ];
 
+        $this->execute($statement, $params);
+        return $this->fetch($statement);
+    }
     /**
      * Get the connected user role by the user id and the gallery id
      * @param int $userId
@@ -256,7 +260,8 @@ class GalleryModel extends Model
      * @param mixed $galleryId
      * @return bool|string
      */
-    public function addUsersinGalleryById(int $userId, $galleryId):bool|string{
+    public function addUsersinGalleryById(int $userId, $galleryId): bool|string
+    {
         $sql = "
             INSERT INTO gallery_users (gallery_id, user_id, can_upload, can_view, is_owner) VALUES (:gallery_id, :user_id, 1, 1, 0)
         ";
@@ -264,5 +269,80 @@ class GalleryModel extends Model
         $this->execute($statement, ['gallery_id' => $galleryId, 'user_id' => $userId]);
         return $this->pdo->lastInsertId();
     }
-    
+
+
+    /**
+     * Remove a user from the gallery by the user id and the gallery id
+     * @param int $userId
+     * @param int $galleryId
+     * @return bool|string
+     */
+    public function removeUserFromGalleryById(int $userId, int $galleryId): bool|string
+    {
+        $sql = "
+            DELETE FROM gallery_users WHERE gallery_id = :gallery_id AND user_id = :user_id
+        ";
+        $statement = $this->prepare($sql);
+        $this->execute($statement, [
+            "user_id" => $userId,
+            "gallery_id" => $galleryId
+        ]);
+        return $statement->rowCount() > 0;
+    }
+
+
+
+    /**
+     * Remove all the photos from the gallery by the gallery id.
+     * @param int $galleryId
+     * @return bool|string
+     */
+
+    public function emptyGallery(int $galleryId): bool
+    {
+        $sql = 'DELETE FROM photos WHERE gallery_id = :gallery_id ';
+        $statement = $this->prepare($sql);
+
+        $params = [
+            'gallery_id' => $galleryId
+        ];
+
+        $this->execute($statement, $params);
+        return $statement->rowCount() > 0;
+    }
+
+    // public function deleteGalleryById(int $galleryId):bool|string
+    // {
+    //     $sql = 'DELETE FROM galleries WHERE id = :gallery_id';
+    //     $statement = $this->prepare($sql);
+    //     return $this->execute($statement, [':gallery_id'=> $galleryId]);
+    // }
+
+
+    // public function deleteUsersinGalleryById(int $galleryId) {
+    //     $sql = 'DELETE FROM gallery_users WHERE gallery_id = :gallery_id';
+    //     $statement = $this->prepare($sql);
+    //     return $this->execute($statement, [':gallery_id'=> $galleryId]);
+    // }
+
+
+
+
+
+
+    /**
+     * Check if the user is the owner of the gallery.
+     * @param int $userId
+     * @return bool
+     */
+
+    public function checkOwner(int $userId): bool
+    {
+        $sql = 'SELECT * FROM gallery_users WHERE user_id = :user_id AND is_owner = 1';
+        $statement = $this->prepare($sql);
+
+        $this->execute($statement, ['user_id' => $userId]);
+        $result = $this->fetch($statement);
+        return $result !== false;
+    }
 }

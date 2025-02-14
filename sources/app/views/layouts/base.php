@@ -17,7 +17,7 @@ $title = $title ?? 'Default Title'; // Set a default title if none is provided
 </head>
 <body>
 <?php require __DIR__ . '/header.php'; ?>
-<main>
+<main class="container">
     <?php FlashMessage::display(); ?>
 	<?= $content; // This will be where individual page content is injected ?>
 </main>

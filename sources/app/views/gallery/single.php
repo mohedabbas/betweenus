@@ -19,7 +19,7 @@ $photoCount = count($galleryPhotos);
             <div class="flex flex--align-center ml-2">
                 <?php foreach ($galleryUsers as $key => $user) { ?>
                     <img src="
-                <?php echo '/uploads/profiles/default.jpg'; ?>
+                <?php echo '/uploads/profiles/default.svg'; ?>
                     " alt="<?php echo $user->username; ?>" title="<?php echo $user->username; ?>"
                         class="user_thumbnail">
                 <?php } ?>

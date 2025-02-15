@@ -8,7 +8,7 @@ $userImg = $user['image_path'] ?? '/uploads/profiles/default.jpg';
 <header class="container">
     <!-- Logo/Brand section -->
     <a href="/" class="brand">
-        <img src="../../../assets/images/brand-logo.png" alt="BetweenUs Logo">
+        <img src="/assets/images/brand-logo.png" alt="BetweenUs Logo">
         <span>BetweenUs</span>
     </a>
 

@@ -37,11 +37,14 @@ $main-font: "Urbanist", serif;
     a {
         color: var(--primary-color);
     }
-
     .container {
         margin: auto;
         max-width: f.rem(1300);
         padding: 0 f.rem(16);
+    }
+
+    section {
+        margin-bottom: f.rem(200);
     }
 
     .hero-section {

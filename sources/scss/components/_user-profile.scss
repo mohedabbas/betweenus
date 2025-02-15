@@ -19,20 +19,21 @@
   // Menu utilisateur avec dropdown
   .user-menu {
     position: relative;
-    display: inline-block; 
-    padding: f.rem(8);       
+    display: inline-block;
+    padding: f.rem(8);
     cursor: pointer;
+    border-radius: f.rem(20);
 
     .user-profile {
       display: flex;
       align-items: center;
-      gap: f.rem(8);         
+      gap: f.rem(8);
       height: 100%;
 
       .user__thumbnail {
         width: f.rem(40);
         height: f.rem(40);
-        border-radius: 50%;  
+        border-radius: 50%;
         object-fit: cover;
       }
     }
@@ -52,7 +53,7 @@
 
       // Flèche en haut du dropdown
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: f.rem(-8);
         left: 50%;
@@ -64,7 +65,7 @@
 
       .dropdown-item {
         display: block;
-        padding: f.rem(12) f.rem(16); 
+        padding: f.rem(12) f.rem(16);
         text-decoration: none;
         color: white;
         text-align: center;
@@ -78,18 +79,17 @@
 
     // Zone tampon pour éviter la fermeture accidentelle du menu
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: f.rem(-20);
       left: 0;
-      width: 100%;  
+      width: 100%;
       height: f.rem(20);
     }
 
     // Affichage du dropdown au survol
     &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-
+      background-color: var(--light-grey-color);
       .user-dropdown {
         display: block;
       }

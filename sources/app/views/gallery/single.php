@@ -4,7 +4,7 @@ ob_start();
 $photoCount = count($galleryPhotos);
 // <?php echo __DIR__."/uploads/profiles/default.jpg";
 ?>
-<main class="container">
+<main>
     <!-- Gallery header -->
     <div class="flex flex--justify-between flex--wrap flex--gap-2 mb-3">
         <div class="flex flex--gap-2 flex--wrap">

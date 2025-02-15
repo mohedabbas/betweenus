@@ -11,10 +11,17 @@
         border-radius: f.rem(27);
         font-weight: 500;
         color: var(--black-color);
+        height: f.rem(54);
         transition: background-color 0.3s;
 
         &:hover {
             background-color: var(--primary-hover-color);
+        }
+
+        // Element
+        img {
+            width: f.rem(24);
+            height: f.rem(24);
         }
 
         // Modifiers

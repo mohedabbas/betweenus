@@ -247,10 +247,15 @@
     border-radius: 1.6875rem;
     font-weight: 500;
     color: var(--black-color);
+    height: 3.375rem;
     transition: background-color 0.3s;
   }
   .button:hover {
     background-color: var(--primary-hover-color);
+  }
+  .button img {
+    width: 1.5rem;
+    height: 1.5rem;
   }
   .button--cta {
     background-color: var(--primary-color);

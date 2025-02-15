@@ -4,9 +4,9 @@ ob_start();
 $photoCount = count($galleryPhotos);
 // <?php echo __DIR__."/uploads/profiles/default.jpg";
 ?>
-<main>
+<main class="container">
     <!-- Gallery header -->
-    <div class="flex flex--justify-between flex--wrap flex--gap-2 mb-3">
+    <div class="flex flex--align-center flex--justify-between flex--wrap flex--gap-2 mb-3">
         <div class="flex flex--gap-2 flex--wrap">
             <a href="/gallery" class="button button--icon button--no-background">
                 <img src="/assets/images/icons/arrow-left.png" alt="arrow-left">
@@ -15,7 +15,7 @@ $photoCount = count($galleryPhotos);
                 <?php echo $title; ?>
             </h1>
         </div>
-        <div class="flex flex--gap-2 flex--wrap">
+        <div class="flex flex--align-center flex--gap-2 flex--wrap">
             <div class="flex flex--align-center ml-2">
                 <?php foreach ($galleryUsers as $key => $user) { ?>
                     <img src="
@@ -24,7 +24,7 @@ $photoCount = count($galleryPhotos);
                         class="user_thumbnail">
                 <?php } ?>
             </div>
-            <div class="flex flex--gap-2">
+            <div class="flex flex--align-center flex--gap-2">
                 <a href="/gallery/upload/<?php echo $galleryId; ?>" class="button button-cta">
                     <img src="/assets/images/icons/picture.png" alt="picture icon">Ajouter</a>
                 <a href="/gallery/addusers/<?php echo $galleryId; ?>" class="button button--secondary ">

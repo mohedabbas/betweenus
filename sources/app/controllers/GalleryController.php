@@ -38,7 +38,7 @@ class GalleryController extends Controller
 
         AuthMiddleware::requireLogin();
 
-        $galleryForm = new Form('/gallery/create', 'POST');
+        $galleryForm = new Form('/gallery/create', 'POST', '', 'w-100');
         $galleryForm->addTextField(
             'name',
             '',
@@ -46,14 +46,14 @@ class GalleryController extends Controller
             [
                 'required' => true,
                 'placeholder' => 'Nom de la Galerie',
-                'class' => 'mb-2'
+                'class' => 'mb-6'
             ]
         )->addHiddenField(
                 'csrf_token',
                 AuthMiddleware::generateCsrfToken()
             )->addSubmitButton(
                 'Créer',
-                ['class' => 'button m-auto']
+                ['class' => 'button form__button']
             );
 
 

@@ -11,7 +11,7 @@ $form = $form ?? null;
 ?>
 
 <div class="modal">
-    <form class="form">
+    <div class="form">
         <!-- Titre de la page -->
         <h1 class="form__title mb-2"><?= htmlspecialchars($title) ?></h1>
 
@@ -48,7 +48,7 @@ $form = $form ?? null;
             echo $form->renderForm();
         }
         ?>
-    </form>
+    </div>
 </div>
 
 <?php

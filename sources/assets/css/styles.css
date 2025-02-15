@@ -448,7 +448,7 @@
     background-color: var(--primary-color);
     border-radius: 0.25rem;
     box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
-    min-width: 12.5rem;
+    min-width: 15.625rem;
     margin-top: 0.5rem;
     z-index: 1000;
     display: none;
@@ -464,10 +464,12 @@
     border-bottom: 0.5rem solid var(--primary-color);
   }
   .user-menu .user-dropdown .dropdown-item {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 0.75rem 1rem;
     text-decoration: none;
-    color: white;
+    color: var(--white-color);
     text-align: center;
     transition: background-color 0.2s;
   }

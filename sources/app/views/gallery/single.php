@@ -24,15 +24,15 @@ $photoCount = count($galleryPhotos);
                         class="user_thumbnail">
                 <?php } ?>
             </div>
+            <!-- Action button -->
             <div class="flex flex--align-center flex--gap-2">
-                <a href="/gallery/upload/<?php echo $galleryId; ?>" class="button button-cta">
-                    <img src="/assets/images/icons/picture.png" alt="picture icon">Ajouter</a>
                 <a href="/gallery/addusers/<?php echo $galleryId; ?>" class="button button--secondary ">
                     <img src="/assets/images/icons/arrow-curved.png" alt="picture icon">
                     Inviter
                 </a>
+                <!-- Dropdown Menu -->
                 <div class="user-menu">
-                    <button class="button button--icon">
+                    <button class="button button--icon button--secondary">
                         <img src="/assets/images/icons/dropdown.svg" alt="picture icon">
                     </button>
                     <div class="user-dropdown">
@@ -41,14 +41,16 @@ $photoCount = count($galleryPhotos);
                             Vider la gallerie
                         </a>
                         <a href="/gallery/deletegallery/<?php echo $galleryId; ?>" class="dropdown-item">
-                            <img src="/assets/images/icons/delete.svg" alt="picture icon">
-                            <p>
-                                Supprimer la gallerie
-                            </p>
+                            <img src="/assets/images/icons/delete-gallery.svg" alt="picture icon">
+                            Supprimer la gallerie
                         </a>
-
                     </div>
                 </div>
+                <!-- Add photo bouton CTA -->
+                <a href="/gallery/upload/<?php echo $galleryId; ?>" class="button button-cta">
+                    <img src="/assets/images/icons/picture.png" alt="picture icon">Ajouter</a>
+
+                <!-- Action button -->
             </div>
         </div>
     </div>

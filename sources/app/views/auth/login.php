@@ -13,7 +13,7 @@ $title = $title ?? 'Login';
 
         <!-- Message d'erreur -->
         <?php if (isset($_SESSION['login_error'])): ?>
-            <div class="error-message">
+            <div class="form__error-message">
                 <?= htmlspecialchars($_SESSION['login_error']) ?>
                 <?php unset($_SESSION['login_error']); ?>
             </div>

@@ -13,7 +13,7 @@
     --text-fade-color: #959a9e;
     --background-color: #ffffff;
     --primary-color: #ff9161;
-    --primary-hover-color: #faa17a;
+    --primary-hover-color: #ffb899;
     --success-text-color: rgb(92, 198, 92);
     --success-background-color: rgb(214, 255, 214);
     --danger-text-color: rgb(191, 70, 70);
@@ -42,6 +42,9 @@
     margin: auto;
     max-width: 81.25rem;
     padding: 0 1rem;
+  }
+  section {
+    margin-bottom: 12.5rem;
   }
   .hero-section {
     display: flex;
@@ -146,6 +149,84 @@
   }
   .mr-4 {
     margin-right: 2.5rem;
+  }
+  .m-5 {
+    margin: 3.125rem;
+  }
+  .m-auto {
+    margin: auto;
+  }
+  .mt-5 {
+    margin-top: 3.125rem;
+  }
+  .mb-5 {
+    margin-bottom: 3.125rem;
+  }
+  .ml-5 {
+    margin-left: 3.125rem;
+  }
+  .mr-5 {
+    margin-right: 3.125rem;
+  }
+  .m-6 {
+    margin: 3.75rem;
+  }
+  .m-auto {
+    margin: auto;
+  }
+  .mt-6 {
+    margin-top: 3.75rem;
+  }
+  .mb-6 {
+    margin-bottom: 3.75rem;
+  }
+  .ml-6 {
+    margin-left: 3.75rem;
+  }
+  .mr-6 {
+    margin-right: 3.75rem;
+  }
+  .m-7 {
+    margin: 4.375rem;
+  }
+  .m-auto {
+    margin: auto;
+  }
+  .mt-7 {
+    margin-top: 4.375rem;
+  }
+  .mb-7 {
+    margin-bottom: 4.375rem;
+  }
+  .ml-7 {
+    margin-left: 4.375rem;
+  }
+  .mr-7 {
+    margin-right: 4.375rem;
+  }
+  .m-8 {
+    margin: 5rem;
+  }
+  .m-auto {
+    margin: auto;
+  }
+  .mt-8 {
+    margin-top: 5rem;
+  }
+  .mb-8 {
+    margin-bottom: 5rem;
+  }
+  .ml-8 {
+    margin-left: 5rem;
+  }
+  .mr-8 {
+    margin-right: 5rem;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .w-100 {
+    width: 100%;
   }
 }
 @layer components {
@@ -253,13 +334,6 @@
     justify-content: center;
     align-items: center;
   }
-  .form__title {
-    font-size: 2.4375rem;
-  }
-  .form__text, .form__title {
-    font-weight: 500;
-    text-align: center;
-  }
   .form a:hover {
     color: var(--primary-color);
     text-decoration: underline;
@@ -285,6 +359,13 @@
   .form input::placeholder {
     color: var(--grey-color);
   }
+  .form__text, .form__title {
+    font-weight: 500;
+    text-align: center;
+  }
+  .form__text__title, .form__title__title {
+    font-size: 2.4375rem;
+  }
   .form__button[type=submit] {
     width: 100%;
     text-align: center;
@@ -293,13 +374,11 @@
     border-radius: 0.875rem;
   }
   .form__error-message {
-    background-color: #fff2f0;
-    border: 1px solid #ffccc7;
-    color: #ff4d4f;
+    background-color: var(--danger-background-color0);
+    color: var(--danger-text-color);
     padding: 0.75rem;
     border-radius: 0.75rem;
     margin-bottom: 1.25rem;
-    font-size: 0.875rem;
     text-align: center;
   }
   .form .forgot-password-text {
@@ -342,6 +421,7 @@
     display: inline-block;
     padding: 0.5rem;
     cursor: pointer;
+    border-radius: 1.25rem;
   }
   .user-menu .user-profile {
     display: flex;
@@ -398,7 +478,7 @@
     height: 1.25rem;
   }
   .user-menu:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: var(--light-grey-color);
   }
   .user-menu:hover .user-dropdown {
     display: block;

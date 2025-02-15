@@ -2,11 +2,9 @@
 ob_start();
 ?>
 <main>
-    <div class="container">
-        <div class="form-group m-auto">
-            <h1><?php echo $title ?></h1>
-            <?php echo $form->renderForm(); ?>
-        </div>
+    <div class="form-group m-auto">
+        <h1><?php echo $title ?></h1>
+        <?php echo $form->renderForm(); ?>
     </div>
 </main>
 

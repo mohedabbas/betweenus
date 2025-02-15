@@ -23,7 +23,7 @@ $form = $form ?? null;
 
         <!-- Message de succès (inscription) -->
         <?php if (isset($_SESSION['register_info'])): ?>
-            <div class="success-message">
+            <div class="form__success-message">
                 <?= htmlspecialchars($_SESSION['register_info']) ?>
             </div>
             <?php unset($_SESSION['register_info']); ?>
@@ -31,10 +31,12 @@ $form = $form ?? null;
 
         <!-- Affichage GLOBAL des erreurs s’il y en a -->
         <?php if (!empty($errors)): ?>
-            <div class="error-container">
-                <?php foreach ($errors as $field => $message): ?>
-                    <p class="error-message"><?= htmlspecialchars($message) ?></p>
-                <?php endforeach; ?>
+            <div class="form__error-message">
+                <ul>
+                    <?php foreach ($errors as $field => $message): ?>
+                        <li><?= htmlspecialchars($message) ?></li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         <?php endif; ?>
 

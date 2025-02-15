@@ -4,50 +4,6 @@ ob_start();
 $photoCount = count($galleryPhotos);
 // <?php echo __DIR__."/uploads/profiles/default.jpg";
 ?>
-<style>
-    .user-menu {
-        position: relative;
-
-        .button--icon {
-            border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
-            display: flex ;
-            justify-content: center;
-            align-items: center;
-
-            img {
-                width: 1.5rem;
-                height: 1.5rem;
-                object-fit: contain;
-            }
-        }
-
-        .user-dropdown {
-
-            .dropdown-item {
-                padding: 0.5rem;
-                border-bottom: 1px solid #f1f1f1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #333;
-                text-decoration: none;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-
-                img {
-                    width: 1rem;
-                    height: 1rem;
-                    object-fit: contain;
-                }
-
-            }
-        }
-    }
-</style>
-
 <main>
     <!-- Gallery header -->
     <div class="flex flex--justify-between flex--wrap flex--gap-2 mb-3">

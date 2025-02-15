@@ -38,11 +38,11 @@ $photoCount = count($galleryPhotos);
                     <div class="user-dropdown">
                         <a href="/gallery/empty/<?php echo $galleryId; ?>" class="dropdown-item">
                             <img src="/assets/images/icons/delete.svg" alt="picture icon">
-                            Vider la gallerie
+                            Vider la galerie
                         </a>
                         <a href="/gallery/deletegallery/<?php echo $galleryId; ?>" class="dropdown-item">
                             <img src="/assets/images/icons/delete-gallery.svg" alt="picture icon">
-                            Supprimer la gallerie
+                            Supprimer la galerie
                         </a>
                     </div>
                 </div>
@@ -58,7 +58,7 @@ $photoCount = count($galleryPhotos);
 
     <?php if ($photoCount == 0) { ?>
         <div class="">
-            <p>Il n'y a pas de photo dans cette gallerie pour l'instant</p>
+            <p>Il n'y a pas de photo dans cette galerie pour l'instant</p>
         </div>
     <?php } ?>
 

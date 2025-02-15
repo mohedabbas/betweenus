@@ -22,7 +22,7 @@ class GalleryController extends Controller
         $galleries = $galleryModel->getUserGalleriesAndContent($user['id']);
 
         $data = [
-            'title' => 'Mes Galleries',
+            'title' => 'Mes Galeries',
             'galleries' => $galleries
         ];
         $this->loadView('gallery/index', $data);
@@ -248,7 +248,7 @@ class GalleryController extends Controller
         $isOwner = $galleryModel->checkOwner($userId);
 
         if (!$isOwner) {
-            FlashMessage::add('Vous n\'avez pas l\'autorisation pour vider le gallerie.', 'error');
+            FlashMessage::add('Vous n\'avez pas l\'autorisation pour vider le galerie.', 'error');
             $this->redirect('/gallery/' . $galleryId);
         }
 

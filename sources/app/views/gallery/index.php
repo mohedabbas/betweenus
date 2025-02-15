@@ -5,7 +5,7 @@ ob_start();
     <div class="flex flex--justify-between flex--wrap flex--gap-2 mb-3">
         <h1 class="m-0"><?php echo $title; ?></h1>
         <a href="/gallery/create" class="button button-cta">
-            <img src="../../../assets/images/icons/plus.png" alt="plus icon"> Nouvelle Gallerie
+            <img src="../../../assets/images/icons/plus.png" alt="plus icon"> Nouvelle Galerie
         </a>
     </div>
     <div class="grid">

@@ -6,17 +6,17 @@ $title = $title ?? 'Register';
 
 // Récupération des erreurs, le formulaire, etc. 
 // (ils sont passés par $data dans loadView)
-$errors = $errors ?? []; 
-$form   = $form ?? null;
+$errors = $errors ?? [];
+$form = $form ?? null;
 ?>
 
-<div class="login-container">
-    <div class="login-card form-group">
+<div class="modal">
+    <form class="form">
         <!-- Titre de la page -->
-        <h1><?= htmlspecialchars($title) ?></h1>
+        <h1 class="form__title mb-2"><?= htmlspecialchars($title) ?></h1>
 
         <!-- Lien "déjà un compte ?" -->
-        <p class="signup-text">
+        <p class="form__text mb-3">
             Vous avez déjà un compte ?
             <a href="/login">Se connecter</a>
         </p>
@@ -46,7 +46,7 @@ $form   = $form ?? null;
             echo $form->renderForm();
         }
         ?>
-    </div>
+    </form>
 </div>
 
 <?php

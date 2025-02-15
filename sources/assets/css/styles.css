@@ -2,6 +2,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 @layer base {
   * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
   :root {
@@ -242,106 +244,84 @@
     background-color: rgba(0, 0, 0, 0.6);
   }
 }
-.login-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.25rem;
+@layer components {
+  .form {
+    width: 100%;
+    max-width: 33.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .form__title {
+    font-size: 2.4375rem;
+  }
+  .form__text, .form__title {
+    font-weight: 500;
+    text-align: center;
+  }
+  .form a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+  .form label {
+    width: 100%;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .form input {
+    border: 1px solid var(--grey-color);
+    outline: none;
+    background: none;
+    width: 100%;
+    padding: 0.9375rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  .form input:focus {
+    border-color: var(--grey-color);
+  }
+  .form input::placeholder {
+    color: var(--grey-color);
+  }
+  .form__button[type=submit] {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    border-radius: 0.875rem;
+  }
+  .form__error-message {
+    background-color: #fff2f0;
+    border: 1px solid #ffccc7;
+    color: #ff4d4f;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  .form .forgot-password-text {
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+  }
 }
-
-.login-card {
-  border-radius: 1.5rem;
-  padding: 2.5rem;
-  width: 100%;
-  max-width: 25rem;
-  box-shadow: 0 2px 0.625rem rgba(0, 0, 0, 0.08);
+@layer components {
+  .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 0.625rem rgba(0, 0, 0, 0.08);
+    margin: auto;
+    max-width: 46.25rem;
+    min-height: 35.875rem;
+    padding: 3.125rem 1rem;
+    background-color: var(--white-color);
+    border-radius: 1.25rem;
+  }
 }
-.login-card h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #333333;
-  text-align: center;
-  margin-bottom: 0.75rem;
-}
-.login-card button {
-  width: 100%;
-  padding: 0.875rem;
-  display: block;
-  border-radius: 0.875rem;
-  transition: background-color 0.3s ease;
-}
-.login-card .signup-text {
-  text-align: center;
-  color: #333333;
-  margin-bottom: 2rem;
-  font-size: 0.9375rem;
-}
-.login-card .signup-text a {
-  color: #ff7f50;
-  text-decoration: none;
-  font-weight: 500;
-}
-.login-card .signup-text a:hover {
-  text-decoration: underline;
-}
-
-.form-group {
-  max-width: 25rem;
-}
-.form-group label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-.form-group input {
-  border: 1px solid var(--grey-color);
-  outline: none;
-  background: none;
-  width: 100%;
-  padding: 0.9375rem;
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  margin-bottom: 1.875rem;
-}
-.form-group input:focus {
-  border-color: var(--grey-color);
-}
-.form-group input::placeholder {
-  color: var(--grey-color);
-}
-.form-group button[type=submit] {
-  width: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  border-radius: 0.875rem;
-}
-
-.error-message {
-  background-color: #fff2f0;
-  border: 1px solid #ffccc7;
-  color: #ff4d4f;
-  padding: 0.75rem;
-  border-radius: 0.75rem;
-  margin-bottom: 1.25rem;
-  font-size: 0.875rem;
-  text-align: center;
-}
-
-.forgot-password-text {
-  text-align: center;
-  margin-top: 1.25rem;
-}
-.forgot-password-text a {
-  color: #333333;
-  text-decoration: none;
-  font-size: 0.875rem;
-}
-.forgot-password-text a:hover {
-  color: #ff7f50;
-}
-
 @layer components {
   .user-profile {
     color: inherit;

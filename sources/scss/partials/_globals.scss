@@ -8,6 +8,8 @@ $main-font: "Urbanist", serif;
 
 @layer base {
     * {
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
     :root {

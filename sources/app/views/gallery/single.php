@@ -4,23 +4,9 @@ ob_start();
 $photoCount = count($galleryPhotos);
 ?>
 
-<style>
+<body>
 
-    .dropdown-item {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1rem;
-        border-bottom: 1px solid #f0f0f0;
-
-        img{
-            width: 1.5rem;
-            height: 1.5rem;
-            object-fit: cover;
-        }
-    }
-
-</style>
+</body>
 <main class="container">
     <!-- Gallery header -->
     <div class="flex flex--align-center flex--justify-between flex--wrap flex--gap-2 mb-3">
@@ -28,7 +14,7 @@ $photoCount = count($galleryPhotos);
             <a href="/gallery" class="button button--icon button--no-background">
                 <img src="/assets/images/icons/arrow-left.png" alt="arrow-left">
             </a>
-            <h1 class="m-0">
+            <h1>
                 <?php echo $title; ?>
             </h1>
         </div>

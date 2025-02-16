@@ -2,8 +2,25 @@
 ob_start();
 
 $photoCount = count($galleryPhotos);
-// <?php echo __DIR__."/uploads/profiles/default.jpg";
 ?>
+
+<style>
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+
+        img{
+            width: 1.5rem;
+            height: 1.5rem;
+            object-fit: cover;
+        }
+    }
+
+</style>
 <main class="container">
     <!-- Gallery header -->
     <div class="flex flex--align-center flex--justify-between flex--wrap flex--gap-2 mb-3">

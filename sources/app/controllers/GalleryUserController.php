@@ -44,14 +44,14 @@ class GalleryUserController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search_user'])) {
             // Validate CSRF token
             if (!AuthMiddleware::verifyCsrfToken($_POST['csrf_token'])) {
-                FlashMessage::add('Invalid CSRF token', 'error');
+                FlashMessage::add('Token CSRF invalide.', 'error');
                 $this->redirect("/gallery/addusers/$galleryId");
             }
 
             // Validate email input
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                FlashMessage::add('Invalid email format', 'error');
+                FlashMessage::add("Format d'email invalide", "error");
                 $this->redirect("/gallery/addusers/$galleryId");
             }
 
@@ -96,10 +96,10 @@ class GalleryUserController extends Controller
             $mailer = new Mailer();
             $user = $this->loadModel('AuthModel')->findUserById($userid);
             $mailer->sendMail($user->email, 'Invitation to join gallery', 'You have been invited to join a gallery. Please login to your account to accept the invitation.');
-            FlashMessage::add('User added successfully', 'success');
+            FlashMessage::add('L\'Utilisateur ajouté avec succès', 'success');
             $this->redirect("/gallery/addusers/$galleryId");
         } else {
-            FlashMessage::add('Error adding user', 'error');
+            FlashMessage::add('Erreur lors de l\'ajout de l\'utilisateur', 'error');
             $this->redirect("/gallery/addusers/$galleryId");
         }
     }
@@ -116,16 +116,14 @@ class GalleryUserController extends Controller
         $lastID = $galleryModel->removeUserFromGalleryById($userid, $galleryId);
         if ($lastID) {
             // If the user is added successfully
-            FlashMessage::add('User removed successfully', 'success');
+            FlashMessage::add('L\'Utilisateur retiré avec succès', 'success');
             $this->redirect("/gallery/addusers/$galleryId");
         } else {
-            FlashMessage::add('Error removing user', 'error');
+            FlashMessage::add('Erreur lors du retrait de l\'utilisateur', 'error');
             $this->redirect("/gallery/addusers/$galleryId");
         }
     }
-
-
-
+    
     /**
      * Add a user in the gallery and send an email to the user
      * @param int $userid
@@ -140,7 +138,7 @@ class GalleryUserController extends Controller
         $roles = $this->getConnectedUserRole($user['id'], $galleryId);
 
         if (!$roles || $roles->is_owner !== '1') {
-            FlashMessage::add('Dont have necessary permissions.', 'error');
+            FlashMessage::add("Vous n'avez pas les autorisations nécessaires.", "error");
             $this->redirect('/gallery/' . $galleryId);
         }
 
@@ -162,7 +160,7 @@ class GalleryUserController extends Controller
         $roles = $this->getConnectedUserRole($user['id'], $galleryId);
 
         if (!$roles || $roles->is_owner !== '1') {
-            FlashMessage::add('Dont have necessary permissions.', 'error');
+            FlashMessage::add('Vous n\'avez pas les autorisations nécessaires.', 'error');
             $this->redirect('/gallery/' . $galleryId);
         }
 

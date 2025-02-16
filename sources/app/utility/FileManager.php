@@ -41,7 +41,7 @@ class FileManager
         $destination    = $targetDir . '/' . $uniqueFilename;
 
         // Check if the file size is within the allowed limit
-        if ($file['size'] > self::$allowedSize) {
+        if ($file['size'] >= self::$allowedSize) {
             return false;
         }
 

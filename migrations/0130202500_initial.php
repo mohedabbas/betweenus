@@ -79,23 +79,69 @@ CREATE TABLE photos (
 
 		// 2. Insert an initial admin user
 		// You can change the username, email, password, etc. as desired
-		$insert = " INSERT INTO users (first_name,last_name,username,email,password,profile_image,role) 
-		VALUES (:first_name,:last_name,:username,:email,:password,:profile_image,:role) ";
+		$insert = " INSERT INTO users (first_name,last_name,username,email,password,profile_image,role,is_verified) 
+		VALUES (:first_name,:last_name,:username,:email,:password,:profile_image,:role,:is_verified) ";
 
 		$stmt = $this->pdo->prepare($insert);
 
 		// We’ll hash the password for security
 		$hashedPassword = password_hash('admin123', PASSWORD_BCRYPT);
 
-		$stmt->execute([
-			'username'   => 'admin',
-			'email'      => 'admin@betweenus.com',
-			'password'   => $hashedPassword,
-			'first_name' => 'Admin',
-			'last_name'  => 'User',
-			'profile_image' => 'default.jpg',
-			'role'       => 'admin'
-		]);
+        $users = [
+            [
+                'first_name' => 'Admin',
+                'last_name'  => 'User',
+                'username'   => 'admin',
+                'email'      => 'admin@betweenus.com',
+                'password'   => 'admin123',
+                'profile_image' => 'default.jpg',
+                'role'       => 'admin',
+                'is_verified'=> 1,
+            ],
+            [
+                'first_name' => 'Mohed',
+                'last_name'  => 'Abbas',
+                'username'   => 'mohedabbas',
+                'email'      => 'mohed332@gmail.com',
+                'password'   => 'password123',
+                'profile_image' => 'default.jpg',
+                'role'       => 'user',
+                'is_verified'=> 1,
+            ],
+            [
+                'first_name' => 'Wilson',
+                'last_name'  => 'San',
+                'username'   => 'wilsonsan',
+                'email'      => 'wilsonsan@gmail.com',
+                'password'   => 'password123',
+                'profile_image' => 'default.jpg',
+                'role'       => 'user',
+                'is_verified'=> 1,
+            ],
+            [
+                'first_name' => 'Ilia',
+                'last_name'  => 'Choumitzky',
+                'username'   => 'iliachoumitzky',
+                'email'      => 'iliachoumitzky@gmail.com',
+                'password'   => 'password123',
+                'profile_image' => 'default.jpg',
+                'role'       => 'user',
+                'is_verified'=> 1,
+            ]
+        ];
+        
+        foreach ($users as $user) {
+            $stmt->execute([
+                'first_name' => $user['first_name'],
+                'last_name'  => $user['last_name'],
+                'username'   => $user['username'],
+                'email'      => $user['email'],
+                'password'   => password_hash($user['password'], PASSWORD_BCRYPT),
+                'profile_image' => $user['profile_image'],
+                'role'       => $user['role'],
+                'is_verified'=> $user['is_verified']
+            ]);
+        }
 	}
 
 	public function down(): void

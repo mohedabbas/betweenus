@@ -311,25 +311,11 @@ class GalleryModel extends Model
         return $statement->rowCount() > 0;
     }
 
-    // public function deleteGalleryById(int $galleryId):bool|string
-    // {
-    //     $sql = 'DELETE FROM galleries WHERE id = :gallery_id';
-    //     $statement = $this->prepare($sql);
-    //     $result = $this->execute($statement, [':gallery_id'=> $galleryId]);
-    //     return $result->rowCount() > 0;
-    // }
-
-
-
-
-    // public function deleteUsersinGalleryById(int $galleryId) {
-    //     $sql = 'DELETE FROM gallery_users WHERE gallery_id = :gallery_id';
-    //     $statement = $this->prepare($sql);
-    //     return $this->execute($statement, [':gallery_id'=> $galleryId]);
-    // }
-
-
-
+    /**
+     * Delete a gallery by the gallery id.
+     * @param int $galleryId
+     * @return bool|string
+     */
     public function deleteGalleryById(int $galleryId): bool
     {
         $sql = 'DELETE FROM galleries WHERE id = :gallery_id';
@@ -337,11 +323,6 @@ class GalleryModel extends Model
         $this->execute($statement, [':gallery_id' => $galleryId]);
         return $statement->rowCount() > 0;
     }
-
-
-
-
-
 
     /**
      * Check if the user is the owner of the gallery.

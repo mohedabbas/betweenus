@@ -43,7 +43,7 @@ $countUser = count($users);
                     $fullName = htmlspecialchars($user->first_name ?? '') . ' ' . htmlspecialchars($user->last_name ?? '');
                     ?>
                     <li>
-                        <article class="flex flex--justify-between">
+                        <article class="flex flex--justify-between flex--align-center mb-2">
                             <div class="user-profile">
                                 <img src="/uploads/profiles/default.svg" alt="<?php echo $fullName; ?>">
                                 <p>
@@ -54,7 +54,7 @@ $countUser = count($users);
                             </div>
 
                             <a href="/gallery/<?php echo $isNewUser ? 'send_invite' : 'removeuser'; ?>/<?php echo htmlspecialchars($user->id); ?>?galleryid=<?php echo htmlspecialchars($galleryId); ?>"
-                                class="button button--cta mb-2">
+                                class="button button--cta">
                                 <img src="/assets/images/icons/<?php echo $isNewUser ? 'add-user.png' : 'remove-user.png'; ?>"
                                     alt="<?php echo $isNewUser ? 'Invite user' : 'Remove user'; ?>" />
                                 <?php echo $isNewUser ? 'Inviter' : 'Supprimer'; ?>

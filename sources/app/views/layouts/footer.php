@@ -13,7 +13,7 @@
     </div>
     
     <div class="footer-bottom ">
-      <p>BetweenUs © All rights reserved</p>
+      <p>BetweenUs © All rights reeserved</p>
     </div>
   </div>
 </footer>

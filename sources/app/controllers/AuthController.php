@@ -379,16 +379,16 @@ class AuthController extends Controller
 
         $form = new Form(
             '/reset-password',
-            '',
+            'POST',
             '',
             'form'
         ); // => POST
         $form->addPasswordField('new_password', 'Nouveau mot de passe', [
             'required' => 'required',
-            'class' => ''
+            'class' => 'mb-2'
         ])
             ->addHiddenField('token', $token) // Champ caché = token
-            ->addSubmitButton('Valider', ['name' => 'submit', 'class' => 'form__button']);
+            ->addSubmitButton('Valider', ['name' => 'submit', 'class' => 'button form__button']);
 
         $data = [
             'title' => 'Réinitialisation',

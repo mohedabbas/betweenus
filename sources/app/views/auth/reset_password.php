@@ -3,10 +3,10 @@ ob_start();
 $title = $title ?? 'Réinitialisation';
 ?>
 
-<div class="login-container">
-    <div class="login-card form-group">
+<div class="modal">
+    <div class="form">
         <!-- En-tête de page -->
-        <h1><?= htmlspecialchars($title) ?></h1>
+        <h1 class="mb-3"><?= htmlspecialchars($title) ?></h1>
 
         <!-- Afficher les messages d'erreur et de réussite dans des blocs de style -->
         <?php if (isset($_SESSION['reset_error'])): ?>

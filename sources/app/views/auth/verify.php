@@ -3,8 +3,8 @@ ob_start();
 $title = $title ?? 'Vérification';
 ?>
 
-<div class="login-container">
-    <div class="login-card form-group">
+<div class="modal">
+    <div class="form">
         <!-- En-tête de page -->
         <h1><?= htmlspecialchars($title) ?></h1>
 

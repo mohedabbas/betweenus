@@ -21,26 +21,13 @@ $countUser = count($users);
         gap: 1rem;
         padding: 1rem;
 
-        img {
+        /* img {
             width: 2.5rem;
             height: 2.5rem;
             object-fit: cover;
             border-radius: 50%;
             position: relative;
-        }
-
-        a {
-            margin-left: auto;
-
-            img {
-                width: 1.5rem;
-                height: 1.5rem;
-            }
-        }
-    }
-
-    h3 {
-        margin: 0;
+        } */
     }
 
     h3 small {
@@ -50,15 +37,21 @@ $countUser = count($users);
 </style>
 
 <main>
-    <div class="flex flex--gap-2 flex--wrap">
-        <a href="/gallery/<?php echo htmlspecialchars($galleryId); ?>"
-            class="button button--icon button--no-background">
-            <img src="/assets/images/icons/arrow-left.png" alt="Back">
-        </a>
-        <h1 class="m-0"><?php echo htmlspecialchars($title); ?></h1>
+    <!-- Gallery header -->
+    <div class="flex flex--justify-between flex--wrap flex--gap-2 mb-3">
+        <div class="flex flex--gap-2 flex--wrap">
+            <a href="/gallery" class="button button--icon button--no-background">
+                <img src="../../../assets/images/icons/arrow-left.png" alt="arrow-left">
+            </a>
+            <h1 class="m-0">
+                <?php echo htmlspecialchars($title); ?>
+            </h1>
+        </div>
     </div>
 
-    <?php echo $form->renderForm(); ?>
+    <div class="form form--inline">
+        <?php echo $form->renderForm(); ?>
+    </div>
 
     <?php if ($countUser > 0) { ?>
         <div id="users-lists-to-add">
@@ -79,7 +72,7 @@ $countUser = count($users);
 
                             <a href="/gallery/<?php echo $isNewUser ? 'send_invite' : 'removeuser'; ?>/<?php echo htmlspecialchars($user->id); ?>?galleryid=<?php echo htmlspecialchars($galleryId); ?>"
                                 class="button button--cta">
-                                <img src="/assets/images/icons/<?php echo $isNewUser ? 'add-user.svg' : 'remove-user-2.svg'; ?>"
+                                <img src="/assets/images/icons/<?php echo $isNewUser ? 'add-user.png' : 'remove-user.png'; ?>"
                                     alt="<?php echo $isNewUser ? 'Invite user' : 'Remove user'; ?>" />
                                 <?php echo $isNewUser ? 'Invite' : ''; ?>
                             </a>

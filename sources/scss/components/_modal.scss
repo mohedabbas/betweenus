@@ -1,0 +1,15 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+@layer components {
+    .modal {
+        @include m.flexbox($align: center, $justify: center);
+        @include m.box-shadow;
+        margin: auto;
+        max-width: f.rem(740);
+        min-height: f.rem(574);
+        padding: f.rem(50) f.rem(16);
+        background-color: var(--white-color);
+        border-radius: f.rem(20);
+    }
+}

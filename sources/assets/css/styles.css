@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 @layer base {
   * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
   :root {
@@ -10,7 +12,7 @@
     --text-fade-color: #959a9e;
     --background-color: #ffffff;
     --primary-color: #ff9161;
-    --primary-hover-color: #faa17a;
+    --primary-hover-color: #ffb899;
     --success-text-color: rgb(92, 198, 92);
     --success-background-color: rgb(214, 255, 214);
     --danger-text-color: rgb(191, 70, 70);
@@ -39,6 +41,9 @@
     margin: auto;
     max-width: 81.25rem;
     padding: 0 1rem;
+  }
+  section {
+    margin-bottom: 12.5rem;
   }
   .hero-section {
     display: flex;
@@ -144,6 +149,84 @@
   .mr-4 {
     margin-right: 2.5rem;
   }
+  .m-5 {
+    margin: 3.125rem;
+  }
+  .m-auto {
+    margin: auto;
+  }
+  .mt-5 {
+    margin-top: 3.125rem;
+  }
+  .mb-5 {
+    margin-bottom: 3.125rem;
+  }
+  .ml-5 {
+    margin-left: 3.125rem;
+  }
+  .mr-5 {
+    margin-right: 3.125rem;
+  }
+  .m-6 {
+    margin: 3.75rem;
+  }
+  .m-auto {
+    margin: auto;
+  }
+  .mt-6 {
+    margin-top: 3.75rem;
+  }
+  .mb-6 {
+    margin-bottom: 3.75rem;
+  }
+  .ml-6 {
+    margin-left: 3.75rem;
+  }
+  .mr-6 {
+    margin-right: 3.75rem;
+  }
+  .m-7 {
+    margin: 4.375rem;
+  }
+  .m-auto {
+    margin: auto;
+  }
+  .mt-7 {
+    margin-top: 4.375rem;
+  }
+  .mb-7 {
+    margin-bottom: 4.375rem;
+  }
+  .ml-7 {
+    margin-left: 4.375rem;
+  }
+  .mr-7 {
+    margin-right: 4.375rem;
+  }
+  .m-8 {
+    margin: 5rem;
+  }
+  .m-auto {
+    margin: auto;
+  }
+  .mt-8 {
+    margin-top: 5rem;
+  }
+  .mb-8 {
+    margin-bottom: 5rem;
+  }
+  .ml-8 {
+    margin-left: 5rem;
+  }
+  .mr-8 {
+    margin-right: 5rem;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .w-100 {
+    width: 100%;
+  }
 }
 @layer components {
   .button {
@@ -163,10 +246,15 @@
     border-radius: 1.6875rem;
     font-weight: 500;
     color: var(--black-color);
+    height: 3.375rem;
     transition: background-color 0.3s;
   }
   .button:hover {
     background-color: var(--primary-hover-color);
+  }
+  .button img {
+    width: 1.5rem;
+    height: 1.5rem;
   }
   .button--cta {
     background-color: var(--primary-color);
@@ -195,14 +283,15 @@
     width: auto;
     max-width: 19.375rem;
   }
-  .photo-card img {
-    width: 100%;
-  }
   .photo-card:hover::after,
   .photo-card:hover button,
   .photo-card:hover a {
     opacity: 1;
     transition: 300ms ease-out;
+  }
+  .photo-card__img {
+    width: 100%;
+    border-radius: 1.25rem;
   }
   .photo-card__delete, .photo-card__zoom {
     background-color: transparent;
@@ -236,111 +325,89 @@
     z-index: 1;
     right: 0;
     bottom: 0;
+    top: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 0.25rem);
+    border-radius: 1.25rem;
     background-color: rgba(0, 0, 0, 0.6);
   }
 }
-.login-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.25rem;
+@layer components {
+  .form {
+    width: 100%;
+    max-width: 33.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .form a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+  }
+  .form label {
+    width: 100%;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .form input {
+    border: 1px solid var(--grey-color);
+    outline: none;
+    background: none;
+    width: 100%;
+    padding: 0.9375rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  .form input:focus {
+    border-color: var(--grey-color);
+  }
+  .form input::placeholder {
+    color: var(--grey-color);
+  }
+  .form__text, .form__title {
+    font-weight: 500;
+    text-align: center;
+  }
+  .form__text__title, .form__title__title {
+    font-size: 2.4375rem;
+  }
+  .form__button[type=submit] {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    border-radius: 0.875rem;
+  }
+  .form__error-message {
+    background-color: var(--danger-background-color);
+    color: var(--danger-text-color);
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+  .form .forgot-password-text {
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+  }
 }
-
-.login-card {
-  border-radius: 1.5rem;
-  padding: 2.5rem;
-  width: 100%;
-  max-width: 25rem;
-  box-shadow: 0 2px 0.625rem rgba(0, 0, 0, 0.08);
+@layer components {
+  .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 0.625rem rgba(0, 0, 0, 0.08);
+    margin: auto;
+    max-width: 46.25rem;
+    min-height: 35.875rem;
+    padding: 3.125rem 1rem;
+    background-color: var(--white-color);
+    border-radius: 1.25rem;
+  }
 }
-.login-card h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #333333;
-  text-align: center;
-  margin-bottom: 0.75rem;
-}
-.login-card button {
-  width: 100%;
-  padding: 0.875rem;
-  display: block;
-  border-radius: 0.875rem;
-  transition: background-color 0.3s ease;
-}
-.login-card .signup-text {
-  text-align: center;
-  color: #333333;
-  margin-bottom: 2rem;
-  font-size: 0.9375rem;
-}
-.login-card .signup-text a {
-  color: #ff7f50;
-  text-decoration: none;
-  font-weight: 500;
-}
-.login-card .signup-text a:hover {
-  text-decoration: underline;
-}
-
-.form-group {
-  max-width: 25rem;
-}
-.form-group label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-.form-group input {
-  border: 1px solid var(--grey-color);
-  outline: none;
-  background: none;
-  width: 100%;
-  padding: 0.9375rem;
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  margin-bottom: 1.875rem;
-}
-.form-group input:focus {
-  border-color: var(--grey-color);
-}
-.form-group input::placeholder {
-  color: var(--grey-color);
-}
-.form-group button[type=submit] {
-  width: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  border-radius: 0.875rem;
-}
-
-.error-message {
-  background-color: #fff2f0;
-  border: 1px solid #ffccc7;
-  color: #ff4d4f;
-  padding: 0.75rem;
-  border-radius: 0.75rem;
-  margin-bottom: 1.25rem;
-  font-size: 0.875rem;
-  text-align: center;
-}
-
-.forgot-password-text {
-  text-align: center;
-  margin-top: 1.25rem;
-}
-.forgot-password-text a {
-  color: #333333;
-  text-decoration: none;
-  font-size: 0.875rem;
-}
-.forgot-password-text a:hover {
-  color: #ff7f50;
-}
-
 @layer components {
   .user-profile {
     color: inherit;
@@ -361,6 +428,7 @@
     display: inline-block;
     padding: 0.5rem;
     cursor: pointer;
+    border-radius: 1.25rem;
   }
   .user-menu .user-profile {
     display: flex;
@@ -382,7 +450,7 @@
     background-color: var(--primary-color);
     border-radius: 0.25rem;
     box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
-    min-width: 12.5rem;
+    min-width: 15.625rem;
     margin-top: 0.5rem;
     z-index: 1000;
     display: none;
@@ -398,10 +466,12 @@
     border-bottom: 0.5rem solid var(--primary-color);
   }
   .user-menu .user-dropdown .dropdown-item {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 0.75rem 1rem;
     text-decoration: none;
-    color: white;
+    color: var(--white-color);
     text-align: center;
     transition: background-color 0.2s;
   }
@@ -417,7 +487,7 @@
     height: 1.25rem;
   }
   .user-menu:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: var(--light-grey-color);
   }
   .user-menu:hover .user-dropdown {
     display: block;

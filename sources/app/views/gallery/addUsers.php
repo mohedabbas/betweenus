@@ -49,7 +49,7 @@ $countUser = count($users);
     }
 </style>
 
-<main class="container">
+<main>
     <div class="flex flex--gap-2 flex--wrap">
         <a href="/gallery/<?php echo htmlspecialchars($galleryId); ?>"
             class="button button--icon button--no-background">
@@ -61,7 +61,7 @@ $countUser = count($users);
     <?php echo $form->renderForm(); ?>
 
     <?php if ($countUser > 0) { ?>
-        <div id="users-lists-to-add" class="container">
+        <div id="users-lists-to-add">
             <h1 class="m-0">Les Membres</h1>
             <ul>
                 <?php foreach ($users as $user) {

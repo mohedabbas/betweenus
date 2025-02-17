@@ -9,9 +9,6 @@
         width: auto;
         max-width: f.rem(310);
 
-        img {
-            width: 100%;
-        }
         &:hover {
             &::after,
             button,
@@ -20,7 +17,10 @@
                 transition: 300ms ease-out;
             }
         }
-
+        &__img {
+            width: 100%;
+            border-radius: f.rem(20);
+        }
         &__delete,
         &__zoom {
             @include m.resetButton;
@@ -50,8 +50,10 @@
             z-index: 1;
             right: 0;
             bottom: 0;
+            top: 0;
             width: 100%;
-            height: 100%;
+            height: calc(100% - f.rem(4));
+            border-radius: f.rem(20);
             background-color: rgba(0, 0, 0, 0.6);
         }
     }

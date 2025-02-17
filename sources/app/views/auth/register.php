@@ -6,24 +6,24 @@ $title = $title ?? 'Register';
 
 // Récupération des erreurs, le formulaire, etc. 
 // (ils sont passés par $data dans loadView)
-$errors = $errors ?? []; 
-$form   = $form ?? null;
+$errors = $errors ?? [];
+$form = $form ?? null;
 ?>
 
-<div class="login-container">
-    <div class="login-card form-group">
+<div class="modal">
+    <div class="form">
         <!-- Titre de la page -->
-        <h1><?= htmlspecialchars($title) ?></h1>
+        <h1 class="form__title mb-2"><?= htmlspecialchars($title) ?></h1>
 
         <!-- Lien "déjà un compte ?" -->
-        <p class="signup-text">
+        <p class="form__text mb-3">
             Vous avez déjà un compte ?
             <a href="/login">Se connecter</a>
         </p>
 
         <!-- Message de succès (inscription) -->
         <?php if (isset($_SESSION['register_info'])): ?>
-            <div class="success-message">
+            <div class="form__success-message">
                 <?= htmlspecialchars($_SESSION['register_info']) ?>
             </div>
             <?php unset($_SESSION['register_info']); ?>
@@ -31,10 +31,12 @@ $form   = $form ?? null;
 
         <!-- Affichage GLOBAL des erreurs s’il y en a -->
         <?php if (!empty($errors)): ?>
-            <div class="error-container">
-                <?php foreach ($errors as $field => $message): ?>
-                    <p class="error-message"><?= htmlspecialchars($message) ?></p>
-                <?php endforeach; ?>
+            <div class="form__error-message">
+                <ul>
+                    <?php foreach ($errors as $field => $message): ?>
+                        <li><?= htmlspecialchars($message) ?></li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
         <?php endif; ?>
 

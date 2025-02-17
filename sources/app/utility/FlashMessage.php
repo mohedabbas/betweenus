@@ -36,7 +36,7 @@ class FlashMessage
 // Basic error handler
 set_exception_handler(function ($exception) {
     error_log($exception->getMessage());
-    FlashMessage::add('Something went wrong. Please try again later.', 'error');
+    FlashMessage::add("Quelque chose s'est mal passé. Veuillez réessayer plus tard.", "error");
     header('Location: /error');
     exit();
 });

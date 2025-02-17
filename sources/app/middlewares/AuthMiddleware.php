@@ -52,7 +52,7 @@ class AuthMiddleware
     {
         if (!self::isLoggedIn()) {
 
-            FlashMessage::add('You must be logged in to access this page', 'error');
+            FlashMessage::add('Vous devez être connecté pour accéder à cette page', 'error');
             header('Location: /login');
             exit;
         }
@@ -66,7 +66,7 @@ class AuthMiddleware
     {
         self::requireLogin();
         if (!self::isAdmin()) {
-            FlashMessage::add('You must be an admin to access this page', 'error');
+            FlashMessage::add('Vous devez être administrateur pour accéder à cette page', 'error');
             header('Location: /');
         }
     }

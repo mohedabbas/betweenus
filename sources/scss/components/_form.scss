@@ -1,114 +1,62 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
 
-$primary-color: #ff7f50; // Coral color for the button and links
-$background-color: #ffffff;
-$text-color: #333333;
-$placeholder-color: #999999;
-$border-color: #e0e0e0;
-$border-radius: #000000;
-
-// Login Container
-.login-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: f.rem(20);
-}
-
 // Login Card
-.login-card {
-  border-radius: f.rem(24);
-  padding: f.rem(40);
-  width: 100%;
-  max-width: f.rem(400);
-  @include m.card-shadow;
-
-  h1 {
-    font-size: f.rem(32);
-    font-weight: 600;
-    color: $text-color;
-    text-align: center;
-    margin-bottom: f.rem(12);
-  }
-
-  button {
+@layer components {
+  .form {
     width: 100%;
-    padding: f.rem(14);
-    display: block;
-    border-radius: f.rem(14);
-    transition: background-color 0.3s ease;
-  }
+    max-width: f.rem(540);
+    @include m.flexbox($direction: column, $align: center, $justify: center);
 
-  .signup-text {
-    text-align: center;
-    color: $text-color;
-    margin-bottom: f.rem(32);
-    font-size: f.rem(15);
+    a:hover {
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
 
-    a {
-      color: $primary-color;
-      text-decoration: none;
+    label {
+      width: 100%;
       font-weight: 500;
-
-      &:hover {
-        text-decoration: underline;
+      margin-bottom: f.rem(8);
+    }
+    input {
+      @include m.input-reset;
+      &::placeholder {
+        color: var(--grey-color);
       }
     }
-  }
-}
+    // Form Elements
+    &__text,
+    &__title {
+      font-weight: 500;
+      text-align: center;
 
-// Form Elements
-.form-group {
-  max-width: f.rem(400);
-
-  label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: f.rem(8);
-  }
-
-  input {
-    @include m.input-reset;
-    margin-bottom: f.rem(30);
-    &::placeholder {
-      color: var(--grey-color);
+      &__title {
+        font-size: f.rem(39);
+      }
     }
-  }
 
-  button[type="submit"] {
-    width: 100%;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    border-radius: f.rem(14);
-  }
-}
+    &__button[type="submit"] {
+      width: 100%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      border-radius: f.rem(14);
+    }
 
-// Error Message
-.error-message {
-  background-color: #fff2f0;
-  border: 1px solid #ffccc7;
-  color: #ff4d4f;
-  padding: f.rem(12);
-  border-radius: f.rem(12);
-  margin-bottom: f.rem(20);
-  font-size: f.rem(14);
-  text-align: center;
-}
+    // Error Message
+    &__error-message {
+      background-color: var(--danger-background-color);
+      color: var(--danger-text-color);
+      padding: f.rem(12);
+      border-radius: f.rem(12);
+      margin-bottom: f.rem(20);
+      text-align: center;
+    }
 
-// Forgot Password
-.forgot-password-text {
-  text-align: center;
-  margin-top: f.rem(20);
-
-  a {
-    color: $text-color;
-    text-decoration: none;
-    font-size: f.rem(14);
-
-    &:hover {
-      color: $primary-color;
+    // Forgot Password
+    .forgot-password-text {
+      @include m.resetA;
+      text-align: center;
     }
   }
 }

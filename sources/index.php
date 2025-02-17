@@ -1,16 +1,6 @@
 <?php
 use App\Core\Router;
 session_start();
-//$databaseName = $_ENV["DATABASE_NAME"];
-//$databaseUser = $_ENV["DATABASE_USER"];
-//$databasePassword = $_ENV["DATABASE_PASSWORD"];
-//
-//$database = new PDO("mysql:host=mariadb;dbname=$databaseName", $databaseUser, $databasePassword);
-//
-//$query = $database->query("SELECT 1 + 1");
-//
-//$result = $query->fetch();
-//
 
 // Register the autoloader
 spl_autoload_register(function ($class) {
@@ -83,6 +73,7 @@ $router->get('/gallery/delete/{id}', ['GalleryController', 'deletePhoto']);
 
 // Empty gallery 
 $router->get('/gallery/empty/{galleryId}', ['GalleryController','emptyGallery']);
+$router->get('/gallery/deletegallery/{galleryId}', ['GalleryController','deleteGallery']);
 
 
 
@@ -99,6 +90,4 @@ $router->get('/profile', ['ProfileController', 'index']);
 
 // Dispatch
 $router->get('/designguide', ['DesignGuideController', 'index']);
-
-
 $router->dispatch();

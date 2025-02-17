@@ -3,7 +3,8 @@ use App\Utility\FlashMessage;
 $title = $title ?? 'Default Title';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@ $title = $title ?? 'Default Title';
   <!-- Balise meta pour le token CSRF -->
   <meta name="csrf-token" content="<?= $_SESSION['csrf_token'] ?? '' ?>">
 </head>
+
 <body>
   <?php require __DIR__ . '/header.php'; ?>
   <main class="container">

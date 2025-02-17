@@ -2,13 +2,13 @@
 use App\Middlewares\AuthMiddleware;
 $user = AuthMiddleware::getSessionUser();
 $username = htmlspecialchars($user['username'] ?? 'Guest');
-$userImg = $user['image_path'] ?? '/uploads/profiles/default.jpg';
+$userImg = $user['image_path'] ?? '/uploads/profiles/default.svg';
 ?>
 
 <header class="container">
     <!-- Logo/Brand section -->
     <a href="/" class="brand">
-        <img src="../../../assets/images/brand-logo.png" alt="BetweenUs Logo">
+        <img src="/assets/images/brand-logo.png" alt="BetweenUs Logo">
         <span>BetweenUs</span>
     </a>
 

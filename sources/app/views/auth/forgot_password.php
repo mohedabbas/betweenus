@@ -3,10 +3,10 @@ ob_start();
 $title = $title ?? 'Mot de passe oublié';
 ?>
 
-<div class="login-container">
-    <div class="login-card form-group">
+<div class="modal">
+    <div class="form">
         <!-- En-tête de page-->
-        <h1><?= htmlspecialchars($title) ?></h1>
+        <h1 class="mb-3"><?= htmlspecialchars($title) ?></h1>
 
         <!-- Afficher les messages d'erreur et d'information dans des blocs de style -->
         <?php if (isset($_SESSION['forgot_error'])): ?>
@@ -24,7 +24,7 @@ $title = $title ?? 'Mot de passe oublié';
         <?php endif; ?>
 
         <!-- Texte d'instruction -->
-        <p>Veuillez entrer votre email pour recevoir un lien de réinitialisation.</p>
+        <p class="mb-2">Veuillez entrer votre email pour recevoir un lien de réinitialisation.</p>
 
         <!-- Rendre le formulaire (en supposant que $form est un objet avec une méthode renderForm()) -->
         <?php
@@ -34,7 +34,7 @@ $title = $title ?? 'Mot de passe oublié';
         ?>
 
         <!-- Lien facultatif vers la page de connexion ou d'accueil -->
-        <p class="signup-text">
+        <p class="mt-3">
             Vous avez déjà un compte ?
             <a href="/login">Connectez-vous</a>
         </p>

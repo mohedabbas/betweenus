@@ -272,13 +272,13 @@ class AuthController extends Controller
      */
     public function forgotPasswordForm(): void
     {
-        $form = new Form('/forgot-password');
+        $form = new Form('/forgot-password', '', '', 'form');
         $form->addTextField('email', 'Votre email', '', [
             'required' => 'required',
             'placeholder' => 'Entrez votre email',
-            'class' => 'form-group'
+            'class' => 'mb-2'
         ])
-            ->addSubmitButton('Envoyer', ['name' => 'submit', 'class' => 'button']);
+            ->addSubmitButton('Envoyer', ['name' => 'submit', 'class' => 'button form__button']);
 
         $data = [
             'title' => 'Mot de passe oublié',
@@ -377,13 +377,18 @@ class AuthController extends Controller
         // Récup token en GET
         $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);
 
-        $form = new Form('/reset-password'); // => POST
+        $form = new Form(
+            '/reset-password',
+            '',
+            '',
+            'form'
+        ); // => POST
         $form->addPasswordField('new_password', 'Nouveau mot de passe', [
             'required' => 'required',
-            'class' => 'form-group '
+            'class' => ''
         ])
             ->addHiddenField('token', $token) // Champ caché = token
-            ->addSubmitButton('Valider', ['name' => 'submit', 'class' => 'button ']);
+            ->addSubmitButton('Valider', ['name' => 'submit', 'class' => 'form__button']);
 
         $data = [
             'title' => 'Réinitialisation',

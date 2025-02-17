@@ -4,33 +4,14 @@ $countUser = count($users);
 ?>
 
 <style>
-    #users-lists-to-add {
-        margin-top: 2rem;
-    }
-
     ul {
         list-style: none;
-        padding: 0;
-    }
-
-    article {
-        display: flex;
-        align-items: center;
-        border: 1px solid #ccc;
-        justify-content: flex-start;
-        gap: 1rem;
+        background-color: var(--light-grey-color);
+        border-radius: 20px;
         padding: 1rem;
-
-        /* img {
-            width: 2.5rem;
-            height: 2.5rem;
-            object-fit: cover;
-            border-radius: 50%;
-            position: relative;
-        } */
     }
 
-    h3 small {
+    small {
         font-size: 0.8rem;
         color: var(--text-fade-color);
     }
@@ -54,27 +35,29 @@ $countUser = count($users);
     </div>
 
     <?php if ($countUser > 0) { ?>
-        <div id="users-lists-to-add">
-            <h1 class="m-0">Les Membres</h1>
+        <div class="m-6">
+            <h1 class="mb-3">Membres</h1>
             <ul>
                 <?php foreach ($users as $user) {
                     $isNewUser = isset($user->is_newUser) && $user->is_newUser;
                     $fullName = htmlspecialchars($user->first_name ?? '') . ' ' . htmlspecialchars($user->last_name ?? '');
                     ?>
                     <li>
-                        <article>
-                            <img src="/uploads/profiles/default.jpg" alt="<?php echo $fullName; ?>">
-                            <h3>
-                                <?php echo $fullName; ?>
-                                <br>
-                                <small class="small-text"><?php echo htmlspecialchars($user->email); ?></small>
-                            </h3>
+                        <article class="flex flex--justify-between">
+                            <div class="user-profile">
+                                <img src="/uploads/profiles/default.svg" alt="<?php echo $fullName; ?>">
+                                <p>
+                                    <b><?php echo $fullName; ?></b>
+                                    <br>
+                                    <small class="small-text"><?php echo htmlspecialchars($user->email); ?></small>
+                                </p>
+                            </div>
 
                             <a href="/gallery/<?php echo $isNewUser ? 'send_invite' : 'removeuser'; ?>/<?php echo htmlspecialchars($user->id); ?>?galleryid=<?php echo htmlspecialchars($galleryId); ?>"
-                                class="button button--cta">
+                                class="button button--cta mb-2">
                                 <img src="/assets/images/icons/<?php echo $isNewUser ? 'add-user.png' : 'remove-user.png'; ?>"
                                     alt="<?php echo $isNewUser ? 'Invite user' : 'Remove user'; ?>" />
-                                <?php echo $isNewUser ? 'Invite' : ''; ?>
+                                <?php echo $isNewUser ? 'Inviter' : 'Supprimer'; ?>
                             </a>
                         </article>
                     </li>

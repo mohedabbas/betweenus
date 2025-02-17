@@ -20,16 +20,16 @@ class GalleryUserController extends Controller
         AuthMiddleware::requireLogin();
 
         $formAction = "/gallery/addusers/{$galleryId}";
-        $addUsersForm = new Form($formAction, 'POST');
+        $addUsersForm = new Form($formAction, 'POST', '', ' form grid');
         $addUsersForm
             ->addTextField('email', 'Email', '', [
                 'required' => true,
                 'placeholder' => 'Email',
-                'class' => 'form-group'
+                'class' => 'col-7'
             ])
             ->addHiddenField('csrf_token', $_SESSION['csrf_token'])
-            ->addSubmitButton('Search User', [
-                'class' => 'button button-cta',
+            ->addSubmitButton('Rechercher', [
+                'class' => 'button button-cta col-4',
                 'name' => 'search_user'
             ]);
 
@@ -74,7 +74,7 @@ class GalleryUserController extends Controller
 
         // Render the view with data
         $data = [
-            'title' => 'Ajouter les utilisateurs à la galerie',
+            'title' => 'Ajouter des utilisateurs',
             'form' => $addUsersForm,
             'galleryId' => $galleryId,
             'users' => $users
@@ -123,7 +123,7 @@ class GalleryUserController extends Controller
             $this->redirect("/gallery/addusers/$galleryId");
         }
     }
-    
+
     /**
      * Add a user in the gallery and send an email to the user
      * @param int $userid

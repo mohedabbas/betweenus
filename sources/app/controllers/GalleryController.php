@@ -161,7 +161,7 @@ class GalleryController extends Controller
                 'csrf_token',
                 AuthMiddleware::generateCsrfToken()
             )
-            ->addSubmitButton('Upload Photo', ['class' => 'btn btn-primary']);
+            ->addSubmitButton('Upload Photo', ['class' => 'button']);
 
         $data = [
             'title' => 'Importer une photo',
@@ -196,19 +196,19 @@ class GalleryController extends Controller
             $results = [];
             for ($i = 0; $i < $fileCount; $i++) {
                 $file = [
-                    'name'     => $uploadedFiles['name'][$i],
-                    'type'     => $uploadedFiles['type'][$i],
+                    'name' => $uploadedFiles['name'][$i],
+                    'type' => $uploadedFiles['type'][$i],
                     'tmp_name' => $uploadedFiles['tmp_name'][$i],
-                    'error'    => $uploadedFiles['error'][$i],
-                    'size'     => $uploadedFiles['size'][$i]
+                    'error' => $uploadedFiles['error'][$i],
+                    'size' => $uploadedFiles['size'][$i]
                 ];
                 $photoPath = FileManager::uploadGalleryPhoto($file, $user['id'], $galleryId);
                 $data = [
                     'gallery_id' => $galleryId,
-                    'user_id'    => $user['id'],
+                    'user_id' => $user['id'],
                     'image_path' => $photoPath,
-                    'caption'    => 'Photo caption',
-                    'is_public'  => 1
+                    'caption' => 'Photo caption',
+                    'is_public' => 1
                 ];
                 $galleryModel->createPhoto($data);
                 $results[] = $data;
@@ -223,10 +223,10 @@ class GalleryController extends Controller
             $photoPath = FileManager::uploadGalleryPhoto($photo, $user['id'], $galleryId);
             $data = [
                 'gallery_id' => $galleryId,
-                'user_id'    => $user['id'],
+                'user_id' => $user['id'],
                 'image_path' => $photoPath,
-                'caption'    => 'Photo caption',
-                'is_public'  => 1
+                'caption' => 'Photo caption',
+                'is_public' => 1
             ];
             $galleryModel->createPhoto($data);
             header('Content-Type: application/json');
@@ -290,7 +290,7 @@ class GalleryController extends Controller
         $isEmptied = $galleryModel->emptyGallery($galleryId, $userId);
 
         if (!$isEmptied) {
-            FlashMessage::add('Échec de vider la galerie.', 'error');
+            FlashMessage::add('Échec pour vider la galerie.', 'error');
             $this->redirect('/gallery/' . $galleryId);
         }
 

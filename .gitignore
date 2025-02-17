@@ -1,5 +1,4 @@
 **/.bash_history
 **/.env
-**/database
-
-**/uploads\gallery_photos
+**/database/
+/uploads/gallery_photos/

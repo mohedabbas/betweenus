@@ -272,7 +272,7 @@ class AuthController extends Controller
      */
     public function forgotPasswordForm(): void
     {
-        $form = new Form('/forgot-password', '', '', 'form');
+        $form = new Form('/forgot-password', 'POST', '', 'form');
         $form->addTextField('email', 'Votre email', '', [
             'required' => 'required',
             'placeholder' => 'Entrez votre email',

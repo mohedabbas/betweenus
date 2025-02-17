@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Controllers;
-
 use App\Core\Controller;
 use App\Core\Form;
 use App\Middlewares\AuthMiddleware;
 use App\Utility\FileManager;
 use App\Utility\FlashMessage;
+
 
 class GalleryController extends Controller
 {
@@ -22,7 +22,7 @@ class GalleryController extends Controller
         $galleries = $galleryModel->getUserGalleriesAndContent($user['id']);
 
         $data = [
-            'title' => 'Mes Galleries',
+            'title' => 'Mes Galeries',
             'galleries' => $galleries
         ];
         $this->loadView('gallery/index', $data);
@@ -32,11 +32,13 @@ class GalleryController extends Controller
      * Show the form for creating a new gallery.
      * @return void
      */
+
     public function createGallery(): void
     {
+
         AuthMiddleware::requireLogin();
 
-        $galleryForm = new Form('/gallery/create', 'POST');
+        $galleryForm = new Form('/gallery/create', 'POST', '', 'w-100');
         $galleryForm->addTextField(
             'name',
             '',
@@ -44,15 +46,16 @@ class GalleryController extends Controller
             [
                 'required' => true,
                 'placeholder' => 'Nom de la Galerie',
-                'class' => 'mb-2'
+                'class' => 'mb-6'
             ]
         )->addHiddenField(
-            'csrf_token',
-            AuthMiddleware::generateCsrfToken()
-        )->addSubmitButton(
-            'Créer',
-            ['class' => 'button m-auto']
-        );
+                'csrf_token',
+                $_SESSION['csrf_token'] ?? AuthMiddleware::generateCsrfToken()
+            )->addSubmitButton(
+                'Créer',
+                ['class' => 'button form__button']
+            );
+
 
         $data = [
             'title' => 'Créer une Galerie',
@@ -71,12 +74,15 @@ class GalleryController extends Controller
         AuthMiddleware::requireLogin();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            FlashMessage::add('Méthode non autorisée.', 'error');
             // redirect to the create gallery page
             $this->redirect('/gallery/create');
         }
 
+
         if (!AuthMiddleware::verifyCsrfToken($_POST['csrf_token'])) {
             // redirect to the create gallery page
+            FlashMessage::add('L\'authentification a échoué.', 'error');
             $this->redirect('/gallery/create');
         }
 
@@ -89,13 +95,14 @@ class GalleryController extends Controller
 
         try {
             $galleryId = $galleryModel->createGallery([
-                'name'       => $_POST['name'],
+                'name' => $_POST['name'],
                 'created_by' => $user['id']
             ]);
             $this->redirect('/gallery/' . $galleryId);
         } catch (\Exception $e) {
             $this->redirect('/gallery/create');
         }
+
     }
 
     /**
@@ -126,10 +133,10 @@ class GalleryController extends Controller
         // Get the gallery users
         $galleryUsers = $this->getGalleryUsers($id);
         $data = [
-            'title'         => $gallery->gallery_name,
-            'galleryId'     => $id,
+            'title' => $gallery->gallery_name,
+            'galleryId' => $id,
             'galleryPhotos' => $galleryPhotos,
-            'galleryUsers'  => $galleryUsers,
+            'galleryUsers' => $galleryUsers,
         ];
         $this->loadView('gallery/single', $data);
     }
@@ -148,28 +155,23 @@ class GalleryController extends Controller
             '',
             [
                 'required' => true,
-                'class'    => 'button button-cta'
+                'class' => 'button button-cta'
             ]
         )->addHiddenField(
-            'csrf_token',
-            AuthMiddleware::generateCsrfToken()
-        )->addSubmitButton('Upload Photo', ['class' => 'btn btn-primary']);
+                'csrf_token',
+                AuthMiddleware::generateCsrfToken()
+            )
+            ->addSubmitButton('Upload Photo', ['class' => 'btn btn-primary']);
 
         $data = [
             'title' => 'Importer une photo',
-            'form'  => $photoForm
+            'form' => $photoForm
         ];
         $this->loadView('gallery/upload', $data);
     }
 
     /**
      * Store a newly created photo in storage.
-     * Cette méthode a été modifiée pour :
-     * - Valider le token CSRF
-     * - Gérer les uploads multiples (clé 'files[]') envoyés via AJAX
-     * - Renvoi une réponse JSON au lieu d'une redirection
-     *
-     * @param int $id L'identifiant de la galerie
      * @return void
      */
     public function storePhoto($id): void
@@ -237,6 +239,7 @@ class GalleryController extends Controller
         }
     }
 
+
     /**
      * Delete the specified photo from the gallery.
      * @param int $photoId
@@ -250,52 +253,83 @@ class GalleryController extends Controller
         $photo = $galleryModel->getPhoto($photoId, $user['id']);
 
         if (!$photo) {
-            FlashMessage::add('Photo not found.', 'error');
+            FlashMessage::add('Photo non trouvée.', 'error');
             $this->redirect('/gallery');
         }
 
         $isPhotoDeleted = $galleryModel->deleteGalleryPhoto($photoId, $user['id']);
         if (!$isPhotoDeleted) {
-            FlashMessage::add('Failed to delete photo.', 'error');
+            FlashMessage::add('Échec de suppression de la photo.', 'error');
             $this->redirect('/gallery/' . $photo->gallery_id);
         }
 
         FileManager::deleteGalleryPhoto($photo->image_path);
-        FlashMessage::add('Photo deleted successfully.', 'success');
+        FlashMessage::add('Photo supprimée avec succès.', 'success');
         $this->redirect('/gallery/' . $photo->gallery_id);
     }
+
 
     /**
      * Empty the specified gallery.
      * @param int $galleryId
      * @return void
      */
+
     public function emptyGallery(int $galleryId): void
     {
         $galleryModel = $this->loadModel('GalleryModel');
         $userId = AuthMiddleware::getSessionUser()['id'];
-        
+
         $isOwner = $galleryModel->checkOwner($userId);
 
         if (!$isOwner) {
-            FlashMessage::add('Vous n\'avez pas l\'autorisation pour vider le gallerie.', 'error');
+            FlashMessage::add('Vous n\'avez pas la permission de vider la galerie.', 'error');
             $this->redirect('/gallery/' . $galleryId);
         }
 
         $isEmptied = $galleryModel->emptyGallery($galleryId, $userId);
 
         if (!$isEmptied) {
-            FlashMessage::add('Failed to empty gallery.', 'error');
+            FlashMessage::add('Échec de vider la galerie.', 'error');
             $this->redirect('/gallery/' . $galleryId);
         }
 
         FileManager::emptyGalleryPhotos($galleryId);
-        FlashMessage::add('Gallery has been emptied', 'success');
+        FlashMessage::add('La galerie a été vidée.', 'success');
         $this->redirect('/gallery/' . $galleryId);
     }
 
     /**
-     * Get the users of a gallery.
+     * Delete the specified gallery.
+     * @param int $galleryId
+     * @return void
+     */
+
+    public function deleteGallery(int $galleryId): void
+    {
+        $galleryModel = $this->loadModel('GalleryModel');
+        $userId = AuthMiddleware::getSessionUser()['id'];
+        $isOwner = $galleryModel->checkOwner($userId);
+        if (!$isOwner) {
+            FlashMessage::add('Vous n\'avez pas la permission d\'effectuer cette action.', 'error');
+            $this->redirect('/gallery/' . $galleryId);
+        }
+
+        $isDeleted = $galleryModel->deleteGalleryById($galleryId);
+        if (!$isDeleted) {
+            FlashMessage::add('Échec de la suppression de la galerie.', 'error');
+            $this->redirect('/gallery/' . $galleryId);
+        }
+
+        FileManager::emptyGalleryPhotos($galleryId);
+        FlashMessage::add('La galerie a été supprimée.', 'success');
+        $this->redirect('/gallery');
+    }
+
+
+
+    /**
+     * Get the users of a gallery
      * @param int $galleryId
      * @return mixed
      */

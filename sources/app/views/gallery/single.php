@@ -1,8 +1,6 @@
 <?php
 ob_start();
-
 $photoCount = count($galleryPhotos);
-// <?php echo __DIR__."/uploads/profiles/default.jpg";
 ?>
 <main class="container">
     <!-- Gallery header -->
@@ -17,22 +15,37 @@ $photoCount = count($galleryPhotos);
         </div>
         <div class="flex flex--gap-2 flex--wrap">
             <div class="flex flex--align-center ml-2">
-                <?php foreach ($galleryUsers as $user) { ?>
-                    <img src="<?php echo '/uploads/profiles/default.jpg'; ?>" alt="<?php echo $user->username; ?>" title="<?php echo $user->username; ?>" class="user_thumbnail">
+                <?php foreach (array_slice($galleryUsers, 0, 4) as $user) { ?>
+                    <img src="<?php echo $user->profile_image ?? '/uploads/profiles/default.svg'; ?>" alt="<?php echo $user->username; ?>" title="<?php echo $user->username; ?>" class="user_thumbnail">
                 <?php } ?>
             </div>
-            <div class="flex flex--gap-2">
+            <div class="flex flex--gap-2 flex--align-center">
+                <a href="/gallery/addusers/<?php echo $galleryId; ?>" class="button button--secondary ">
+                    <img src="/assets/images/icons/arrow-curved.png" alt="picture icon">
+                    Inviter
+                </a>
+                
+                <!-- Dropdown Menu -->
+                <div class="user-menu">
+                    <button class="button button--icon button--secondary">
+                        <img src="/assets/images/icons/dropdown.svg" alt="picture icon">
+                    </button>
+                    <div class="user-dropdown">
+                        <a href="/gallery/empty/<?php echo $galleryId; ?>" class="dropdown-item">
+                            <img src="/assets/images/icons/delete.svg" alt="picture icon">
+                            Vider la galerie
+                        </a>
+                        <a href="/gallery/deletegallery/<?php echo $galleryId; ?>" class="dropdown-item">
+                            <img src="/assets/images/icons/delete-gallery.svg" alt="picture icon">
+                            Supprimer la galerie
+                        </a>
+                    </div>
+                </div>
+
                 <!-- Bouton d'upload remplaçant le lien -->
                 <button id="uploadButton" type="button" class="button button-cta">
                     <img src="../../../assets/images/icons/picture.png" alt="picture icon">Ajouter
                 </button>
-                <a href="/gallery/addusers/<?php echo $galleryId; ?>" class="button button--secondary ">
-                    <img src="../../../assets/images/icons/arrow-curved.png" alt="picture icon">
-                    Inviter
-                </a>
-                <a href="/gallery/empty/<?php echo $galleryId; ?>" class="button button--secondary">
-                    <img src="../../../assets/images/icons/delete.svg" alt="picture icon" style="width: 100%; height: 20px; object-fit: contain;">
-                </a>
             </div>
         </div>
     </div>

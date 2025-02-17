@@ -1,4 +1,3 @@
-@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 @layer base {
   * {
@@ -723,70 +722,63 @@
   transform: scale(105%);
 }
 
-/* Conteneur principal du footer */
 .footer {
-  background-color: var(--background-color);
-  border-top: 1px solid var(--border-color);
-  padding: 3rem 0 1.5rem;
+  padding: 2rem 0;
+  border-top: 0.0625rem solid #eaeaea;
   margin-top: 18.75rem;
 }
 
-/* Grille principale du contenu (2 colonnes) */
-.footer-content {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.footer .container {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer .footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.footer .footer-content .footer-logo img {
+  width: 1.5625rem;
+  height: 1.5625rem;
+}
+
+.footer .footer-content .footer-nav {
+  display: flex;
   gap: 2rem;
-  /* Marge inférieure retirée pour coller au bas du footer */
 }
 
-@media (max-width: 768px) {
-  .footer-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-}
-/* Styles des sections du footer */
-.footer-section h3 {
-  color: var(--text-color);
-  font-size: 1.125rem;
-  margin-bottom: 1rem;
-}
-
-.footer-section p,
-.footer-section a {
-  color: var(--text-color-light);
-  font-size: 0.875rem;
-}
-
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer-section ul a {
+.footer .footer-content .footer-nav a {
+  color: #666;
   text-decoration: none;
+  font-size: 0.9rem;
   transition: color 0.3s ease;
 }
 
-.footer-section ul a:hover {
-  color: var(--primary-color);
+.footer .footer-content .footer-nav a:hover {
+  color: #333;
 }
 
-/* Section du bas du footer */
-.footer-bottom {
-  /* Marge supérieure retirée pour éviter l'espace avec .footer-content */
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border-color);
+.footer .footer-bottom {
   text-align: center;
+  color: #666;
+  font-size: 0.85rem;
 }
 
-.footer-bottom p {
-  color: var(--text-color-light);
-  font-size: 0.875rem;
-  margin: 0;
+@media (max-width: 48rem) {
+  .footer .footer-content {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  .footer .footer-content .footer-nav {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
-
 @layer components {
   .flex {
     display: flex;

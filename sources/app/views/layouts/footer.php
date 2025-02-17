@@ -1,23 +1,22 @@
-<footer class="footer" id="footer">
+<footer class="footer">
   <div class="container">
     <div class="footer-content">
-      <div class="footer-section">
-        <h3>BetweenUs</h3>
-        <p>Connectez-vous avec vos amis et partagez vos moments.</p>
+      <div class="footer-logo">
+        <img src="/assets/images/brand-logo.png" alt="BetweenUs">
       </div>
       
-      <div class="footer-section">
-        <h3>Liens rapides</h3>
-        <ul>
-          <li><a href="/">Accueil</a></li>
-        </ul>
+      <div class="footer-nav">
+        <a href="/about">About Us</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms & Conditions</a>
       </div>
     </div>
     
     <div class="footer-bottom">
-      <p>&copy; <?= date("Y") ?> BetweenUs. Tous droits réservés.</p>
+      <p>BetweenUs © All rights reserved</p>
     </div>
   </div>
 </footer>
 </body>
 </html>
+

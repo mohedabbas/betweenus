@@ -1,26 +1,24 @@
 <?php
-
 use App\Utility\FlashMessage;
-$title = $title ?? 'Default Title'; // Set a default title if none is provided
+$title = $title ?? 'Default Title';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($title) ?></title>
-
-<link rel="stylesheet" href="/assets/css/styles.css?v=<?= filemtime('assets/css/styles.css') ?>">
-<link rel="stylesheet" href="/assets/css/temporary.css?v=<?= filemtime('assets/css/temporary.css') ?>">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><?= htmlspecialchars($title) ?></title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <!-- Balise meta pour le token CSRF -->
+  <meta name="csrf-token" content="<?= $_SESSION['csrf_token'] ?? '' ?>">
 </head>
 <body>
-<?php require __DIR__ . '/header.php'; ?>
-<main class="container">
+  <?php require __DIR__ . '/header.php'; ?>
+  <main class="container">
     <?php FlashMessage::display(); ?>
-	<?= $content; // This will be where individual page content is injected ?>
-</main>
-
-<?php require __DIR__ . '/footer.php'; ?>
-
+    <?= $content; ?>
+  </main>
+  <?php require __DIR__ . '/footer.php'; ?>
+</body>
+<script src="/assets/js/upload.js"></script>
+</html>

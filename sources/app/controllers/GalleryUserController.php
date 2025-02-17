@@ -20,7 +20,7 @@ class GalleryUserController extends Controller
         AuthMiddleware::requireLogin();
 
         $formAction = "/gallery/addusers/{$galleryId}";
-        $addUsersForm = new Form($formAction, 'POST', '', ' form grid');
+        $addUsersForm = new Form($formAction, 'POST', '', 'form grid');
         $addUsersForm
             ->addTextField('email', 'Email', '', [
                 'required' => true,
@@ -63,7 +63,7 @@ class GalleryUserController extends Controller
                 $this->redirect("/gallery/addusers/$galleryId");
             }
 
-            FlashMessage::add('Utilisateur Trouver', 'success');
+            FlashMessage::add('Utilisateurs Trouvés', 'success');
 
             // Add new user to the list
             $getUser->is_newUser = true;
@@ -116,7 +116,7 @@ class GalleryUserController extends Controller
         $lastID = $galleryModel->removeUserFromGalleryById($userid, $galleryId);
         if ($lastID) {
             // If the user is added successfully
-            FlashMessage::add('L\'Utilisateur retiré avec succès', 'success');
+            FlashMessage::add('Utilisateur retiré avec succès', 'success');
             $this->redirect("/gallery/addusers/$galleryId");
         } else {
             FlashMessage::add('Erreur lors du retrait de l\'utilisateur', 'error');

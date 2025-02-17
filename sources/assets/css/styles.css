@@ -794,7 +794,6 @@
 
 .footer {
   padding: 2rem 0;
-  border-top: 0.0625rem solid #eaeaea;
   margin-top: 18.75rem;
 }
 
@@ -808,12 +807,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.0625rem;
 }
 
 .footer .footer-content .footer-logo img {
-  width: 1.5625rem;
-  height: 1.5625rem;
+  width: 4.0625rem;
+  height: 4.0625rem;
 }
 
 .footer .footer-content .footer-nav {
@@ -836,6 +835,8 @@
   text-align: center;
   color: #666;
   font-size: 0.85rem;
+  border-top: 0.0625rem solid rgba(255, 145, 97, 0.2901960784);
+  padding: 1.5rem;
 }
 
 @media (max-width: 48rem) {

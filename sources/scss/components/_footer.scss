@@ -3,7 +3,6 @@
 // Style principal du footer
 .footer {
   padding: f.rem(32) 0;
-  border-top: f.rem(1) solid #eaeaea;
   margin-top: f.rem(300);
 }
 
@@ -19,13 +18,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: f.rem(24);
+  margin-bottom: f.rem(1);
 }
 
 // Logo présent dans le footer
 .footer .footer-content .footer-logo img {
-  width: f.rem(25);
-  height: f.rem(25);
+  width: f.rem(65);
+  height: f.rem(65);
 }
 
 // Navigation du footer
@@ -50,6 +49,9 @@
   text-align: center;
   color: #666;
   font-size: f.rem(13.6);
+  border-top: f.rem(1) solid #ff91614a;
+  padding:  f.rem(24);
+  
 }
 
 // Adaptation pour les écrans plus petits

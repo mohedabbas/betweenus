@@ -1,8 +1,8 @@
 <footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-logo">
-        <img src="/assets/images/brand-logo.png" alt="BetweenUs">
+  <div class="container ">
+    <div class="footer-content ">
+      <div class="footer-logo ">
+        <img src="/assets/images/brand-logo-shadow.png" alt="BetweenUs">
       </div>
       
       <div class="footer-nav">
@@ -12,7 +12,7 @@
       </div>
     </div>
     
-    <div class="footer-bottom">
+    <div class="footer-bottom ">
       <p>BetweenUs © All rights reserved</p>
     </div>
   </div>

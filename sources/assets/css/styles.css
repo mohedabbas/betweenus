@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 @layer base {
   * {
@@ -918,6 +919,15 @@
  *   | ^^^^^^^^^^^^^^^^^^^^^^
  *   '
  *   sources\scss\main.scss 7:1  root stylesheet */
+=======
+/* Error: Can't find stylesheet to import.
+ *   ,
+ * 1 | @use "fonts" as fonts;
+ *   | ^^^^^^^^^^^^^^^^^^^^^
+ *   '
+ *   sources\scss\partials\_globals.scss 1:1  @use
+ *   sources\scss\main.scss 2:1               root stylesheet */
+>>>>>>> e20701a (17.02.2025)
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
@@ -927,6 +937,7 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
+<<<<<<< HEAD
   content: "Error: Can't find stylesheet to import.\a   \2577 \a 7 \2502  @use \"components/form\";\d\a   \2502  ^^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   sources\\scss\\main.scss 7:1  root stylesheet";
 }
 >>>>>>> 3f14a00 (1)
@@ -1244,3 +1255,7 @@ header {
 
 /*# sourceMappingURL=styles.css.map */
 >>>>>>> 901a0ea (dd)
+=======
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @use \"fonts\" as fonts;\d\a   \2502  ^^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   sources\\scss\\partials\\_globals.scss 1:1  @use\a   sources\\scss\\main.scss 2:1               root stylesheet";
+}
+>>>>>>> e20701a (17.02.2025)

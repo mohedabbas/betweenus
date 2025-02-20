@@ -47,7 +47,7 @@ Le style de l'application peut être personnalisé en modifiant les fichiers SCS
 Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou soumettre une pull request.
 
 ## 📁 Structure du Projet
-.
+
 ├── docker/
 │   ├── php/
 │   ├── nginx/

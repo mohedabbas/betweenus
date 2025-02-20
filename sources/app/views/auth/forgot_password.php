@@ -10,14 +10,14 @@ $title = $title ?? 'Mot de passe oublié';
 
         <!-- Afficher les messages d'erreur et d'information dans des blocs de style -->
         <?php if (isset($_SESSION['forgot_error'])): ?>
-            <div class="error-message">
+            <div class="form__message">
                 <?= htmlspecialchars($_SESSION['forgot_error']) ?>
             </div>
             <?php unset($_SESSION['forgot_error']); ?>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['forgot_info'])): ?>
-            <div class="success-message">
+            <div class="form__message form__message--success">
                 <?= htmlspecialchars($_SESSION['forgot_info']) ?>
             </div>
             <?php unset($_SESSION['forgot_info']); ?>

@@ -51,13 +51,10 @@ $router->post('/login', ['AuthController', 'attemptLogin']);
 // Déconnexion
 $router->get('/logout', ['AuthController', 'logout']);
 
-// Page connectée
-$router->get('/connected', ['AuthController', 'connected']);
-
-$router->get('/forgot-password',  ['AuthController', 'forgotPasswordForm']);
+$router->get('/forgot-password', ['AuthController', 'forgotPasswordForm']);
 $router->post('/forgot-password', ['AuthController', 'forgotPasswordSubmit']);
-$router->get('/reset-password',   ['AuthController', 'resetPasswordForm']);
-$router->post('/reset-password',  ['AuthController', 'resetPasswordSubmit']);
+$router->get('/reset-password', ['AuthController', 'resetPasswordForm']);
+$router->post('/reset-password', ['AuthController', 'resetPasswordSubmit']);
 
 
 //Gallery routes
@@ -72,8 +69,8 @@ $router->post('/gallery/upload/{id}', ['GalleryController', 'storePhoto']);
 $router->get('/gallery/delete/{id}', ['GalleryController', 'deletePhoto']);
 
 // Empty gallery 
-$router->get('/gallery/empty/{galleryId}', ['GalleryController','emptyGallery']);
-$router->get('/gallery/deletegallery/{galleryId}', ['GalleryController','deleteGallery']);
+$router->get('/gallery/empty/{galleryId}', ['GalleryController', 'emptyGallery']);
+$router->get('/gallery/deletegallery/{galleryId}', ['GalleryController', 'deleteGallery']);
 
 
 

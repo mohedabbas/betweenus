@@ -33,7 +33,6 @@ class AuthController extends Controller
         echo "<p><a href='/register'>Register</a> | <a href='/login'>Login</a> | <a href='/logout'>Logout</a></p>";
     }
 
-    // ----------------  INSCRIPTION + CODE 6 CHIFFRES ---------------- //
 
     /**
      * Formulaire d’inscription (GET "/register")
@@ -217,9 +216,9 @@ class AuthController extends Controller
         $form->addTextField('verification_code', 'Code reçu (6 chiffres)', '', [
             'required' => 'required',
             'placeholder' => 'Ex: 123456',
-            'class' => 'form-group'
+            'class' => 'mb-2'
         ])
-            ->addSubmitButton('Valider', ['name' => 'submit', 'class' => 'button ']);
+            ->addSubmitButton('Valider', ['name' => 'submit', 'class' => 'button form__button ']);
 
         $data = [
             'title' => 'Vérification',
@@ -264,8 +263,6 @@ class AuthController extends Controller
         header('Location: /login');
         exit;
     }
-
-    // -------------------- MOT DE PASSE OUBLIÉ (avec lien) -------------------- //
 
     /**
      * Formulaire "Mot de passe oublié" (GET "/forgot-password")
@@ -434,8 +431,6 @@ class AuthController extends Controller
         exit;
     }
 
-    // -------------------- LOGIN / LOGOUT / CONNECTED --------------------
-
     /**
      * Formulaire de connexion (GET "/login")
      */
@@ -527,15 +522,5 @@ class AuthController extends Controller
         session_destroy();
         header('Location: /');
         exit;
-    }
-
-    public function connected(): void
-    {
-        if (!isset($_SESSION['user'])) {
-            header('Location: /login');
-            exit;
-        }
-        echo "<h1>Bienvenue, vous êtes connecté(e) !</h1>";
-        echo "<p>Bonjour " . htmlspecialchars($_SESSION['user']['first_name'] ?? '') . "</p>";
     }
 }

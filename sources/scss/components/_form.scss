@@ -44,13 +44,18 @@
     }
 
     // Error Message
-    &__error-message {
+    &__message {
       background-color: var(--danger-background-color);
       color: var(--danger-text-color);
       padding: f.rem(12);
       border-radius: f.rem(12);
       margin-bottom: f.rem(20);
       text-align: center;
+
+      &--success {
+        background-color: var(--success-background-color);
+        color: var(--success-text-color);
+      }
     }
 
     // Forgot Password

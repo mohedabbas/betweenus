@@ -6,8 +6,8 @@
         position: relative;
         border-radius: f.rem(20);
         overflow: hidden;
-        width: auto;
         max-width: f.rem(310);
+        margin: auto;
 
         &:hover {
             &::after,

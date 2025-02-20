@@ -1,72 +1,81 @@
-# docker-php-nginx-mariadb-template
+# Galerie Photo
 
-Template for running PHP and MariaDB behind NGINX using Docker, Docker Compose & GNU/Make for orchestration.
+Une application web de galerie photo avec système d'authentification permettant aux utilisateurs de télécharger et gérer leurs photos.
 
-## Requirements
+## 🚀 Fonctionnalités
 
-- [GNU/Bash](https://www.gnu.org/software/bash/)
-- [GNU/Make]()
-- [Git](https://git-scm.com/)
-- [Docker](https://www.docker.com/)
-- [Docker Compose](https://docs.docker.com/compose/)
+- Système d'authentification complet
+- Téléchargement de photos
+- Affichage des photos en galerie
+- Vue détaillée des photos
+- Système de récupération de mot de passe
+- Interface responsive
 
-## Clone
+## 📋 Prérequis
 
-```bash
-git clone https://github.com/aminnairi/docker-php-nginx-mariadb-template my-project
-cd my-project
-```
+- PHP 8.0 ou supérieur
+- Serveur web (Apache/Nginx)
+- MySQL/MariaDB
 
-## Setup
+## 🛠 Installation
 
-```bash
-cp .env.example .env
-```
+1. Clonez le repository
 
-> *Note: edit the `.env` file to setup your environment.*
+2. Installez les dépendances
 
-## Startup
+3. Configurez votre base de données dans le fichier de configuration
 
-```bash
-make start
-```
+4. Lancez les migrations : docker-compose exec php php /home/php/migration_script.php up
 
-> *Note: you can change the port listened by the server with the `SERVER_PORT` environment variable by editing it in the `.env` file.*
+## 🎨 Personnalisation
 
-## Database
+Le style de l'application peut être personnalisé en modifiant les fichiers SCSS dans le dossier `sources/scss/components/`.
 
-```bash
-make database
-```
+## 🔒 Sécurité
 
-> *Note: this will login to your database using a command line interface using your environment setup.*
+- Protection contre les injections SQL
+- Hachage sécurisé des mots de passe
+- Validation des fichiers uploadés
+- Protection CSRF
 
-## Shutdown
+## 📝 Licence
 
-```bash
-make stop
-```
+[Votre licence]
 
-## Restart
+## 👥 Contribution
 
-```bash
-make restart
-```
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou soumettre une pull request.
 
-> *Note: this is equivalent to running `make stop start`.*
+## 📁 Structure du Projet
+.
+├── docker/
+│   ├── php/
+│   ├── nginx/
+│   └── mysql/
+├── sources/
+│   ├── app/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   └── middleware/
+│   ├── config/
+│   │   ├── database.php
+│   │   └── app.php
+│   ├── public/
+│   │   ├── index.php
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── images/
+│   ├── scss/
+│   │   ├── components/
+│   │   └── partials/
+│   └── views/
+│       ├── auth/
+│       │   ├── login.php
+│       │   ├── register.php
+│       │   └── ...
+│       ├── gallery/
+│       └── layouts/
+├── docker-compose.yml
+├── composer.json
+└── README.md
 
-## PHP
-
-```bash
-docker compose exec php php --version
-```
-
-> *Note: replace `--version` with the PHP argument of your choice.*
-
-## MariaDB
-
-```bash
-docker compose exec mariadb mariadb --version
-```
-
-> *Note: replace `--version` with the MariaDB argument of your choice.*

@@ -281,8 +281,8 @@
     position: relative;
     border-radius: 1.25rem;
     overflow: hidden;
-    width: auto;
     max-width: 19.375rem;
+    margin: auto;
   }
   .photo-card:hover::after,
   .photo-card:hover button,
@@ -381,13 +381,17 @@
     justify-content: center;
     border-radius: 0.875rem;
   }
-  .form__error-message {
+  .form__message {
     background-color: var(--danger-background-color);
     color: var(--danger-text-color);
     padding: 0.75rem;
     border-radius: 0.75rem;
     margin-bottom: 1.25rem;
     text-align: center;
+  }
+  .form__message--success {
+    background-color: var(--success-background-color);
+    color: var(--success-text-color);
   }
   .form .forgot-password-text {
     color: inherit;

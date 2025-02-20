@@ -30,7 +30,7 @@ class AuthMiddleware
      * Check if the user is an admin
      * @return bool
      */
-    public static function isAdmin():bool
+    public static function isAdmin(): bool
     {
         return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
     }
@@ -88,7 +88,7 @@ class AuthMiddleware
      * @param $token
      * @return bool
      */
-    public static function verifyCsrfToken($token):bool
+    public static function verifyCsrfToken($token): bool
     {
         return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
     }

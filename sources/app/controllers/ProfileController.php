@@ -2,8 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Middlewares\AuthMiddleware;
 use App\Core\Controller;
 use Exception;
+use App\Core\Form;
 
 class ProfileController extends Controller
 {
@@ -12,13 +14,17 @@ class ProfileController extends Controller
 	 */
 	public function index(): void
 	{
-		$loadModel = $this->loadModel('AuthModel');
+		// Vérifier si l'utilisateur est connecté
+		AuthMiddleware::requireLogin();
 
-		$user = $loadModel->findUserByUsernameOrEmail('mohed332@betweenus.com');
+		// Récupérer les données de l'utilisateur
+		$user = AuthMiddleware::getSessionUser();
+
 		$data = [
-			'title' => 'Profile Page',
+			'title' => $user['first_name'] . ' ' . $user['last_name'],
 			'user' => $user
 		];
+
 		$this->loadView('profile/index', $data);
 	}
 }

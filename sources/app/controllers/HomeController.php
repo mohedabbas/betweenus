@@ -2,13 +2,13 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Core\Form;
+
 class HomeController extends Controller
 {
 	public function index(): void
 	{
 		$data = [
-			'title' => 'Home'
+			'title' => 'Partagez facilement vos photos de voyage entre amis'
 		];
 		$this->loadView('home/index', $data);
 	}

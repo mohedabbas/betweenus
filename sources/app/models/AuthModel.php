@@ -74,7 +74,7 @@ class AuthModel extends Model
         $stmt = $this->prepare($sql);
         $this->execute($stmt, [
             'token' => $token,
-            'id'    => $userId
+            'id' => $userId
         ]);
     }
 
@@ -95,7 +95,19 @@ class AuthModel extends Model
         $stmt = $this->prepare($sql);
         $this->execute($stmt, [
             'pwd' => $hashedPassword,
-            'id'  => $id
+            'id' => $id
+        ]);
+    }
+
+    public function updateProfileImage(int $userid, string $imagePath): void
+    {
+        $sql = "UPDATE {$this->table}
+                SET profile_image = :image_path
+                WHERE id = :userid";
+        $stmt = $this->prepare($sql);
+        $this->execute($stmt, [
+            'image_path' => $imagePath,
+            'userid' => $userid
         ]);
     }
 }

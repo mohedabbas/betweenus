@@ -72,8 +72,6 @@ $router->get('/gallery/delete/{id}', ['GalleryController', 'deletePhoto']);
 $router->get('/gallery/empty/{galleryId}', ['GalleryController', 'emptyGallery']);
 $router->get('/gallery/deletegallery/{galleryId}', ['GalleryController', 'deleteGallery']);
 
-
-
 // Gallery user routes
 $router->get('/gallery/addusers/{id}', ['GalleryUserController', 'addUsersInGallery']);
 $router->post('/gallery/addusers/{id}', ['GalleryUserController', 'addUsersInGallery']);
@@ -82,8 +80,9 @@ $router->get('/gallery/send_invite/{userid}', ['GalleryUserController', 'addUser
 // Remove user from gallery
 $router->get('/gallery/removeuser/{userid}', ['GalleryUserController', 'removeUserFromGallery']);
 
-// Temporary code for testing
+// Profile routes
 $router->get('/profile', ['ProfileController', 'index']);
+$router->post('/profile', ['ProfileController', 'updateProfileImage']);
 
 // Dispatch
 $router->get('/designguide', ['DesignGuideController', 'index']);

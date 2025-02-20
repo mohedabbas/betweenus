@@ -27,4 +27,54 @@ class ProfileController extends Controller
 
 		$this->loadView('profile/index', $data);
 	}
+
+	public function updateProfileImage(): void
+	{
+		AuthMiddleware::requireLogin();
+		$user = AuthMiddleware::getSessionUser();
+		$authModel = $this->loadModel('AuthModel');
+		var_dump($_FILES);
+
+		$formAction = "/profile";
+		$photoForm = new Form($formAction, 'POST', 'multipart/form-data');
+		$photoForm->addFileField(
+			'photo',
+			'',
+			[
+				'required' => true,
+				'class' => 'button button-cta'
+			]
+		)->addHiddenField(
+				'csrf_token',
+				AuthMiddleware::generateCsrfToken()
+			)
+			->addSubmitButton('Upload Photo', ['class' => 'button']);
+
+		if (isset($_FILES['photo']) && !empty($_FILES['photo']['name'])) {
+			$image = $_FILES['photo'];
+			//$imagePath = // FileManager::uploadProfileImage($photo, $user['id']);
+
+			// Ajout de la photo dans la base de données
+			//$authModel->updateProfileImage($user['id'], $imagePath);
+		}
+	}
+
+	public function uploadPhotoForm(int $id): void
+	{
+		AuthMiddleware::requireLogin();
+		$formAction = "/profile";
+		$photoForm = new Form($formAction, 'POST', 'multipart/form-data');
+		$photoForm->addFileField(
+			'photo',
+			'',
+			[
+				'required' => true,
+				'class' => 'button button-cta'
+			]
+		)->addHiddenField(
+				'csrf_token',
+				AuthMiddleware::generateCsrfToken()
+			)
+			->addSubmitButton('Upload Photo', ['class' => 'button']);
+	}
 }

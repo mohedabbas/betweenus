@@ -16,7 +16,8 @@ $photoCount = count($galleryPhotos);
         <div class="flex flex--gap-2 flex--wrap">
             <div class="flex flex--align-center ml-2">
                 <?php foreach (array_slice($galleryUsers, 0, 4) as $user) { ?>
-                    <img src="<?php echo $user->profile_image ?? '/uploads/profiles/default.svg'; ?>" alt="<?php echo $user->username; ?>" title="<?php echo $user->username; ?>" class="user_thumbnail">
+                    <img src="<?= $user->profile_image == 'default.png' ? '/uploads/profiles/default.svg' : $user->profile_image ?>"
+                        alt="<?php echo $user->username; ?>" title="<?php echo $user->username; ?>" class="user_thumbnail">
                 <?php } ?>
             </div>
             <div class="flex flex--gap-2 flex--align-center">
@@ -24,7 +25,7 @@ $photoCount = count($galleryPhotos);
                     <img src="/assets/images/icons/arrow-curved.png" alt="picture icon">
                     Inviter
                 </a>
-                
+
                 <!-- Dropdown Menu -->
                 <div class="user-menu">
                     <button class="button button--icon button--secondary">
@@ -58,13 +59,15 @@ $photoCount = count($galleryPhotos);
     <?php } ?>
 
     <!-- Champ de fichier caché pour l'upload (utilisé par le JS externe) -->
-    <input type="file" id="fileInput" name="files[]" style="display: none;" multiple data-gallery-id="<?= $galleryId ?>">
+    <input type="file" id="fileInput" name="files[]" style="display: none;" multiple
+        data-gallery-id="<?= $galleryId ?>">
 
     <div class="grid">
         <?php foreach ($galleryPhotos as $photo) { ?>
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="photo-card">
-                    <img src="<?php echo $photo->image_path; ?>" alt="<?php echo $photo->caption; ?>" title="<?php echo $photo->caption; ?>" class="photo-card__img">
+                    <img src="<?php echo $photo->image_path; ?>" alt="<?php echo $photo->caption; ?>"
+                        title="<?php echo $photo->caption; ?>" class="photo-card__img">
                     <button class="photo-card__zoom"></button>
                     <a href="/gallery/delete/<?php echo $photo->id ?>" class="photo-card__delete"></a>
                 </div>

@@ -3,8 +3,8 @@
 $title = $data['title'];
 ob_start();
 
-if (isset($user->profile_image)) {
-	$profile = $user->profile_image;
+if ($user['profile_image'] !== 'default.svg') {
+	$profile = $user['profile_image'];
 } else {
 	$profile = null;
 }
@@ -12,8 +12,9 @@ if (isset($user->profile_image)) {
 ?>
 
 <main>
-	<img src="<?= $profile ? 'uploads/profiles/' . $profile : '/uploads/profiles/default.svg' ?>" alt="profile image"
-		class="profile-image mb-3">
+	<div class="user-profile">
+		<img src="<?= $profile ?? 'uploads/profiles/default.svg' ?>" alt="profile image" class="profile-image mb-3">
+	</div>
 	<h1 class="mb-3"><?= $title ?></h1>
 
 	<h2 class="mb-2">Informations personnelles</h2>
@@ -25,6 +26,9 @@ if (isset($user->profile_image)) {
 			<b>Email</b> : <?= $user['email'] ?>
 		</li>
 	</ul>
+	<?php
+	echo $form->renderForm();
+	?>
 </main>
 
 <?php

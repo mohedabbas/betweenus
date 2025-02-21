@@ -31,7 +31,7 @@ $form = $form ?? null;
 
         <!-- Affichage GLOBAL des erreurs s’il y en a -->
         <?php if (!empty($errors)): ?>
-            <div class="form__error-message">
+            <div class="form__message">
                 <ul>
                     <?php foreach ($errors as $field => $message): ?>
                         <li><?= htmlspecialchars($message) ?></li>

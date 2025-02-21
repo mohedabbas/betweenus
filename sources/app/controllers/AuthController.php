@@ -481,13 +481,13 @@ class AuthController extends Controller
         $user = $authModel->findUserByUsernameOrEmail($identifier);
 
         if (!$user) {
-            $_SESSION['login_error'] = "Identifiant inconnu.";
+            $_SESSION['login_error'] = "Identifiants incorrects";
             header('Location: /login');
             exit;
         }
 
         if (!password_verify($password, $user->password)) {
-            $_SESSION['login_error'] = "Mot de passe incorrect.";
+            $_SESSION['login_error'] = "Identifiants incorrects";
             header('Location: /login');
             exit;
         }
@@ -509,7 +509,8 @@ class AuthController extends Controller
             'email' => $user->email,
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
-            'role' => $user->role ?? 'user'
+            'role' => $user->role ?? 'user',
+            'profile_image' => $user->profile_image
         ];
 
         header('Location: /gallery');

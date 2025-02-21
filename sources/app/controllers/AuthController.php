@@ -480,14 +480,8 @@ class AuthController extends Controller
         $authModel = $this->loadModel('AuthModel');
         $user = $authModel->findUserByUsernameOrEmail($identifier);
 
-        if (!$user) {
-            $_SESSION['login_error'] = "Identifiant inconnu.";
-            header('Location: /login');
-            exit;
-        }
-
-        if (!password_verify($password, $user->password)) {
-            $_SESSION['login_error'] = "Mot de passe incorrect.";
+        if (!$user && !password_verify($password, $user->password)) {
+            $_SESSION['login_error'] = "Identifiants incorrects";
             header('Location: /login');
             exit;
         }
